@@ -27,8 +27,9 @@ import {
 import { Button } from "@/components/ui/button"
 import GlobalSearch from "@/GlobalSearch"
 import type { Currency } from "@/shared"
+import { LocaleProvider, type Locale } from "@/locale"
 
-const navItems = [
+const navItemsEn = [
   { label: "Overview", icon: LayoutDashboard, href: "/dashboard" },
   { label: "Orders", icon: ShoppingCart, href: "/dashboard/orders" },
   { label: "Products", icon: Package, href: "/dashboard/products" },
@@ -41,6 +42,21 @@ const navItems = [
   { label: "Channels", icon: Send, href: "/dashboard/channels" },
   { label: "Workspace", icon: Building2, href: "/dashboard/workspace" },
   { label: "Settings", icon: Settings, href: "/dashboard/settings" },
+]
+
+const navItemsKr = [
+  { label: "개요", icon: LayoutDashboard, href: "/kr/dashboard" },
+  { label: "주문", icon: ShoppingCart, href: "/kr/dashboard/orders" },
+  { label: "상품", icon: Package, href: "/kr/dashboard/products" },
+  { label: "재고", icon: Database, href: "/kr/dashboard/inventory" },
+  { label: "라이선스", icon: KeyRound, href: "/kr/dashboard/licenses" },
+  { label: "공급사", icon: Unplug, href: "/kr/dashboard/providers" },
+  { label: "고객", icon: Users, href: "/kr/dashboard/customers" },
+  { label: "판매처", icon: Store, href: "/kr/dashboard/merchants" },
+  { label: "분석", icon: BarChart3, href: "/kr/dashboard/analytics" },
+  { label: "채널", icon: Send, href: "/kr/dashboard/channels" },
+  { label: "워크스페이스", icon: Building2, href: "/kr/dashboard/workspace" },
+  { label: "설정", icon: Settings, href: "/kr/dashboard/settings" },
 ]
 
 type Workspace = {
@@ -57,7 +73,8 @@ const workspaces: Workspace[] = [
   { id: "devshop", name: "DevShop", plan: "Pro", platforms: 2, color: "#34A853" },
 ]
 
-function SidebarContent({ currentPath, activeWorkspace, onWorkspaceChange, allWorkspaces, onCreateWorkspace }: { currentPath: string; activeWorkspace: Workspace; onWorkspaceChange: (ws: Workspace) => void; allWorkspaces: Workspace[]; onCreateWorkspace: () => void }) {
+function SidebarContent({ currentPath, activeWorkspace, onWorkspaceChange, allWorkspaces, onCreateWorkspace, locale }: { currentPath: string; activeWorkspace: Workspace; onWorkspaceChange: (ws: Workspace) => void; allWorkspaces: Workspace[]; onCreateWorkspace: () => void; locale: Locale }) {
+  const navItems = locale === "kr" ? navItemsKr : navItemsEn
   const mainNav = navItems.slice(0, 7)
   const secondaryNav = navItems.slice(7)
   const [wsOpen, setWsOpen] = useState(false)
@@ -75,8 +92,10 @@ function SidebarContent({ currentPath, activeWorkspace, onWorkspaceChange, allWo
     }
   }, [wsOpen])
 
-  const isActive = (href: string) =>
-    href === "/dashboard" ? currentPath === "/dashboard" : currentPath.startsWith(href)
+  const isActive = (href: string) => {
+    const dashPath = locale === "kr" ? "/kr/dashboard" : "/dashboard"
+    return href === dashPath ? currentPath === dashPath : currentPath.startsWith(href)
+  }
 
   return (
     <div className="flex h-full flex-col">
@@ -86,7 +105,7 @@ function SidebarContent({ currentPath, activeWorkspace, onWorkspaceChange, allWo
           <span className="absolute top-0.5 right-0.5 size-3 rounded-full bg-[#F5F5F6]" />
         </span>
         <span className="text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">
-          Mont
+          Linko
         </span>
       </div>
 
@@ -160,7 +179,7 @@ function SidebarContent({ currentPath, activeWorkspace, onWorkspaceChange, allWo
                 <span className="inline-flex items-center rounded-full bg-[#918DF6]/10 px-2 py-0.5 text-[10px] font-semibold tracking-[-0.32px] text-[#918DF6]">
                   {activeWorkspace.plan}
                 </span>
-                <span className="text-[11px] tracking-[-0.32px] text-[#999999]">{activeWorkspace.platforms} platforms</span>
+                <span className="text-[11px] tracking-[-0.32px] text-[#999999]">{activeWorkspace.platforms} {locale === "kr" ? "플랫폼" : "platforms"}</span>
               </div>
             </div>
             <ChevronDown className={`size-4 shrink-0 text-[#999999] transition-transform ${wsOpen ? "rotate-180" : ""}`} />
@@ -185,7 +204,7 @@ function SidebarContent({ currentPath, activeWorkspace, onWorkspaceChange, allWo
                     <div className="flex items-center gap-1.5">
                       <span className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{ws.plan}</span>
                       <span className="text-[10px] tracking-[-0.32px] text-[#CCCCCC]">·</span>
-                      <span className="text-[10px] tabular-nums tracking-[-0.32px] text-[#999999]">{ws.platforms} platforms</span>
+                      <span className="text-[10px] tabular-nums tracking-[-0.32px] text-[#999999]">{ws.platforms} {locale === "kr" ? "플랫폼" : "platforms"}</span>
                     </div>
                   </div>
                   {ws.id === activeWorkspace.id && (
@@ -198,7 +217,7 @@ function SidebarContent({ currentPath, activeWorkspace, onWorkspaceChange, allWo
                 <span className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-dashed border-[rgba(0,0,0,0.15)] text-[#999999]">
                   <Plus className="size-3.5" strokeWidth={2} />
                 </span>
-                <p className="text-[13px] font-medium tracking-[-0.32px] text-[#666666]">Create workspace</p>
+                <p className="text-[13px] font-medium tracking-[-0.32px] text-[#666666]">{locale === "kr" ? "워크스페이스 만들기" : "Create workspace"}</p>
               </button>
             </div>
           )}
@@ -227,11 +246,13 @@ export default function DashboardLayout({
   title,
   currency,
   onCurrencyToggle,
+  locale = "en",
 }: {
   children: React.ReactNode
   title: string
   currency: Currency
   onCurrencyToggle: () => void
+  locale?: Locale
 }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [allWorkspaces] = useState<Workspace[]>(workspaces)
@@ -241,19 +262,20 @@ export default function DashboardLayout({
   const navigateTo = useNavigate()
 
   const handleOpenCreate = () => {
-    navigateTo("/dashboard/quick-setup")
+    navigateTo(locale === "kr" ? "/kr/dashboard/quick-setup" : "/dashboard/quick-setup")
   }
 
   return (
+    <LocaleProvider locale={locale}>
     <div className="flex h-svh bg-[#F7F7F8]">
       <aside className="hidden w-[240px] shrink-0 border-r border-[rgba(0,0,0,0.08)] bg-[#F5F5F6] lg:block">
-          <SidebarContent currentPath={location.pathname} activeWorkspace={activeWorkspace} onWorkspaceChange={setActiveWorkspace} allWorkspaces={allWorkspaces} onCreateWorkspace={handleOpenCreate} />
+          <SidebarContent currentPath={location.pathname} activeWorkspace={activeWorkspace} onWorkspaceChange={setActiveWorkspace} allWorkspaces={allWorkspaces} onCreateWorkspace={handleOpenCreate} locale={locale} />
       </aside>
 
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="w-[260px] bg-[#F5F5F6] p-0" showCloseButton={false}>
-          <SheetTitle className="sr-only">Navigation</SheetTitle>
-        <SidebarContent currentPath={location.pathname} activeWorkspace={activeWorkspace} onWorkspaceChange={setActiveWorkspace} allWorkspaces={allWorkspaces} onCreateWorkspace={handleOpenCreate} />
+          <SheetTitle className="sr-only">{locale === "kr" ? "네비게이션" : "Navigation"}</SheetTitle>
+        <SidebarContent currentPath={location.pathname} activeWorkspace={activeWorkspace} onWorkspaceChange={setActiveWorkspace} allWorkspaces={allWorkspaces} onCreateWorkspace={handleOpenCreate} locale={locale} />
         </SheetContent>
       </Sheet>
 
@@ -297,8 +319,11 @@ export default function DashboardLayout({
           </div>
         </header>
 
-        {children}
+        <div className="flex-1 overflow-y-auto px-14 lg:px-24">
+          {children}
+        </div>
       </main>
     </div>
+    </LocaleProvider>
   )
 }

@@ -61,7 +61,7 @@ function SidebarContent() {
           <span className="absolute top-0.5 right-0.5 size-3 rounded-full bg-[#F5F5F6]" />
         </span>
         <span className="text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">
-          Mont
+          Linko
         </span>
       </div>
 
@@ -130,10 +130,10 @@ const steps = [
 
 const platforms = [
   { id: "telegram-bot", name: "Telegram Bot", description: "Sell directly through your own Telegram bot", badge: "T", badgeBg: "#2AABEE", tier: "free" as const },
-  { id: "mont-website", name: "Mont Website", description: "Auto-generated storefront hosted by Mont", badge: "M", badgeBg: "#918DF6", tier: "free" as const },
-  { id: "naver", name: "Naver Store", description: "Korea's largest e-commerce platform", badge: "N", badgeBg: "#03C75A", tier: "pro" as const },
-  { id: "g2g", name: "G2G", description: "Global digital goods marketplace", badge: "G2G", badgeBg: "#E87A2A", tier: "pro" as const },
-  { id: "g2a", name: "G2A", description: "Game keys & software marketplace", badge: "G2A", badgeBg: "#F05A23", tier: "pro" as const },
+  { id: "mont-website", name: "Linko Website", description: "Auto-generated storefront hosted by Linko", badge: "M", badgeBg: "#918DF6", tier: "free" as const },
+  { id: "naver", name: "네이버 스토어", description: "Korea's largest e-commerce platform", badge: "N", badgeBg: "#03C75A", tier: "pro" as const },
+  { id: "g2g", name: "롯데몰", description: "Global digital goods marketplace", badge: "롯데몰", badgeBg: "#E87A2A", tier: "pro" as const },
+  { id: "g2a", name: "지마켓", description: "Game keys & software marketplace", badge: "지마켓", badgeBg: "#F05A23", tier: "pro" as const },
   { id: "coupang", name: "Coupang", description: "Korea's rocket delivery platform", badge: "C", badgeBg: "#D93025", tier: "pro" as const },
 ]
 
@@ -605,7 +605,7 @@ export default function Onboarding() {
                   transition={{ delay: 0.3, duration: 0.3 }}
                   className="mt-5 text-[15px] font-medium tracking-[-0.32px] text-[#181925]"
                 >
-                  Opening Mont MiniApp...
+                  Opening Linko MiniApp...
                 </motion.p>
                 <motion.p
                   initial={{ opacity: 0 }}
@@ -711,7 +711,7 @@ export default function Onboarding() {
                       type="text"
                       value={botStoreName}
                       onChange={(e) => setBotStoreName(e.target.value)}
-                      placeholder="e.g. Mont Digital Store"
+                      placeholder="e.g. Linko Digital Store"
                       className="h-10 w-full rounded-xl border border-[rgba(0,0,0,0.12)] bg-white px-3.5 text-[14px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] transition-colors focus:border-[#2AABEE] focus:outline-none focus:ring-2 focus:ring-[#2AABEE]/20"
                     />
                   </div>
@@ -791,7 +791,7 @@ export default function Onboarding() {
                 <DialogHeader>
                   <DialogTitle className="flex items-center gap-2.5 text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
                     <span className="flex size-7 items-center justify-center rounded-lg bg-[#918DF6] text-[10px] font-bold text-white">M</span>
-                    Mont Website Setup
+                    Linko Website Setup
                   </DialogTitle>
                   <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
                     Create your storefront on mont.shop

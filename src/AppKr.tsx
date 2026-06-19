@@ -24,26 +24,26 @@ function Navbar() {
             href="#"
             className="flex items-center gap-0.5 rounded-full px-3 py-1.5 text-[13px] text-[#999999] transition-colors hover:text-white"
           >
-            Features
+            기능
             <ChevronDown className="size-3 opacity-60" />
           </a>
           <a
             href="#"
             className="rounded-full px-3 py-1.5 text-[13px] text-[#999999] transition-colors hover:text-white"
           >
-            Pricing
+            요금제
           </a>
           <a
             href="#"
             className="rounded-full px-3 py-1.5 text-[13px] text-[#999999] transition-colors hover:text-white"
           >
-            Blog
+            블로그
           </a>
           <a
             href="#"
             className="rounded-full px-3 py-1.5 text-[13px] text-[#999999] transition-colors hover:text-white"
           >
-            Docs
+            문서
           </a>
           <a
             href="#"
@@ -52,15 +52,15 @@ function Navbar() {
             API
           </a>
           <Link
-            to="/login"
+            to="/kr/login"
             className="rounded-full px-3 py-1.5 text-[13px] text-[#999999] transition-colors hover:text-white"
           >
-            Login
+            로그인
           </Link>
         </div>
 
-        <Link to="/signup" className="ml-1 shrink-0 cursor-pointer whitespace-nowrap rounded-full bg-[#918DF6] px-4 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-[#9580FF]">
-          Start free trial
+        <Link to="/kr/signup" className="ml-1 shrink-0 cursor-pointer whitespace-nowrap rounded-full bg-[#918DF6] px-4 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-[#9580FF]">
+          무료 체험 시작
         </Link>
       </div>
     </nav>
@@ -79,7 +79,7 @@ const logos = [
 function LogoCloud() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-      <span className="text-[11px] font-medium tracking-widest text-[#999999]/60 uppercase">Supported platforms</span>
+      <span className="text-[11px] font-medium tracking-widest text-[#999999]/60 uppercase">지원 플랫폼</span>
       {logos.map((logo) => (
         <span
           key={logo.name}
@@ -102,29 +102,29 @@ const painPoints: {
 }[] = [
   {
     icon: MessageSquare,
-    question: "Spending all day glued to chat?",
-    description: "You're manually responding to every order on WhatsApp and Telegram. That's not scaling — that's surviving.",
+    question: "하루 종일 채팅에 매달려 있나요?",
+    description: "왓츠앱, 텔레그램으로 들어오는 주문 하나하나에 직접 답하고 계신 거죠. 그건 성장이 아니라 생존입니다.",
     align: "left",
     visualId: "chat-flood",
   },
   {
     icon: Clock,
-    question: "Sending discount codes and restock alerts by hand?",
-    description: "Copy-paste. Send. Repeat. For every customer, every platform, every time.",
+    question: "할인 코드와 재입고 알림을 수작업으로 보내고 있나요?",
+    description: "복사하고, 붙여넣고, 전송. 모든 고객에게, 모든 플랫폼에서, 매번 반복.",
     align: "right",
     visualId: "slow-send",
   },
   {
     icon: Moon,
-    question: "Lost a customer because you were asleep?",
-    description: "They ordered at 3 AM. You replied at 9 AM. They already bought from someone else.",
+    question: "자는 사이에 고객을 놓친 적 있나요?",
+    description: "새벽 3시에 주문이 들어왔는데 오전 9시에 확인했습니다. 고객은 이미 다른 셀러에게 갔습니다.",
     align: "left",
     visualId: "missed-order",
   },
   {
     icon: Zap,
-    question: "Linko delivers 24/7. Even when you don't.",
-    description: "Auto-delivery in under 3 seconds. No missed orders. No lost customers.",
+    question: "Linko는 24시간 배송합니다. 당신이 자는 동안에도.",
+    description: "3초 이내 자동 배송. 놓치는 주문 없이, 떠나는 고객 없이.",
     align: "right",
     isResolution: true,
     visualId: "instant-delivery",
@@ -133,25 +133,25 @@ const painPoints: {
 
 function ChatFloodVisual({ animate }: { animate: boolean }) {
   const allMessages = [
-    "Hi, is the Steam key available?",
-    "When will it be delivered?",
-    "Can I get a bulk discount?",
-    "Hello? Still waiting...",
-    "I paid 10 minutes ago",
-    "Anyone there???",
-    "How long does delivery take?",
-    "I need 5x Xbox Game Pass",
-    "Is Elden Ring in stock?",
-    "Sent payment, check please",
-    "Why is nobody responding?",
-    "I've been waiting 30 min",
-    "Do you have PS Plus codes?",
-    "Need Windows 11 key ASAP",
-    "Hello?? Are you online?",
-    "This is ridiculous...",
-    "Refund please",
-    "I'm going to another seller",
-    "Nvm, buying elsewhere",
+    "스팀 키 아직 있나요?",
+    "언제 배송되나요?",
+    "대량 구매 할인 되나요?",
+    "여보세요? 아직 기다리고 있는데요...",
+    "10분 전에 결제했어요",
+    "거기 아무도 없어요???",
+    "배송 얼마나 걸려요?",
+    "Xbox Game Pass 5개 필요해요",
+    "엘든링 재고 있나요?",
+    "입금했는데 확인 좀요",
+    "왜 아무도 안 받아요?",
+    "30분째 기다리는 중인데요",
+    "PS Plus 코드 있어요?",
+    "윈도우 11 키 급해요",
+    "여보세요?? 접속해 계세요?",
+    "이거 말이 안 되네...",
+    "환불해주세요",
+    "다른 데서 살래요",
+    "됐고 다른 셀러한테 감",
   ]
 
   const [visibleMessages, setVisibleMessages] = useState<{ text: string; id: number; time: string }[]>([])
@@ -213,8 +213,8 @@ function ChatFloodVisual({ animate }: { animate: boolean }) {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#8696A0"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-medium text-white">Customers</p>
-          <p className="text-[11px] text-white/70">online</p>
+          <p className="text-[13px] font-medium text-white">고객</p>
+          <p className="text-[11px] text-white/70">온라인</p>
         </div>
         <div className="flex items-center gap-3">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z" fill="white" fillOpacity="0.7"/></svg>
@@ -266,7 +266,7 @@ function ChatFloodVisual({ animate }: { animate: boolean }) {
               className="rounded-[7px] px-3 py-1 text-[11px] text-[#111B21]"
               style={{ backgroundColor: "#FFEECC", boxShadow: "0 1px 0.5px rgba(11,20,26,0.08)" }}
             >
-              Customer left the chat
+              고객이 채팅을 나갔습니다
             </span>
           </motion.div>
         )}
@@ -543,7 +543,7 @@ function SlowSendVisual({ animate }: { animate: boolean }) {
             transition={{ duration: 0.4, delay: 0.4 }}
             className="font-mono text-[14px] font-bold tracking-[-0.5px] text-[#FF2F00]"
           >
-            3 of 847 sent...
+            847개 중 3개 전송 완료...
           </motion.span>
 
           <motion.span
@@ -558,7 +558,7 @@ function SlowSendVisual({ animate }: { animate: boolean }) {
             }}
             className="font-mono text-[11px] font-medium tracking-[-0.32px] text-[#FF2F00]"
           >
-            ~23 min remaining
+            약 23분 남음
           </motion.span>
         </motion.div>
       )}
@@ -597,7 +597,7 @@ function MissedOrderVisual({ animate }: { animate: boolean }) {
         className="rounded-lg border border-[#25D366]/30 bg-[#25D366]/10 px-3 py-2"
       >
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-medium text-[#25D366]">New order</span>
+          <span className="text-[11px] font-medium text-[#25D366]">새 주문</span>
           <span className="font-mono text-[11px] text-[#25D366]">$49.99</span>
         </div>
         <span className="text-[10px] text-[#6B7280]">GTA V Premium — Telegram</span>
@@ -620,7 +620,7 @@ function MissedOrderVisual({ animate }: { animate: boolean }) {
           ))}
         </div>
         <span className="font-mono text-[10px] text-[#6B7280]">
-          Waiting for reply... 6 hours
+          응답 대기 중... 6시간 경과
         </span>
       </motion.div>
 
@@ -632,10 +632,10 @@ function MissedOrderVisual({ animate }: { animate: boolean }) {
       >
         <div className="flex items-center gap-2">
           <X className="size-3 text-[#FF2F00]" strokeWidth={3} />
-          <span className="text-[11px] font-medium text-[#FF2F00]">Customer left</span>
+          <span className="text-[11px] font-medium text-[#FF2F00]">고객 이탈</span>
         </div>
         <span className="text-[10px] text-[#FF2F00]/60">
-          Bought from competitor at 3:14 AM
+          새벽 3:14 AM에 경쟁 셀러에게 구매
         </span>
       </motion.div>
     </div>
@@ -684,7 +684,7 @@ function InstantDeliveryVisual({ animate }: { animate: boolean }) {
         className="rounded-lg border border-[#25D366]/30 bg-[#25D366]/10 px-3 py-2"
       >
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-medium text-[#25D366]">New order</span>
+          <span className="text-[11px] font-medium text-[#25D366]">새 주문</span>
           <span className="font-mono text-[11px] text-[#25D366]">$49.99</span>
         </div>
         <span className="text-[10px] text-[#6B7280]">GTA V Premium — Telegram</span>
@@ -703,7 +703,7 @@ function InstantDeliveryVisual({ animate }: { animate: boolean }) {
         >
           <Zap className="size-3 text-[#918DF6]" strokeWidth={2.5} />
         </motion.div>
-        <span className="font-mono text-[10px] text-[#918DF6]">Linko processing...</span>
+        <span className="font-mono text-[10px] text-[#918DF6]">Linko 처리 중...</span>
         <span className="ml-auto font-mono text-[11px] tabular-nums text-[#918DF6]">
           {timer.toFixed(1)}s
         </span>
@@ -724,7 +724,7 @@ function InstantDeliveryVisual({ animate }: { animate: boolean }) {
           >
             <Check className="size-2.5 text-white" strokeWidth={3} />
           </motion.div>
-          <span className="text-[11px] font-medium text-[#33C758]">Key delivered</span>
+          <span className="text-[11px] font-medium text-[#33C758]">키 배송 완료</span>
           <span className="ml-auto font-mono text-[10px] text-[#33C758]">2.7s</span>
         </div>
         <span className="font-mono text-[10px] text-[#6B7280]">
@@ -828,10 +828,10 @@ function PainPointsSection() {
         className="mb-14 text-center"
       >
         <h2 className="text-3xl font-medium tracking-[-1.8px] text-[#181925] sm:text-4xl">
-          Sound familiar?
+          혹시 이런 경험 있으신가요?
         </h2>
         <p className="mt-2 text-base tracking-[-0.32px] text-[#666666]">
-          The daily reality of selling digital products manually
+          디지털 상품을 수동으로 판매하는 셀러의 일상
         </p>
       </motion.div>
 
@@ -849,14 +849,14 @@ function PainPointsSection() {
 }
 
 const comparisonRows = [
-  { metric: "Avg. delivery time", manual: "2–6 hours", basic: "5–30 minutes", mont: "< 3 seconds", montGood: true, manualBad: true, basicBad: false },
-  { metric: "Platforms supported", manual: "1–2", basic: "1 platform only", mont: "Naver, G2G, G2A, Web, + more", montGood: true, manualBad: true, basicBad: true },
-  { metric: "Delivery channels", manual: "Email only", basic: "Email + 1 messenger", mont: "Email, Telegram, SMS, WhatsApp", montGood: true, manualBad: true, basicBad: false },
-  { metric: "Monthly revenue (est.)", manual: "$800–2,000", basic: "$2,000–5,000", mont: "$5,000–15,000+", montGood: true, manualBad: true, basicBad: false },
-  { metric: "Customer return rate", manual: "~12%", basic: "~25%", mont: "~47%", montGood: true, manualBad: true, basicBad: false },
-  { metric: "Missed orders", manual: "15–30%", basic: "5–10%", mont: "< 0.1%", montGood: true, manualBad: true, basicBad: true },
-  { metric: "Operating hours", manual: "Your waking hours", basic: "Platform hours", mont: "24/7/365", montGood: true, manualBad: true, basicBad: false },
-  { metric: "Setup time", manual: "N/A", basic: "Days–weeks", mont: "5 minutes", montGood: true, manualBad: false, basicBad: true },
+  { metric: "평균 배송 시간", manual: "2~6시간", basic: "5~30분", mont: "3초 이내", montGood: true, manualBad: true, basicBad: false },
+  { metric: "지원 플랫폼", manual: "1~2개", basic: "1개 플랫폼만", mont: "네이버, G2G, G2A, 웹 + 추가", montGood: true, manualBad: true, basicBad: true },
+  { metric: "배송 채널", manual: "이메일만", basic: "이메일 + 메신저 1개", mont: "이메일, 텔레그램, SMS, WhatsApp", montGood: true, manualBad: true, basicBad: false },
+  { metric: "월 예상 매출", manual: "$800~2,000", basic: "$2,000~5,000", mont: "$5,000~15,000+", montGood: true, manualBad: true, basicBad: false },
+  { metric: "고객 재구매율", manual: "~12%", basic: "~25%", mont: "~47%", montGood: true, manualBad: true, basicBad: false },
+  { metric: "놓친 주문", manual: "15~30%", basic: "5~10%", mont: "0.1% 미만", montGood: true, manualBad: true, basicBad: true },
+  { metric: "운영 시간", manual: "깨어 있는 시간만", basic: "플랫폼 운영 시간", mont: "24/7/365", montGood: true, manualBad: true, basicBad: false },
+  { metric: "설정 시간", manual: "해당 없음", basic: "수일~수주", mont: "5분", montGood: true, manualBad: false, basicBad: true },
 ] as const
 
 function ComparisonDesktopTable({ isInView }: { isInView: boolean }) {
@@ -873,12 +873,12 @@ function ComparisonDesktopTable({ isInView }: { isInView: boolean }) {
           <tr className="border-b border-[rgba(0,0,0,0.08)] bg-neutral-50/80">
             <th className="px-6 py-4 text-sm font-medium tracking-[-0.32px] text-[#999999]" />
             <th className="px-6 py-4 text-center">
-              <span className="block text-sm font-medium tracking-[-0.32px] text-[#181925]">Doing it yourself</span>
-              <span className="block text-xs tracking-[-0.32px] text-[#999999]">Manual</span>
+              <span className="block text-sm font-medium tracking-[-0.32px] text-[#181925]">직접 하기</span>
+              <span className="block text-xs tracking-[-0.32px] text-[#999999]">수동</span>
             </th>
             <th className="border-x border-[rgba(0,0,0,0.08)] px-6 py-4 text-center">
-              <span className="block text-sm font-medium tracking-[-0.32px] text-[#181925]">Limited tools</span>
-              <span className="block text-xs tracking-[-0.32px] text-[#999999]">Single platform, single region</span>
+              <span className="block text-sm font-medium tracking-[-0.32px] text-[#181925]">제한적 도구</span>
+              <span className="block text-xs tracking-[-0.32px] text-[#999999]">단일 플랫폼, 단일 지역</span>
             </th>
             <th className="relative px-7 py-4 text-center">
               <div className="absolute inset-0 bg-[#918DF6]/[0.06]" />
@@ -896,7 +896,7 @@ function ComparisonDesktopTable({ isInView }: { isInView: boolean }) {
                 </span>
                 Linko
               </span>
-              <span className="relative block text-xs tracking-[-0.32px] text-[#666666]">Every platform, every region</span>
+              <span className="relative block text-xs tracking-[-0.32px] text-[#666666]">모든 플랫폼, 모든 지역</span>
             </th>
           </tr>
         </thead>
@@ -960,14 +960,14 @@ function ComparisonMobileCards({ isInView }: { isInView: boolean }) {
           <p className="mb-3 text-sm font-medium tracking-[-0.32px] text-[#181925]">{row.metric}</p>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs tracking-[-0.32px] text-[#999999]">Manual</span>
+              <span className="text-xs tracking-[-0.32px] text-[#999999]">수동</span>
               <span className="inline-flex items-center gap-1 text-sm tracking-[-0.32px] text-[#999999]">
                 {row.manualBad && <X className="size-3 text-[#FF2F00]/60" strokeWidth={2.5} />}
                 {row.manual}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs tracking-[-0.32px] text-[#999999]">Basic</span>
+              <span className="text-xs tracking-[-0.32px] text-[#999999]">기본</span>
               <span className="inline-flex items-center gap-1 text-sm tracking-[-0.32px] text-[#999999]">
                 {row.basicBad ? (
                   <X className="size-3 text-[#FF2F00]/60" strokeWidth={2.5} />
@@ -1001,26 +1001,26 @@ function IntegrationSection() {
   const steps = [
     {
       icon: FileText,
-      title: "Drop in your supplier docs",
-      description: "API documentation, CSV exports, webhook URLs — whatever your supplier gives you. Just paste it in.",
+      title: "공급업체 문서를 넣으세요",
+      description: "API 문서, CSV 파일, 웹훅 URL — 공급업체가 제공하는 것이면 뭐든. 그냥 붙여넣기만 하면 됩니다.",
     },
     {
       icon: Code2,
-      title: "Linko reads and connects",
-      description: "No coding required. Linko parses the docs, maps the endpoints, and builds the integration automatically.",
+      title: "Linko가 읽고 연동합니다",
+      description: "코딩 필요 없습니다. Linko가 문서를 분석하고, 엔드포인트를 매핑하고, 자동으로 연동을 구성합니다.",
     },
     {
       icon: Plug,
-      title: "Start selling instantly",
-      description: "Inventory syncs, orders flow in, keys deliver out. You're live across every platform in minutes.",
+      title: "바로 판매를 시작하세요",
+      description: "재고가 동기화되고, 주문이 들어오고, 키가 자동 배송됩니다. 몇 분 만에 모든 플랫폼에서 운영 시작.",
     },
   ]
 
   const suppliers = [
-    { name: "Kinguin API", status: "Connected", color: "#33C758" },
-    { name: "G2A Goldmine", status: "Connected", color: "#33C758" },
-    { name: "Custom Supplier", status: "Syncing...", color: "#FFA600" },
-    { name: "Eneba Marketplace", status: "Connected", color: "#33C758" },
+    { name: "Kinguin API", status: "연결됨", color: "#33C758" },
+    { name: "G2A Goldmine", status: "연결됨", color: "#33C758" },
+    { name: "Custom Supplier", status: "동기화 중...", color: "#FFA600" },
+    { name: "Eneba Marketplace", status: "연결됨", color: "#33C758" },
   ]
 
   return (
@@ -1032,10 +1032,10 @@ function IntegrationSection() {
         className="mb-14 text-center"
       >
         <h2 className="text-3xl font-medium tracking-[-1.8px] text-[#181925] sm:text-4xl">
-          Every supplier. One integration.
+          모든 공급업체. 하나의 연동.
         </h2>
         <p className="mt-2 max-w-lg mx-auto text-base tracking-[-0.32px] text-[#666666]">
-          Your suppliers all have different APIs? Don't know how to code? Just drop in their docs — Linko handles the rest.
+          공급업체마다 API가 다르다고요? 코딩을 못 한다고요? 문서만 넣으면 Linko가 알아서 처리합니다.
         </p>
       </motion.div>
 
@@ -1077,8 +1077,8 @@ function IntegrationSection() {
             style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 16px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02)" }}
           >
             <div className="border-b border-[rgba(0,0,0,0.08)] bg-neutral-50/80 px-5 py-3">
-              <p className="text-sm font-medium tracking-[-0.32px] text-[#181925]">Supplier Integrations</p>
-              <p className="text-xs tracking-[-0.32px] text-[#999999]">Auto-configured from documentation</p>
+              <p className="text-sm font-medium tracking-[-0.32px] text-[#181925]">공급업체 연동</p>
+              <p className="text-xs tracking-[-0.32px] text-[#999999]">문서 기반 자동 설정</p>
             </div>
 
             <div className="divide-y divide-[rgba(0,0,0,0.08)]">
@@ -1111,9 +1111,9 @@ function IntegrationSection() {
                 transition={{ delay: 1.0 }}
                 className="flex items-center justify-between"
               >
-                <span className="text-sm tracking-[-0.32px] text-[#666666]">Add new supplier</span>
+                <span className="text-sm tracking-[-0.32px] text-[#666666]">새 공급업체 추가</span>
                 <span className="flex items-center gap-1 text-sm font-medium tracking-[-0.32px] text-[#918DF6]">
-                  Upload docs <ArrowRight className="size-3.5" />
+                  문서 업로드 <ArrowRight className="size-3.5" />
                 </span>
               </motion.div>
             </div>
@@ -1137,10 +1137,10 @@ function ComparisonSection() {
         className="mb-14 text-center"
       >
         <h2 className="text-3xl font-medium tracking-[-1.8px] text-[#181925] sm:text-4xl">
-          See the difference
+          차이를 직접 확인하세요
         </h2>
         <p className="mt-2 text-base tracking-[-0.32px] text-[#666666]">
-          Manual hustle vs. full automation — the numbers speak
+          수작업 vs. 완전 자동화 — 숫자가 말해줍니다
         </p>
       </motion.div>
 
@@ -1154,10 +1154,10 @@ function ComparisonSection() {
         className="mt-12 flex flex-col items-center gap-4 text-center"
       >
         <p className="text-lg font-medium tracking-[-0.32px] text-[#181925]">
-          Stop losing customers to slow delivery
+          느린 배송으로 고객을 잃지 마세요
         </p>
         <Button className="h-10 cursor-pointer rounded-full bg-[#918DF6] px-6 text-sm font-medium text-white transition-colors hover:bg-[#9580FF]">
-          Start free trial
+          무료 체험 시작
         </Button>
       </motion.div>
     </section>
@@ -1165,7 +1165,7 @@ function ComparisonSection() {
 }
 
 
-function App() {
+function AppKr() {
   return (
     <div className="relative min-h-svh overflow-hidden bg-white">
       <Navbar />
@@ -1178,30 +1178,30 @@ function App() {
           <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[11px] font-bold tracking-wide text-white uppercase">
             Live
           </span>
-          <span className="text-[#666666]">Now supporting Naver Store</span>
+          <span className="text-[#666666]">네이버 스토어 지원 시작</span>
           <ChevronRight className="size-3.5 text-[#999999]" />
         </a>
 
         <h1 className="max-w-2xl text-center text-5xl leading-[1.1] font-bold tracking-tight text-[#181925] sm:text-6xl md:text-7xl">
-          Sell digital products
+          디지털 상품 판매,
           <br />
-          on autopilot
+          완전 자동화
         </h1>
 
         <p className="mt-6 max-w-lg text-center text-base leading-relaxed text-[#666666] sm:text-lg">
-          Connect Naver Store, G2G, G2A, and your own site. Linko tracks orders,
-          manages inventory, and auto-delivers keys in under 3 seconds.
+          네이버 스토어, G2G, G2A, 자체 사이트를 연결하세요. Linko가 주문을 추적하고,
+          재고를 관리하고, 3초 안에 키를 자동 배송합니다.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Button className="h-10 cursor-pointer rounded-full bg-[#918DF6] px-6 text-sm font-medium text-white transition-colors hover:bg-[#9580FF]">
-            Start free trial
+            무료 체험 시작
           </Button>
           <Button
             variant="outline"
             className="h-10 cursor-pointer rounded-full px-6 text-sm font-medium"
           >
-            See how it works
+            작동 방식 보기
           </Button>
         </div>
 
@@ -1230,13 +1230,13 @@ function App() {
               <span className="text-sm font-semibold text-[#181925]">Linko</span>
             </div>
             <p className="text-[#666666]">
-              OneH International &middot; Representative YUCHAN HAN
+              OneH International &middot; 대표 한유찬
             </p>
             <p>
-              Business Registration No. 812-33-01680 &middot; 1914-S1, 11, Mirae-ro, Seo-gu, Incheon, Republic of Korea
+              사업자등록번호 812-33-01680 &middot; 인천광역시 서구 미래로 11, 1914-S1
             </p>
             <p className="mt-2 text-[#BBBBBB]">
-              &copy; {new Date().getFullYear()} OneH International. All rights reserved.
+              &copy; {new Date().getFullYear()} OneH International. 모든 권리 보유.
             </p>
           </div>
         </footer>
@@ -1245,4 +1245,4 @@ function App() {
   )
 }
 
-export default App
+export default AppKr

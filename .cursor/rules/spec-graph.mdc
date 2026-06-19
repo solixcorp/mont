@@ -1,0 +1,34 @@
+---
+description: spec-graph workflow — typed spec graph is the source of truth for requirements and phases
+alwaysApply: true
+---
+
+# spec-graph
+
+This project uses [spec-graph](https://github.com/tyeongkim/spec-graph) for requirements, decisions, phases, and delivery tracking.
+
+## Layout
+
+- Graph data: `.spec-graph/entities/{type}/{id}.toml` (committed)
+- SQLite index: `.spec-graph/graph.db` (gitignored, auto-rebuilt)
+- Agent skills: `.agents/skills/spec-graph`, `spec-planner`, `spec-executor`, `spec-verifier`
+
+## Agent workflow
+
+1. **Plan** — use `spec-planner` to register REQ/DEC/PHS and `covers` relations
+2. **Implement** — use `spec-executor` to add API/STT/TST and `delivers` relations as work completes
+3. **Verify** — use `spec-verifier` before marking a phase `resolved`
+
+## CLI rules
+
+- Run `spec-graph impact <ID>` before changing an entity or its relations
+- Run `spec-graph validate` after graph edits
+- Parse JSON stdout; exit code 2 means validation/gate failure
+- Never edit `.spec-graph/graph.db` directly
+- Commit `.spec-graph/entities/` after each logical graph change
+
+## Install / update skills
+
+```bash
+bunx --bun skills add https://github.com/tyeongkim/spec-graph.git --skill '*' --agent cursor -y
+```

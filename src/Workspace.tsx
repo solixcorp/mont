@@ -27,6 +27,210 @@ import {
 } from "@/components/ui/dialog"
 import DashboardLayout from "@/DashboardLayout"
 import type { Currency } from "@/shared"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    title: "Workspace",
+    save: "Save",
+    saved: "Saved!",
+    saveChanges: "Save Changes",
+    deliverySettings: "Delivery Settings",
+    deliverySettingsDesc: "Default delivery behavior for new orders",
+    defaultDeliveryChannel: "Default delivery channel",
+    autoRetryFailed: "Auto-retry failed deliveries",
+    autoRetryFailedDesc: "Automatically retry when delivery fails",
+    retryCount: "Retry count",
+    deliveryTimeout: "Delivery timeout (seconds)",
+    apiKeys: "API Keys",
+    apiKeysDesc: "Manage your API credentials",
+    copyKey: "Copy key",
+    regenerate: "Regenerate",
+    regenerated: "Regenerated!",
+    planManagement: "Plan Management",
+    planManagementDesc: "Manage your subscription and billing",
+    currentPlan: "Current Plan",
+    nextBilling: "Next billing:",
+    monthlyCost: "Monthly cost",
+    changePlan: "Change Plan",
+    paymentMethod: "Payment method",
+    visaEnding: "Visa ending in 4242",
+    change: "Change",
+    team: "Team",
+    teamDesc: "Manage members and invitations",
+    memberSeats: "Member seats",
+    seatsUsed: "of 5 seats used",
+    nameCol: "Name",
+    emailCol: "Email",
+    roleCol: "Role",
+    inviteMember: "Invite Member",
+    inviteMemberDesc: "Add a new member to your workspace.",
+    emailInvite: "Email Invite",
+    guestUser: "Guest User",
+    emailAddress: "Email address",
+    role: "Role",
+    cancel: "Cancel",
+    sendInvite: "Send Invite",
+    username: "Username",
+    password: "Password",
+    guestRoleDesc: "Guest users have limited access and cannot manage workspace settings.",
+    createGuest: "Create Guest",
+    inviteSent: "Invite Sent",
+    inviteSentDesc: "An invitation email has been sent to",
+    pendingAcceptance: "Pending acceptance",
+    inviteExpireNote: "The invite link will expire in 7 days. You can resend it from the members list.",
+    inviteAnother: "Invite Another",
+    done: "Done",
+    guestAccountCreated: "Guest Account Created",
+    guestAccountCreatedDesc: "Share the login details below with the guest user.",
+    loginDetails: "LOGIN DETAILS",
+    loginUrl: "Login URL",
+    usernameLabel: "Username",
+    passwordLabel: "Password",
+    credentialWarning: "Make sure to save or share these credentials now. The password cannot be retrieved later.",
+    createAnother: "Create Another",
+    status: "Status",
+    usageQuota: "Usage & Quota",
+    usageQuotaDesc: "Resource consumption this billing cycle",
+    ordersProcessed: "Orders processed",
+    keysDelivered: "Keys delivered",
+    apiCalls: "API calls",
+    storage: "Storage",
+    dangerZone: "Danger Zone",
+    dangerZoneDesc: "Irreversible actions",
+    deleteWorkspace: "Delete workspace",
+    deleteWorkspaceDesc: "Permanently delete this workspace and all its data",
+    deleteWorkspaceBtn: "Delete Workspace",
+    deleteWorkspaceTitle: "Delete Workspace",
+    deleteWorkspaceWarning: "This action is permanent and cannot be undone. All data, API keys, and delivery history will be lost.",
+    typeToConfirm: "Type",
+    toConfirm: "to confirm",
+    deleteConfirmText: "delete my workspace",
+    removeMember: "Remove Member",
+    removeConfirmDesc: "'s access to this workspace. This action cannot be undone.",
+    thisWillRevoke: "This will revoke",
+    changeRole: "Change Role",
+    changeRoleDesc: "'s role in this workspace",
+    updateRole: "Update",
+    currentRole: "Current role",
+    newRole: "New role",
+    monthly: "Monthly",
+    yearly: "Yearly",
+    save20: "Save 20%",
+    choosePlan: "Choose the plan that fits your business",
+    current: "Current",
+    upgrade: "Upgrade",
+    downgrade: "Downgrade",
+    contactSales: "Contact Sales",
+    havePromoCode: "Have a promo code?",
+    enterCode: "Enter code",
+    apply: "Apply",
+    applied: "applied — 30% off",
+    workspaceName: "Workspace name",
+    liveApiKey: "Live API Key",
+    testApiKey: "Test API Key",
+  },
+  kr: {
+    title: "워크스페이스",
+    save: "저장",
+    saved: "저장됨!",
+    saveChanges: "변경사항 저장",
+    deliverySettings: "배송 설정",
+    deliverySettingsDesc: "신규 주문의 기본 배송 동작",
+    defaultDeliveryChannel: "기본 배송 채널",
+    autoRetryFailed: "실패한 배송 자동 재시도",
+    autoRetryFailedDesc: "배송 실패 시 자동으로 재시도합니다",
+    retryCount: "재시도 횟수",
+    deliveryTimeout: "배송 타임아웃 (초)",
+    apiKeys: "API 키",
+    apiKeysDesc: "API 인증 정보를 관리합니다",
+    copyKey: "키 복사",
+    regenerate: "재생성",
+    regenerated: "재생성됨!",
+    planManagement: "플랜 관리",
+    planManagementDesc: "구독 및 결제를 관리합니다",
+    currentPlan: "현재 플랜",
+    nextBilling: "다음 결제일:",
+    monthlyCost: "월 비용",
+    changePlan: "플랜 변경",
+    paymentMethod: "결제 수단",
+    visaEnding: "Visa ****4242",
+    change: "변경",
+    team: "팀",
+    teamDesc: "멤버 및 초대를 관리합니다",
+    memberSeats: "멤버 좌석",
+    seatsUsed: "/ 5석 사용 중",
+    nameCol: "이름",
+    emailCol: "이메일",
+    roleCol: "역할",
+    inviteMember: "멤버 초대",
+    inviteMemberDesc: "워크스페이스에 새 멤버를 추가합니다.",
+    emailInvite: "이메일 초대",
+    guestUser: "게스트 사용자",
+    emailAddress: "이메일 주소",
+    role: "역할",
+    cancel: "취소",
+    sendInvite: "초대 보내기",
+    username: "사용자명",
+    password: "비밀번호",
+    guestRoleDesc: "게스트 사용자는 제한된 접근 권한을 가지며 워크스페이스 설정을 관리할 수 없습니다.",
+    createGuest: "게스트 생성",
+    inviteSent: "초대 발송됨",
+    inviteSentDesc: "초대 이메일이 발송되었습니다",
+    pendingAcceptance: "수락 대기 중",
+    inviteExpireNote: "초대 링크는 7일 후 만료됩니다. 멤버 목록에서 재발송할 수 있습니다.",
+    inviteAnother: "다른 멤버 초대",
+    done: "완료",
+    guestAccountCreated: "게스트 계정 생성됨",
+    guestAccountCreatedDesc: "아래 로그인 정보를 게스트 사용자에게 공유하세요.",
+    loginDetails: "로그인 정보",
+    loginUrl: "로그인 URL",
+    usernameLabel: "사용자명",
+    passwordLabel: "비밀번호",
+    credentialWarning: "이 인증 정보를 지금 저장하거나 공유하세요. 비밀번호는 나중에 다시 확인할 수 없습니다.",
+    createAnother: "다른 계정 생성",
+    status: "상태",
+    usageQuota: "사용량 & 할당량",
+    usageQuotaDesc: "이번 결제 주기의 리소스 사용량",
+    ordersProcessed: "처리된 주문",
+    keysDelivered: "배송된 키",
+    apiCalls: "API 호출",
+    storage: "스토리지",
+    dangerZone: "위험 영역",
+    dangerZoneDesc: "되돌릴 수 없는 작업",
+    deleteWorkspace: "워크스페이스 삭제",
+    deleteWorkspaceDesc: "이 워크스페이스와 모든 데이터를 영구적으로 삭제합니다",
+    deleteWorkspaceBtn: "워크스페이스 삭제",
+    deleteWorkspaceTitle: "워크스페이스 삭제",
+    deleteWorkspaceWarning: "이 작업은 영구적이며 되돌릴 수 없습니다. 모든 데이터, API 키, 배송 이력이 삭제됩니다.",
+    typeToConfirm: "확인하려면",
+    toConfirm: "을(를) 입력하세요",
+    deleteConfirmText: "delete my workspace",
+    removeMember: "멤버 제거",
+    removeConfirmDesc: "의 워크스페이스 접근 권한을 해제합니다. 이 작업은 되돌릴 수 없습니다.",
+    thisWillRevoke: "",
+    changeRole: "역할 변경",
+    changeRoleDesc: "의 워크스페이스 역할을 변경합니다",
+    updateRole: "변경",
+    currentRole: "현재 역할",
+    newRole: "새 역할",
+    monthly: "월간",
+    yearly: "연간",
+    save20: "20% 절약",
+    choosePlan: "비즈니스에 맞는 플랜을 선택하세요",
+    current: "현재",
+    upgrade: "업그레이드",
+    downgrade: "다운그레이드",
+    contactSales: "영업팀 문의",
+    havePromoCode: "프로모션 코드가 있으신가요?",
+    enterCode: "코드 입력",
+    apply: "적용",
+    applied: "적용됨 — 30% 할인",
+    workspaceName: "워크스페이스 이름",
+    liveApiKey: "라이브 API 키",
+    testApiKey: "테스트 API 키",
+  },
+} as const
 
 interface Member {
   name: string
@@ -114,7 +318,8 @@ function SectionCard({
   )
 }
 
-export default function Workspace() {
+export default function Workspace({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const [currency, setCurrency] = useState<Currency>("KRW")
 
   const [defaultChannel, setDefaultChannel] = useState("Email")
@@ -124,8 +329,8 @@ export default function Workspace() {
 
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const [apiKeys] = useState([
-    { id: "live", label: "Live API Key", key: "mont_live_sk_••••••••••••7f3m" },
-    { id: "test", label: "Test API Key", key: "mont_test_sk_••••••••••••a2k9" },
+    { id: "live", label: t.liveApiKey, key: "mont_live_sk_••••••••••••7f3m" },
+    { id: "test", label: t.testApiKey, key: "mont_test_sk_••••••••••••a2k9" },
   ])
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -171,7 +376,8 @@ export default function Workspace() {
 
   return (
     <DashboardLayout
-      title="Workspace"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
@@ -189,7 +395,7 @@ export default function Workspace() {
                 value={workspaceName}
                 onChange={(e) => setWorkspaceName(e.target.value)}
                 className="w-full rounded-md border border-transparent bg-transparent px-1.5 py-0.5 text-[20px] font-bold tracking-[-0.32px] text-[#181925] outline-none transition-colors placeholder:text-[#999999] hover:border-[rgba(0,0,0,0.12)] hover:bg-[rgba(0,0,0,0.02)] focus:border-[#918DF6] focus:bg-white focus:ring-2 focus:ring-[rgba(145,141,246,0.15)]"
-                placeholder="Workspace name"
+                placeholder={t.workspaceName}
               />
               <p className="text-[13px] tracking-[-0.32px] text-[#999999]">vexora.mont.app</p>
             </div>
@@ -200,19 +406,19 @@ export default function Workspace() {
               {savedSection === "workspace-name" ? (
                 <span className="flex items-center gap-1.5">
                   <Check className="size-3.5" strokeWidth={2.5} />
-                  Saved!
+                  {t.saved}
                 </span>
               ) : (
-                "Save"
+                t.save
               )}
             </button>
           </div>
 
-          <SectionCard icon={Truck} title="Delivery Settings" description="Default delivery behavior for new orders">
+          <SectionCard icon={Truck} title={t.deliverySettings} description={t.deliverySettingsDesc}>
             <div className="flex flex-col gap-4">
               <div>
                 <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                  Default delivery channel
+                  {t.defaultDeliveryChannel}
                 </label>
                 <div className="relative">
                   <select
@@ -233,10 +439,10 @@ export default function Workspace() {
               <div className="flex items-center justify-between py-1">
                 <div>
                   <p className="text-[14px] font-medium tracking-[-0.32px] text-[#181925]">
-                    Auto-retry failed deliveries
+                    {t.autoRetryFailed}
                   </p>
                   <p className="text-[12px] tracking-[-0.32px] text-[#999999]">
-                    Automatically retry when delivery fails
+                    {t.autoRetryFailedDesc}
                   </p>
                 </div>
                 <Toggle checked={autoRetry} onChange={setAutoRetry} />
@@ -245,7 +451,7 @@ export default function Workspace() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                    Retry count
+                    {t.retryCount}
                   </label>
                   <input
                     type="number"
@@ -259,7 +465,7 @@ export default function Workspace() {
                 </div>
                 <div>
                   <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                    Delivery timeout (seconds)
+                    {t.deliveryTimeout}
                   </label>
                   <input
                     type="number"
@@ -280,17 +486,17 @@ export default function Workspace() {
                   {savedSection === "delivery" ? (
                     <span className="flex items-center gap-1.5">
                       <Check className="size-3.5" strokeWidth={2.5} />
-                      Saved!
+                      {t.saved}
                     </span>
                   ) : (
-                    "Save Changes"
+                    t.saveChanges
                   )}
                 </button>
               </div>
             </div>
           </SectionCard>
 
-          <SectionCard icon={KeyRound} title="API Keys" description="Manage your API credentials">
+          <SectionCard icon={KeyRound} title={t.apiKeys} description={t.apiKeysDesc}>
             <div className="flex flex-col gap-3">
               {apiKeys.map((ak) => (
                 <div
@@ -309,7 +515,7 @@ export default function Workspace() {
                     <button
                       onClick={() => handleCopyKey(ak.id, ak.key)}
                       className="flex size-8 items-center justify-center rounded-lg transition-colors hover:bg-[rgba(0,0,0,0.06)]"
-                      title="Copy key"
+                      title={t.copyKey}
                     >
                       {copiedKey === ak.id ? (
                         <Check className="size-3.5 text-[#34A853]" strokeWidth={2.5} />
@@ -322,7 +528,7 @@ export default function Workspace() {
                       className="flex h-7 items-center gap-1 rounded-full border border-[rgba(0,0,0,0.12)] px-2.5 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                     >
                       <RefreshCw className="size-3" strokeWidth={2} />
-                      {savedSection === `key-${ak.id}` ? "Regenerated!" : "Regenerate"}
+                      {savedSection === `key-${ak.id}` ? t.regenerated : t.regenerate}
                     </button>
                   </div>
                 </div>
@@ -330,23 +536,23 @@ export default function Workspace() {
             </div>
           </SectionCard>
 
-          <SectionCard icon={Crown} title="Plan Management" description="Manage your subscription and billing">
+          <SectionCard icon={Crown} title={t.planManagement} description={t.planManagementDesc}>
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">Current Plan</p>
+                  <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">{t.currentPlan}</p>
                   <span className="inline-flex items-center rounded-full bg-[rgba(145,141,246,0.1)] px-2.5 py-0.5 text-[12px] font-semibold tracking-[-0.32px] text-[#918DF6]">
                     {currentPlan}
                   </span>
                 </div>
                 <p className="text-[12px] tracking-[-0.32px] text-[#999999]">
-                  Next billing: <span className="tabular-nums text-[#666666]">May 28, 2026</span>
+                  {t.nextBilling} <span className="tabular-nums text-[#666666]">May 28, 2026</span>
                 </p>
               </div>
 
               <div className="flex items-center justify-between rounded-lg border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.015)] px-4 py-3">
                 <div>
-                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">Monthly cost</p>
+                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">{t.monthlyCost}</p>
                   <p className="mt-0.5 text-[18px] font-bold tabular-nums tracking-[-0.5px] text-[#181925]">
                     ${yearlyBilling ? 23 : 29}<span className="text-[12px] font-normal tracking-[-0.32px] text-[#999999]">/mo</span>
                   </p>
@@ -355,28 +561,28 @@ export default function Workspace() {
                   onClick={() => setShowPlanPicker(true)}
                   className="flex h-8 items-center rounded-full border border-[rgba(0,0,0,0.12)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                 >
-                  Change Plan
+                  {t.changePlan}
                 </button>
               </div>
 
               <div className="flex items-center justify-between rounded-lg border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.015)] px-4 py-3">
                 <div>
-                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">Payment method</p>
-                  <p className="mt-0.5 text-[13px] tracking-[-0.32px] text-[#181925]">Visa ending in 4242</p>
+                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">{t.paymentMethod}</p>
+                  <p className="mt-0.5 text-[13px] tracking-[-0.32px] text-[#181925]">{t.visaEnding}</p>
                 </div>
                 <button className="flex h-7 items-center rounded-full border border-[rgba(0,0,0,0.12)] px-2.5 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]">
-                  Change
+                  {t.change}
                 </button>
               </div>
             </div>
           </SectionCard>
 
-          <SectionCard icon={Users} title="Team" description="Manage members and invitations">
+          <SectionCard icon={Users} title={t.team} description={t.teamDesc}>
             <div className="flex flex-col gap-4">
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">Member seats</p>
-                  <p className="text-[12px] tabular-nums tracking-[-0.32px] text-[#666666]">{members.length} of 5 seats used</p>
+                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">{t.memberSeats}</p>
+                  <p className="text-[12px] tabular-nums tracking-[-0.32px] text-[#666666]">{members.length} {t.seatsUsed}</p>
                 </div>
                 <div className="h-[6px] w-full rounded-full bg-[rgba(0,0,0,0.06)]">
                   <div className="h-full rounded-full bg-[#918DF6]" style={{ width: `${(members.length / 5) * 100}%` }} />
@@ -385,9 +591,9 @@ export default function Workspace() {
 
               <div className="overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)]">
                 <div className="grid grid-cols-[1fr_1fr_auto_auto] gap-x-4 border-b border-[rgba(0,0,0,0.06)] bg-[rgba(0,0,0,0.02)] px-4 py-2">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#999999]">Name</span>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#999999]">Email</span>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#999999]">Role</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#999999]">{t.nameCol}</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#999999]">{t.emailCol}</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#999999]">{t.roleCol}</span>
                   <span className="w-8" />
                 </div>
                 {members.map((member, idx) => (
@@ -441,7 +647,7 @@ export default function Workspace() {
                 className="flex h-8 items-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]"
               >
                 <Plus className="size-3.5" strokeWidth={2.5} />
-                Invite Member
+                {t.inviteMember}
               </button>
             </div>
           </SectionCard>
@@ -450,10 +656,10 @@ export default function Workspace() {
             <DialogContent className="sm:max-w-[440px]">
               <DialogHeader>
                 <DialogTitle className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">
-                  Invite Member
+                  {t.inviteMember}
                 </DialogTitle>
                 <DialogDescription className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                  Add a new member to your workspace.
+                  {t.inviteMemberDesc}
                 </DialogDescription>
               </DialogHeader>
 
@@ -465,38 +671,38 @@ export default function Workspace() {
                         <Check className="size-5 text-[#34A853]" strokeWidth={2.5} />
                       </div>
                       <div className="text-center">
-                        <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">Invite Sent</p>
+                        <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">{t.inviteSent}</p>
                         <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">
-                          An invitation email has been sent to
+                          {t.inviteSentDesc}
                         </p>
                         <p className="mt-0.5 text-[13px] font-medium tracking-[-0.32px] text-[#918DF6]">{inviteResult.email}</p>
                       </div>
                     </div>
                     <div className="rounded-lg bg-[rgba(0,0,0,0.02)] px-3 py-2.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[12px] tracking-[-0.32px] text-[#666666]">Role</span>
+                        <span className="text-[12px] tracking-[-0.32px] text-[#666666]">{t.role}</span>
                         <span className="text-[12px] font-medium tracking-[-0.32px] text-[#181925]">{inviteResult.role}</span>
                       </div>
                       <div className="mt-1.5 flex items-center justify-between">
-                        <span className="text-[12px] tracking-[-0.32px] text-[#666666]">Status</span>
-                        <span className="text-[12px] font-medium tracking-[-0.32px] text-[#E37400]">Pending acceptance</span>
+                        <span className="text-[12px] tracking-[-0.32px] text-[#666666]">{t.status}</span>
+                        <span className="text-[12px] font-medium tracking-[-0.32px] text-[#E37400]">{t.pendingAcceptance}</span>
                       </div>
                     </div>
                     <p className="text-[11px] tracking-[-0.32px] text-[#999999]">
-                      The invite link will expire in 7 days. You can resend it from the members list.
+                      {t.inviteExpireNote}
                     </p>
                     <DialogFooter>
                       <button
                         onClick={() => setInviteResult(null)}
                         className="flex h-9 items-center rounded-full border border-[rgba(0,0,0,0.08)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                       >
-                        Invite Another
+                        {t.inviteAnother}
                       </button>
                       <button
                         onClick={() => { setInviteDialogOpen(false); setInviteResult(null) }}
                         className="flex h-9 items-center rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]"
                       >
-                        Done
+                        {t.done}
                       </button>
                     </DialogFooter>
                   </div>
@@ -507,32 +713,32 @@ export default function Workspace() {
                         <UserPlus className="size-5 text-[#34A853]" strokeWidth={2} />
                       </div>
                       <div className="text-center">
-                        <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">Guest Account Created</p>
+                        <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">{t.guestAccountCreated}</p>
                         <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">
-                          Share the login details below with the guest user.
+                          {t.guestAccountCreatedDesc}
                         </p>
                       </div>
                     </div>
                     <div className="rounded-lg border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.02)] p-3">
-                      <p className="mb-2 text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">LOGIN DETAILS</p>
+                      <p className="mb-2 text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.loginDetails}</p>
                       <div className="flex flex-col gap-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-[12px] tracking-[-0.32px] text-[#666666]">Login URL</span>
+                          <span className="text-[12px] tracking-[-0.32px] text-[#666666]">{t.loginUrl}</span>
                           <a href={inviteResult.loginUrl} className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6] hover:underline">{inviteResult.loginUrl}</a>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-[12px] tracking-[-0.32px] text-[#666666]">Username</span>
+                          <span className="text-[12px] tracking-[-0.32px] text-[#666666]">{t.usernameLabel}</span>
                           <span className="font-mono text-[12px] font-medium tracking-[-0.32px] text-[#181925]">{inviteResult.username}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-[12px] tracking-[-0.32px] text-[#666666]">Password</span>
+                          <span className="text-[12px] tracking-[-0.32px] text-[#666666]">{t.passwordLabel}</span>
                           <span className="font-mono text-[12px] font-medium tracking-[-0.32px] text-[#181925]">{inviteResult.password}</span>
                         </div>
                       </div>
                     </div>
                     <div className="rounded-lg border border-[rgba(227,116,0,0.15)] bg-[rgba(227,116,0,0.04)] px-3 py-2">
                       <p className="text-[11px] tracking-[-0.32px] text-[#E37400]">
-                        Make sure to save or share these credentials now. The password cannot be retrieved later.
+                        {t.credentialWarning}
                       </p>
                     </div>
                     <DialogFooter>
@@ -540,13 +746,13 @@ export default function Workspace() {
                         onClick={() => setInviteResult(null)}
                         className="flex h-9 items-center rounded-full border border-[rgba(0,0,0,0.08)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                       >
-                        Create Another
+                        {t.createAnother}
                       </button>
                       <button
                         onClick={() => { setInviteDialogOpen(false); setInviteResult(null) }}
                         className="flex h-9 items-center rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]"
                       >
-                        Done
+                        {t.done}
                       </button>
                     </DialogFooter>
                   </div>
@@ -563,7 +769,7 @@ export default function Workspace() {
                   }`}
                 >
                   <Mail className="size-3.5" strokeWidth={2} />
-                  Email Invite
+                  {t.emailInvite}
                 </button>
                 <button
                   onClick={() => setInviteTab("guest")}
@@ -574,7 +780,7 @@ export default function Workspace() {
                   }`}
                 >
                   <UserPlus className="size-3.5" strokeWidth={2} />
-                  Guest User
+                  {t.guestUser}
                 </button>
               </div>
 
@@ -582,7 +788,7 @@ export default function Workspace() {
                 <div className="flex flex-col gap-4">
                   <div>
                     <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                      Email address
+                      {t.emailAddress}
                     </label>
                     <div className="relative">
                       <Mail className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-[#999999]" strokeWidth={2} />
@@ -597,7 +803,7 @@ export default function Workspace() {
                   </div>
                   <div>
                     <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                      Role
+                      {t.role}
                     </label>
                     <div className="relative">
                       <select
@@ -617,7 +823,7 @@ export default function Workspace() {
                       onClick={() => { setInviteDialogOpen(false); setInviteEmail(""); setInviteRole("Admin") }}
                       className="flex h-9 items-center rounded-full border border-[rgba(0,0,0,0.08)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                     >
-                      Cancel
+                      {t.cancel}
                     </button>
                     <button
                       onClick={() => {
@@ -633,7 +839,7 @@ export default function Workspace() {
                       disabled={!inviteEmail.trim()}
                       className="flex h-9 items-center rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0] disabled:cursor-not-allowed disabled:opacity-40"
                     >
-                      Send Invite
+                      {t.sendInvite}
                     </button>
                   </DialogFooter>
                 </div>
@@ -641,7 +847,7 @@ export default function Workspace() {
                 <div className="flex flex-col gap-4">
                   <div>
                     <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                      Username
+                      {t.username}
                     </label>
                     <input
                       type="text"
@@ -653,7 +859,7 @@ export default function Workspace() {
                   </div>
                   <div>
                     <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                      Password
+                      {t.password}
                     </label>
                     <input
                       type="text"
@@ -665,7 +871,7 @@ export default function Workspace() {
                   </div>
                   <div>
                     <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                      Role
+                      {t.role}
                     </label>
                     <div className="relative">
                       <select
@@ -679,7 +885,7 @@ export default function Workspace() {
                       <ChevronDown className="pointer-events-none absolute top-1/2 right-2.5 size-3.5 -translate-y-1/2 text-[#999999]" strokeWidth={2} />
                     </div>
                     <p className="mt-1.5 text-[11px] tracking-[-0.32px] text-[#999999]">
-                      Guest users have limited access and cannot manage workspace settings.
+                      {t.guestRoleDesc}
                     </p>
                   </div>
                   <DialogFooter>
@@ -687,7 +893,7 @@ export default function Workspace() {
                       onClick={() => { setInviteDialogOpen(false); setGuestName(""); setGuestPassword(""); setGuestRole("Viewer") }}
                       className="flex h-9 items-center rounded-full border border-[rgba(0,0,0,0.08)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                     >
-                      Cancel
+                      {t.cancel}
                     </button>
                     <button
                       onClick={() => {
@@ -705,7 +911,7 @@ export default function Workspace() {
                       disabled={!guestName.trim() || !guestPassword.trim()}
                       className="flex h-9 items-center rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0] disabled:cursor-not-allowed disabled:opacity-40"
                     >
-                      Create Guest
+                      {t.createGuest}
                     </button>
                   </DialogFooter>
                 </div>
@@ -715,13 +921,13 @@ export default function Workspace() {
             </DialogContent>
           </Dialog>
 
-          <SectionCard icon={BarChart3} title="Usage & Quota" description="Resource consumption this billing cycle">
+          <SectionCard icon={BarChart3} title={t.usageQuota} description={t.usageQuotaDesc}>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {([
-                { label: "Orders processed", value: "2,847", limit: "Unlimited", percent: 100 },
-                { label: "Keys delivered", value: "2,831", limit: "Unlimited", percent: 100 },
-                { label: "API calls", value: "12,450", limit: "50,000", percent: 24.9 },
-                { label: "Storage", value: "1.2 GB", limit: "5 GB", percent: 24 },
+                { label: t.ordersProcessed, value: "2,847", limit: "Unlimited", percent: 100 },
+                { label: t.keysDelivered, value: "2,831", limit: "Unlimited", percent: 100 },
+                { label: t.apiCalls, value: "12,450", limit: "50,000", percent: 24.9 },
+                { label: t.storage, value: "1.2 GB", limit: "5 GB", percent: 24 },
               ] as const).map((stat) => {
                 const barColor = stat.percent > 80 ? "#D93025" : stat.percent > 50 ? "#F59E0B" : "#34A853"
                 return (
@@ -747,14 +953,14 @@ export default function Workspace() {
             </div>
           </SectionCard>
 
-          <SectionCard icon={Trash2} title="Danger Zone" description="Irreversible actions" danger>
+          <SectionCard icon={Trash2} title={t.dangerZone} description={t.dangerZoneDesc} danger>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[14px] font-medium tracking-[-0.32px] text-[#181925]">
-                  Delete workspace
+                  {t.deleteWorkspace}
                 </p>
                 <p className="text-[12px] tracking-[-0.32px] text-[#999999]">
-                  Permanently delete this workspace and all its data
+                  {t.deleteWorkspaceDesc}
                 </p>
               </div>
               <button
@@ -762,7 +968,7 @@ export default function Workspace() {
                 className="flex h-8 items-center gap-1.5 rounded-full border border-[#D93025]/25 bg-[#D93025]/[0.06] px-4 text-[13px] font-semibold tracking-[-0.32px] text-[#D93025] transition-colors hover:bg-[#D93025]/10"
               >
                 <Trash2 className="size-3.5" strokeWidth={2} />
-                Delete Workspace
+                {t.deleteWorkspaceBtn}
               </button>
             </div>
           </SectionCard>
@@ -778,21 +984,21 @@ export default function Workspace() {
         <DialogContent className="sm:max-w-[640px]" showCloseButton>
           <DialogHeader>
             <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-              Change Plan
+              {t.changePlan}
             </DialogTitle>
             <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
-              Choose the plan that fits your business
+              {t.choosePlan}
             </DialogDescription>
           </DialogHeader>
 
           <div className="flex flex-col gap-5">
             <div className="flex items-center justify-center gap-2">
-              <span className={`text-[13px] font-medium tracking-[-0.32px] ${!yearlyBilling ? "text-[#181925]" : "text-[#999999]"}`}>Monthly</span>
+              <span className={`text-[13px] font-medium tracking-[-0.32px] ${!yearlyBilling ? "text-[#181925]" : "text-[#999999]"}`}>{t.monthly}</span>
               <Toggle checked={yearlyBilling} onChange={setYearlyBilling} />
-              <span className={`text-[13px] font-medium tracking-[-0.32px] ${yearlyBilling ? "text-[#181925]" : "text-[#999999]"}`}>Yearly</span>
+              <span className={`text-[13px] font-medium tracking-[-0.32px] ${yearlyBilling ? "text-[#181925]" : "text-[#999999]"}`}>{t.yearly}</span>
               {yearlyBilling && (
                 <span className="ml-1 rounded-full bg-[#34A853]/10 px-2 py-0.5 text-[11px] font-semibold tracking-[-0.32px] text-[#34A853]">
-                  Save 20%
+                  {t.save20}
                 </span>
               )}
             </div>
@@ -894,28 +1100,28 @@ export default function Workspace() {
                       {isCurrent ? (
                         <button className="flex h-8 w-full items-center justify-center gap-1.5 rounded-full border border-[rgba(0,0,0,0.12)] text-[13px] font-medium tracking-[-0.32px] text-[#666666]">
                           <Check className="size-3.5" strokeWidth={2.5} />
-                          Current
+                          {t.current}
                         </button>
                       ) : plan.name === "Enterprise" && isUpgrade ? (
                         <button
                           onClick={() => setShowPlanPicker(false)}
                           className="flex h-8 w-full items-center justify-center rounded-full border border-[rgba(0,0,0,0.12)] text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                         >
-                          Contact Sales
+                          {t.contactSales}
                         </button>
                       ) : isUpgrade ? (
                         <button
                           onClick={() => { setPlanChangeTarget(plan.name); setShowPlanPicker(false) }}
                           className="flex h-8 w-full items-center justify-center rounded-full bg-[#918DF6] text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]"
                         >
-                          Upgrade
+                          {t.upgrade}
                         </button>
                       ) : isDowngrade ? (
                         <button
                           onClick={() => { setPlanChangeTarget(plan.name); setShowPlanPicker(false) }}
                           className="flex h-8 w-full items-center justify-center rounded-full border border-[rgba(0,0,0,0.12)] text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                         >
-                          Downgrade
+                          {t.downgrade}
                         </button>
                       ) : null}
                     </div>
@@ -931,7 +1137,7 @@ export default function Workspace() {
                     <Check className="size-2.5 text-white" strokeWidth={3} />
                   </span>
                   <span className="text-[13px] font-medium tracking-[-0.32px] text-[#22C55E]">
-                    {promoCode.toUpperCase()} applied — 30% off
+                    {promoCode.toUpperCase()} {t.applied}
                   </span>
                 </div>
               ) : !promoOpen ? (
@@ -941,7 +1147,7 @@ export default function Workspace() {
                   className="flex w-full items-center justify-center gap-1.5 py-1 text-[13px] tracking-[-0.32px] text-[#999999] transition-colors hover:text-[#666666]"
                 >
                   <Tag className="size-3.5" strokeWidth={2} />
-                  Have a promo code?
+                  {t.havePromoCode}
                 </button>
               ) : (
                 <div className="flex gap-2">
@@ -950,7 +1156,7 @@ export default function Workspace() {
                     value={promoCode}
                     onChange={(e) => setPromoCode(e.target.value)}
                     onKeyDown={(e) => { if (e.key === "Enter" && promoCode.trim()) setPromoApplied(true) }}
-                    placeholder="Enter code"
+                    placeholder={t.enterCode}
                     className="h-9 flex-1 rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none"
                   />
                   <button
@@ -959,7 +1165,7 @@ export default function Workspace() {
                     disabled={!promoCode.trim()}
                     className="h-9 rounded-lg bg-[#181925] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#2a2b3d] disabled:opacity-40"
                   >
-                    Apply
+                    {t.apply}
                   </button>
                 </div>
               )}
@@ -980,10 +1186,10 @@ export default function Workspace() {
         <DialogContent className="sm:max-w-sm" showCloseButton>
           <DialogHeader>
             <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-              Delete Workspace
+              {t.deleteWorkspaceTitle}
             </DialogTitle>
             <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
-              This action is permanent and cannot be undone. All data, API keys, and delivery history will be lost.
+              {t.deleteWorkspaceWarning}
             </DialogDescription>
           </DialogHeader>
 
@@ -991,7 +1197,7 @@ export default function Workspace() {
             <div className="flex items-center gap-2.5 rounded-lg border border-[#D93025]/15 bg-[#D93025]/[0.04] px-3 py-2.5">
               <AlertTriangle className="size-4 shrink-0 text-[#D93025]" strokeWidth={2} />
               <p className="text-[12px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                Type <span className="font-semibold text-[#D93025]">delete my workspace</span> to confirm
+                {t.typeToConfirm} <span className="font-semibold text-[#D93025]">{t.deleteConfirmText}</span> {t.toConfirm}
               </p>
             </div>
 
@@ -1008,14 +1214,14 @@ export default function Workspace() {
                 onClick={() => { setShowDeleteDialog(false); setDeleteConfirmText("") }}
                 className="rounded-full border border-[rgba(0,0,0,0.12)] px-4 py-1.5 text-[13px] font-semibold tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
               >
-                Cancel
+                {t.cancel}
               </button>
               <button
                 disabled={deleteConfirmText !== "delete my workspace"}
                 onClick={() => { setShowDeleteDialog(false); setDeleteConfirmText("") }}
                 className="rounded-full bg-[#D93025] px-4 py-1.5 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#C12B20] disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Delete Workspace
+                {t.deleteWorkspaceBtn}
               </button>
             </div>
           </div>
@@ -1031,10 +1237,10 @@ export default function Workspace() {
         <DialogContent className="sm:max-w-sm" showCloseButton>
           <DialogHeader>
             <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-              Remove {confirmAction?.type === "remove" ? confirmAction.member.name : ""}?
+              {t.removeMember} {confirmAction?.type === "remove" ? confirmAction.member.name : ""}?
             </DialogTitle>
             <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
-              This will revoke {confirmAction?.type === "remove" ? confirmAction.member.name : ""}'s access to this workspace. This action cannot be undone.
+              {t.thisWillRevoke}{confirmAction?.type === "remove" ? confirmAction.member.name : ""}{t.removeConfirmDesc}
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center justify-end gap-2">
@@ -1042,7 +1248,7 @@ export default function Workspace() {
               onClick={() => setConfirmAction(null)}
               className="rounded-full border border-[rgba(0,0,0,0.12)] px-4 py-1.5 text-[13px] font-semibold tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
             >
-              Cancel
+              {t.cancel}
             </button>
             <button
               onClick={() => {
@@ -1053,7 +1259,7 @@ export default function Workspace() {
               }}
               className="rounded-full bg-[#D93025] px-4 py-1.5 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#C12B20]"
             >
-              Remove Member
+              {t.removeMember}
             </button>
           </div>
         </DialogContent>
@@ -1071,16 +1277,16 @@ export default function Workspace() {
         <DialogContent className="sm:max-w-sm" showCloseButton>
           <DialogHeader>
             <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-              Change Role
+              {t.changeRole}
             </DialogTitle>
             <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
-              Update {confirmAction?.type === "role-change" ? confirmAction.member.name : ""}'s role in this workspace
+              {t.updateRole} {confirmAction?.type === "role-change" ? confirmAction.member.name : ""}{t.changeRoleDesc}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4">
             <div>
               <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                Current role
+                {t.currentRole}
               </label>
               <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">
                 {confirmAction?.type === "role-change" ? confirmAction.member.role : ""}
@@ -1088,7 +1294,7 @@ export default function Workspace() {
             </div>
             <div>
               <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                New role
+                {t.newRole}
               </label>
               <div className="relative">
                 <select
@@ -1111,7 +1317,7 @@ export default function Workspace() {
                 }}
                 className="rounded-full border border-[rgba(0,0,0,0.12)] px-4 py-1.5 text-[13px] font-semibold tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
               >
-                Cancel
+                {t.cancel}
               </button>
               <button
                 disabled={confirmAction?.type === "role-change" && roleChangeSelection === confirmAction.member.role}
@@ -1128,7 +1334,7 @@ export default function Workspace() {
                 }}
                 className="rounded-full bg-[#918DF6] px-4 py-1.5 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0] disabled:cursor-not-allowed disabled:opacity-40"
               >
-                Change Role
+                {t.changeRole}
               </button>
             </div>
           </div>

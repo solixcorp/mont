@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { KeyboardEvent as ReactKeyboardEvent } from "react"
 import { useNavigate } from "react-router-dom"
+import { useLocale } from "@/locale"
 import {
   ArrowRight,
   Database,
@@ -82,7 +83,7 @@ const globalSearchFields: GlobalSearchFieldConfig[] = [
     label: "Platform",
     description: "Filter by sales platform",
     example: "platform:naver",
-    values: ["Naver Store", "G2G", "G2A", "Website"],
+    values: ["네이버 스토어", "롯데몰", "지마켓", "Website"],
   },
   {
     key: "customer",
@@ -284,13 +285,13 @@ function gsGetChipClasses(filter: GlobalSearchFilter) {
 }
 
 const searchItems: SearchItem[] = [
-  { id: "ORD-1024", category: "Orders", title: "Windows 11 Pro Key", subtitle: "ORD-1024 \u00b7 Mina Kim \u00b7 Naver Store", status: "Delivered", href: "/dashboard/orders", keywords: ["ord-1024", "windows 11 pro key", "mina kim", "naver store", "delivered"], platform: "Naver Store", customer: "Mina Kim", product: "Windows 11 Pro Key" },
-  { id: "ORD-1025", category: "Orders", title: "Steam Wallet 50,000 KRW", subtitle: "ORD-1025 \u00b7 Daniel Park \u00b7 G2G", status: "Pending", href: "/dashboard/orders", keywords: ["ord-1025", "steam wallet", "daniel park", "g2g", "pending"], platform: "G2G", customer: "Daniel Park", product: "Steam Wallet 50,000 KRW" },
+  { id: "ORD-1024", category: "Orders", title: "Windows 11 Pro Key", subtitle: "ORD-1024 \u00b7 Mina Kim \u00b7 Naver Store", status: "Delivered", href: "/dashboard/orders", keywords: ["ord-1024", "windows 11 pro key", "mina kim", "naver store", "delivered"], platform: "네이버 스토어", customer: "Mina Kim", product: "Windows 11 Pro Key" },
+  { id: "ORD-1025", category: "Orders", title: "Steam Wallet 50,000 KRW", subtitle: "ORD-1025 \u00b7 Daniel Park \u00b7 G2G", status: "Pending", href: "/dashboard/orders", keywords: ["ord-1025", "steam wallet", "daniel park", "g2g", "pending"], platform: "롯데몰", customer: "Daniel Park", product: "Steam Wallet 50,000 KRW" },
   { id: "ORD-1026", category: "Orders", title: "Minecraft Java Edition", subtitle: "ORD-1026 \u00b7 Olivia Lee \u00b7 Website", status: "Refunded", href: "/dashboard/orders", keywords: ["ord-1026", "minecraft java edition", "olivia lee", "website", "refunded"], platform: "Website", customer: "Olivia Lee", product: "Minecraft Java Edition" },
-  { id: "ORD-1027", category: "Orders", title: "Canva Pro 1 Year", subtitle: "ORD-1027 \u00b7 Ethan Choi \u00b7 G2A", status: "Delivered", href: "/dashboard/orders", keywords: ["ord-1027", "canva pro 1 year", "ethan choi", "g2a", "delivered"], platform: "G2A", customer: "Ethan Choi", product: "Canva Pro 1 Year" },
-  { id: "ORD-1028", category: "Orders", title: "Adobe Creative Cloud", subtitle: "ORD-1028 \u00b7 Sophia Jung \u00b7 Naver Store", status: "Flagged", href: "/dashboard/orders", keywords: ["ord-1028", "adobe creative cloud", "sophia jung", "naver store", "flagged"], platform: "Naver Store", customer: "Sophia Jung", product: "Adobe Creative Cloud" },
+  { id: "ORD-1027", category: "Orders", title: "Canva Pro 1 Year", subtitle: "ORD-1027 \u00b7 Ethan Choi \u00b7 G2A", status: "Delivered", href: "/dashboard/orders", keywords: ["ord-1027", "canva pro 1 year", "ethan choi", "g2a", "delivered"], platform: "지마켓", customer: "Ethan Choi", product: "Canva Pro 1 Year" },
+  { id: "ORD-1028", category: "Orders", title: "Adobe Creative Cloud", subtitle: "ORD-1028 \u00b7 Sophia Jung \u00b7 Naver Store", status: "Flagged", href: "/dashboard/orders", keywords: ["ord-1028", "adobe creative cloud", "sophia jung", "naver store", "flagged"], platform: "네이버 스토어", customer: "Sophia Jung", product: "Adobe Creative Cloud" },
   { id: "ORD-1029", category: "Orders", title: "ChatGPT Plus Voucher", subtitle: "ORD-1029 \u00b7 Lucas Han \u00b7 Website", status: "Delivered", href: "/dashboard/orders", keywords: ["ord-1029", "chatgpt plus voucher", "lucas han", "website", "delivered"], platform: "Website", customer: "Lucas Han", product: "ChatGPT Plus Voucher" },
-  { id: "ORD-1030", category: "Orders", title: "PlayStation Plus Deluxe", subtitle: "ORD-1030 \u00b7 Grace Yoon \u00b7 G2G", status: "Pending", href: "/dashboard/orders", keywords: ["ord-1030", "playstation plus deluxe", "grace yoon", "g2g", "pending"], platform: "G2G", customer: "Grace Yoon", product: "PlayStation Plus Deluxe" },
+  { id: "ORD-1030", category: "Orders", title: "PlayStation Plus Deluxe", subtitle: "ORD-1030 \u00b7 Grace Yoon \u00b7 G2G", status: "Pending", href: "/dashboard/orders", keywords: ["ord-1030", "playstation plus deluxe", "grace yoon", "g2g", "pending"], platform: "롯데몰", customer: "Grace Yoon", product: "PlayStation Plus Deluxe" },
   { id: "ORD-1031", category: "Orders", title: "Notion AI Annual", subtitle: "ORD-1031 \u00b7 Noah Seo \u00b7 Website", status: "Delivered", href: "/dashboard/orders", keywords: ["ord-1031", "notion ai annual", "noah seo", "website", "delivered"], platform: "Website", customer: "Noah Seo", product: "Notion AI Annual" },
   { id: "PRD-204", category: "Products", title: "Windows 11 Pro Key", subtitle: "PRD-204 \u00b7 Software \u00b7 \u20a939,000", status: "Active", href: "/dashboard/products", keywords: ["prd-204", "windows 11 pro key", "software", "39000", "active"], product: "Windows 11 Pro Key" },
   { id: "PRD-205", category: "Products", title: "Steam Wallet 50,000 KRW", subtitle: "PRD-205 \u00b7 Gift Card \u00b7 \u20a952,000", status: "Active", href: "/dashboard/products", keywords: ["prd-205", "steam wallet 50000 krw", "gift card", "52000", "active"], product: "Steam Wallet 50,000 KRW" },
@@ -308,13 +309,13 @@ const searchItems: SearchItem[] = [
   { id: "INV-706", category: "Inventory", title: "ChatGPT Plus Voucher", subtitle: "INV-706 \u00b7 GP-PL-3D6F \u00b7 Low stock", status: "Low Stock", href: "/dashboard/inventory", keywords: ["inv-706", "chatgpt plus voucher", "gp-pl-3d6f", "low stock"], product: "ChatGPT Plus Voucher" },
   { id: "INV-707", category: "Inventory", title: "PlayStation Plus Deluxe", subtitle: "INV-707 \u00b7 PS-DX-9A1B \u00b7 Delivered to Grace Yoon", status: "Assigned", href: "/dashboard/inventory", keywords: ["inv-707", "playstation plus deluxe", "ps-dx-9a1b", "assigned", "grace yoon"], customer: "Grace Yoon", product: "PlayStation Plus Deluxe" },
   { id: "INV-708", category: "Inventory", title: "Notion AI Annual", subtitle: "INV-708 \u00b7 NT-AI-5V3C \u00b7 In stock", status: "In Stock", href: "/dashboard/inventory", keywords: ["inv-708", "notion ai annual", "nt-ai-5v3c", "in stock"], product: "Notion AI Annual" },
-  { id: "CUS-330", category: "Customers", title: "Mina Kim", subtitle: "mina@naver.com \u00b7 Naver Store \u00b7 14 orders", status: "VIP", href: "/dashboard/customers", keywords: ["cus-330", "mina kim", "mina@naver.com", "naver store", "14 orders", "vip"], platform: "Naver Store", customer: "Mina Kim" },
-  { id: "CUS-331", category: "Customers", title: "Daniel Park", subtitle: "daniel@g2gmail.com \u00b7 G2G \u00b7 6 orders", status: "Active", href: "/dashboard/customers", keywords: ["cus-331", "daniel park", "daniel@g2gmail.com", "g2g", "6 orders", "active"], platform: "G2G", customer: "Daniel Park" },
+  { id: "CUS-330", category: "Customers", title: "Mina Kim", subtitle: "mina@naver.com \u00b7 Naver Store \u00b7 14 orders", status: "VIP", href: "/dashboard/customers", keywords: ["cus-330", "mina kim", "mina@naver.com", "naver store", "14 orders", "vip"], platform: "네이버 스토어", customer: "Mina Kim" },
+  { id: "CUS-331", category: "Customers", title: "Daniel Park", subtitle: "daniel@g2gmail.com \u00b7 G2G \u00b7 6 orders", status: "Active", href: "/dashboard/customers", keywords: ["cus-331", "daniel park", "daniel@g2gmail.com", "g2g", "6 orders", "active"], platform: "롯데몰", customer: "Daniel Park" },
   { id: "CUS-332", category: "Customers", title: "Olivia Lee", subtitle: "olivia@pixelmail.io \u00b7 Website \u00b7 9 orders", status: "Repeat", href: "/dashboard/customers", keywords: ["cus-332", "olivia lee", "olivia@pixelmail.io", "website", "9 orders", "repeat"], platform: "Website", customer: "Olivia Lee" },
-  { id: "CUS-333", category: "Customers", title: "Ethan Choi", subtitle: "ethan@g2auser.com \u00b7 G2A \u00b7 3 orders", status: "Active", href: "/dashboard/customers", keywords: ["cus-333", "ethan choi", "ethan@g2auser.com", "g2a", "3 orders", "active"], platform: "G2A", customer: "Ethan Choi" },
-  { id: "CUS-334", category: "Customers", title: "Sophia Jung", subtitle: "sophia@naver.com \u00b7 Naver Store \u00b7 12 orders", status: "VIP", href: "/dashboard/customers", keywords: ["cus-334", "sophia jung", "sophia@naver.com", "naver store", "12 orders", "vip"], platform: "Naver Store", customer: "Sophia Jung" },
+  { id: "CUS-333", category: "Customers", title: "Ethan Choi", subtitle: "ethan@g2auser.com \u00b7 G2A \u00b7 3 orders", status: "Active", href: "/dashboard/customers", keywords: ["cus-333", "ethan choi", "ethan@g2auser.com", "g2a", "3 orders", "active"], platform: "지마켓", customer: "Ethan Choi" },
+  { id: "CUS-334", category: "Customers", title: "Sophia Jung", subtitle: "sophia@naver.com \u00b7 Naver Store \u00b7 12 orders", status: "VIP", href: "/dashboard/customers", keywords: ["cus-334", "sophia jung", "sophia@naver.com", "naver store", "12 orders", "vip"], platform: "네이버 스토어", customer: "Sophia Jung" },
   { id: "CUS-335", category: "Customers", title: "Lucas Han", subtitle: "lucas@devmail.app \u00b7 Website \u00b7 5 orders", status: "Active", href: "/dashboard/customers", keywords: ["cus-335", "lucas han", "lucas@devmail.app", "website", "5 orders", "active"], platform: "Website", customer: "Lucas Han" },
-  { id: "CUS-336", category: "Customers", title: "Grace Yoon", subtitle: "grace@g2gmail.com \u00b7 G2G \u00b7 8 orders", status: "Repeat", href: "/dashboard/customers", keywords: ["cus-336", "grace yoon", "grace@g2gmail.com", "g2g", "8 orders", "repeat"], platform: "G2G", customer: "Grace Yoon" },
+  { id: "CUS-336", category: "Customers", title: "Grace Yoon", subtitle: "grace@g2gmail.com \u00b7 G2G \u00b7 8 orders", status: "Repeat", href: "/dashboard/customers", keywords: ["cus-336", "grace yoon", "grace@g2gmail.com", "g2g", "8 orders", "repeat"], platform: "롯데몰", customer: "Grace Yoon" },
   { id: "CUS-337", category: "Customers", title: "Noah Seo", subtitle: "noah@creatorhub.io \u00b7 Website \u00b7 11 orders", status: "VIP", href: "/dashboard/customers", keywords: ["cus-337", "noah seo", "noah@creatorhub.io", "website", "11 orders", "vip"], platform: "Website", customer: "Noah Seo" },
 ]
 
@@ -360,6 +361,11 @@ function getStatusClasses(status: string) {
 
 export default function GlobalSearch() {
   const navigate = useNavigate()
+  const locale = useLocale()
+  const searchLabel = locale === "kr" ? "검색..." : "Search..."
+  const searchPlaceholder = locale === "kr"
+    ? "검색... status:delivered 또는 platform:naver 시도"
+    : "Search... Try status:delivered or platform:naver"
   const inputRef = useRef<HTMLInputElement>(null)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
@@ -406,14 +412,15 @@ export default function GlobalSearch() {
 
   const handleSelect = useCallback(
     (item: SearchItem) => {
+      const prefix = locale === "kr" ? "/kr" : ""
       if (item.category === "Orders") {
-        navigate(`/dashboard/orders?order=${item.id.replace("ORD-", "")}`)
+        navigate(`${prefix}/dashboard/orders?order=${item.id.replace("ORD-", "")}`)
       } else {
-        navigate(item.href)
+        navigate(`${prefix}${item.href}`)
       }
       handleOpenChange(false)
     },
-    [handleOpenChange, navigate]
+    [handleOpenChange, locale, navigate]
   )
 
   const applySuggestion = useCallback((suggestion: GlobalSearchSuggestion) => {
@@ -536,7 +543,7 @@ export default function GlobalSearch() {
       >
         <span className="flex min-w-0 items-center gap-2.5">
           <Search className="size-4 text-[#999999]" strokeWidth={2} />
-          <span className="truncate text-[14px] tracking-[-0.32px] text-[#666666]">Search...</span>
+          <span className="truncate text-[14px] tracking-[-0.32px] text-[#666666]">{searchLabel}</span>
         </span>
         <kbd className="inline-flex h-6 items-center rounded-md border border-[rgba(0,0,0,0.08)] bg-[#F7F7F8] px-2 text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">
           ⌘K
@@ -566,7 +573,7 @@ export default function GlobalSearch() {
                 }}
                 onFocus={() => setSuggestionMode(true)}
                 onKeyDown={handleInputKeyDown}
-                placeholder="Search... Try status:delivered or platform:naver"
+                placeholder={searchPlaceholder}
                 className="h-11 w-full bg-transparent text-[16px] tracking-[-0.32px] text-[#181925] outline-none placeholder:text-[#999999]"
               />
             </div>

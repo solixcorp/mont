@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/spec-graph-context.sh"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/spec-graph-validate.sh",
+        "matcher": "Write|StrReplace|EditNotebook"
+      }
+    ]
+  }
+}

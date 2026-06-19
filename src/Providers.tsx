@@ -33,6 +33,7 @@ import {
 } from "lucide-react"
 import DashboardLayout from "@/DashboardLayout"
 import type { Currency } from "@/shared"
+import type { Locale } from "@/locale"
 import {
   Dialog,
   DialogContent,
@@ -40,6 +41,227 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog"
+
+const translations = {
+  en: {
+    title: "Providers",
+    procurementNetwork: "Procurement network",
+    externalProviders: "External Providers",
+    externalProvidersDesc: "External key suppliers for automatic fulfillment",
+    manualApi: "Manual API",
+    addProvider: "Add Provider",
+    apiBaseUrl: "API Base URL",
+    authType: "Auth Type",
+    totalFetched: "Total Fetched",
+    successRate: "Success Rate",
+    avgResponse: "Avg Response",
+    productsMapped: "Products Mapped",
+    configure: "Configure",
+    connection: "Connection",
+    accessToken: "Access Token",
+    apiKeyToken: "API Key / Token",
+    testConnection: "Test Connection",
+    productMappings: "Product Mappings",
+    product: "Product",
+    externalSku: "External SKU",
+    priority: "Priority",
+    autoFetch: "Auto-fetch",
+    fallback: "Fallback",
+    fulfillmentRules: "Fulfillment Rules",
+    maxRetries: "Max Retries",
+    retryDelay: "Retry Delay",
+    rateLimit: "Rate Limit",
+    webhookUrl: "Webhook URL",
+    recentActivity: "Recent Activity",
+    timestamp: "Timestamp",
+    status: "Status",
+    keyType: "Key Type",
+    responseTime: "Response time",
+    connectionSettings: "Connection settings, product mappings, and fulfillment rules",
+    addProviderTitle: "Add Provider",
+    addProviderDesc: "Let AI analyze supplier documentation and prepare your provider configuration.",
+    pasteDocs: "Paste docs",
+    enterUrl: "Enter URL",
+    autoDetect: "Auto-detect",
+    apiDocumentation: "API documentation",
+    pasteDocsPlaceholder: "Paste your supplier's API documentation here...",
+    rawTextSupported: "Raw text, JSON, or OpenAPI spec supported.",
+    documentationUrl: "Documentation URL",
+    pasteUrlNote: "Paste a public documentation link and AI will inspect the provider setup.",
+    selectKnownProvider: "Select a known provider to auto-fill configuration and skip to review.",
+    analyze: "Analyze",
+    aiAnalysis: "AI Analysis",
+    buildingConfig: "Building your provider configuration",
+    buildingConfigDesc: "Simulating documentation parsing, endpoint discovery, and auth inference.",
+    done: "Done",
+    running: "Running",
+    queued: "Queued",
+    reviewConfig: "Review Configuration",
+    aiGeneratedSetup: "AI-generated provider setup",
+    highConfidence: "High confidence",
+    providerName: "Provider Name",
+    back: "Back",
+    testConnectionBtn: "Test Connection",
+    testConnectionTitle: "Test Connection",
+    validatingConfig: "Validating the generated provider config",
+    testingConnection: "Testing provider connection...",
+    testingConnectionDesc: "Checking auth, base URL reachability, and endpoint compatibility.",
+    connectedSuccessfully: "Connected successfully",
+    responseTimeLabel: "Response time",
+    apiVersion: "API version",
+    availableEndpoints: "Available endpoints",
+    continue: "Continue",
+    productMapping: "Product Mapping",
+    chooseProducts: "Choose which products this provider should fulfill",
+    aiPreMapped: "AI pre-mapped",
+    ofProducts: "of",
+    products: "products.",
+    map: "Map",
+    externalSkuCol: "External SKU",
+    priorityCol: "Priority",
+    saveProvider: "Save Provider",
+    manualApiTitle: "Manual API Integration",
+    manualApiDesc: "Configure a custom API endpoint and map response fields to your internal model.",
+    apiConfig: "API Config",
+    response: "Response",
+    mapping: "Mapping",
+    headers: "Headers",
+    add: "Add",
+    authentication: "Authentication",
+    none: "None",
+    apiKey: "API Key",
+    bearerToken: "Bearer Token",
+    basicAuth: "Basic Auth",
+    requestBody: "Request Body",
+    sendTestRequest: "Send Test Request",
+    testing: "Testing...",
+    responsePreview: "Response Preview",
+    apiResponseReceived: "API response received",
+    continueToMapping: "Continue to Mapping",
+    step3: "Step 3",
+    responseMapping: "Response Mapping",
+    responseMappingDesc: "Drag fields from the JSON tree onto model fields, or click to select and map. You can also set fixed string values.",
+    jsonResponse: "JSON Response",
+    modelFields: "Model Fields",
+    selectedPath: "Selected path",
+    mapBtn: "Map",
+    fixed: "Fixed",
+    mapSelectedPath: "Map selected path",
+    selectOrDrag: "Select or drag a JSON field here",
+    enterFixedValue: "Enter fixed value...",
+    set: "Set",
+    apiTestPassed: "API test passed · ready to connect",
+  },
+  kr: {
+    title: "공급사",
+    procurementNetwork: "조달 네트워크",
+    externalProviders: "외부 공급사",
+    externalProvidersDesc: "자동 배송을 위한 외부 키 공급사",
+    manualApi: "수동 API",
+    addProvider: "공급사 추가",
+    apiBaseUrl: "API 기본 URL",
+    authType: "인증 유형",
+    totalFetched: "총 가져온 수",
+    successRate: "성공률",
+    avgResponse: "평균 응답",
+    productsMapped: "매핑된 상품",
+    configure: "설정",
+    connection: "연결",
+    accessToken: "액세스 토큰",
+    apiKeyToken: "API 키 / 토큰",
+    testConnection: "연결 테스트",
+    productMappings: "상품 매핑",
+    product: "상품",
+    externalSku: "외부 SKU",
+    priority: "우선순위",
+    autoFetch: "자동 가져오기",
+    fallback: "대체 방식",
+    fulfillmentRules: "배송 규칙",
+    maxRetries: "최대 재시도",
+    retryDelay: "재시도 지연",
+    rateLimit: "속도 제한",
+    webhookUrl: "Webhook URL",
+    recentActivity: "최근 활동",
+    timestamp: "시간",
+    status: "상태",
+    keyType: "키 유형",
+    responseTime: "응답 시간",
+    connectionSettings: "연결 설정, 상품 매핑 및 배송 규칙",
+    addProviderTitle: "공급사 추가",
+    addProviderDesc: "AI가 공급사 문서를 분석하고 공급사 설정을 준비합니다.",
+    pasteDocs: "문서 붙여넣기",
+    enterUrl: "URL 입력",
+    autoDetect: "자동 감지",
+    apiDocumentation: "API 문서",
+    pasteDocsPlaceholder: "공급사의 API 문서를 여기에 붙여넣으세요...",
+    rawTextSupported: "일반 텍스트, JSON, OpenAPI 스펙을 지원합니다.",
+    documentationUrl: "문서 URL",
+    pasteUrlNote: "공개 문서 링크를 붙여넣으면 AI가 공급사 설정을 분석합니다.",
+    selectKnownProvider: "알려진 공급사를 선택하여 설정을 자동 입력하고 검토로 건너뛰세요.",
+    analyze: "분석",
+    aiAnalysis: "AI 분석",
+    buildingConfig: "공급사 설정을 구성하는 중",
+    buildingConfigDesc: "문서 파싱, 엔드포인트 검색, 인증 추론을 시뮬레이션합니다.",
+    done: "완료",
+    running: "실행 중",
+    queued: "대기 중",
+    reviewConfig: "설정 검토",
+    aiGeneratedSetup: "AI 생성 공급사 설정",
+    highConfidence: "높은 신뢰도",
+    providerName: "공급사 이름",
+    back: "이전",
+    testConnectionBtn: "연결 테스트",
+    testConnectionTitle: "연결 테스트",
+    validatingConfig: "생성된 공급사 설정을 검증하는 중",
+    testingConnection: "공급사 연결을 테스트하는 중...",
+    testingConnectionDesc: "인증, 기본 URL 접근성, 엔드포인트 호환성을 확인합니다.",
+    connectedSuccessfully: "연결 성공",
+    responseTimeLabel: "응답 시간",
+    apiVersion: "API 버전",
+    availableEndpoints: "사용 가능한 엔드포인트",
+    continue: "계속",
+    productMapping: "상품 매핑",
+    chooseProducts: "이 공급사가 처리할 상품을 선택하세요",
+    aiPreMapped: "AI 사전 매핑",
+    ofProducts: "/",
+    products: "개 상품",
+    map: "매핑",
+    externalSkuCol: "외부 SKU",
+    priorityCol: "우선순위",
+    saveProvider: "공급사 저장",
+    manualApiTitle: "수동 API 연동",
+    manualApiDesc: "커스텀 API 엔드포인트를 설정하고 응답 필드를 내부 모델에 매핑합니다.",
+    apiConfig: "API 설정",
+    response: "응답",
+    mapping: "매핑",
+    headers: "헤더",
+    add: "추가",
+    authentication: "인증",
+    none: "없음",
+    apiKey: "API 키",
+    bearerToken: "Bearer 토큰",
+    basicAuth: "Basic 인증",
+    requestBody: "요청 본문",
+    sendTestRequest: "테스트 요청 전송",
+    testing: "테스트 중...",
+    responsePreview: "응답 미리보기",
+    apiResponseReceived: "API 응답 수신됨",
+    continueToMapping: "매핑으로 계속",
+    step3: "3단계",
+    responseMapping: "응답 매핑",
+    responseMappingDesc: "JSON 트리에서 모델 필드로 드래그하거나 클릭하여 선택하고 매핑하세요. 고정 문자열 값도 설정할 수 있습니다.",
+    jsonResponse: "JSON 응답",
+    modelFields: "모델 필드",
+    selectedPath: "선택된 경로",
+    mapBtn: "매핑",
+    fixed: "고정",
+    mapSelectedPath: "선택된 경로 매핑",
+    selectOrDrag: "JSON 필드를 여기에 선택하거나 드래그하세요",
+    enterFixedValue: "고정 값 입력...",
+    set: "설정",
+    apiTestPassed: "API 테스트 통과 · 연결 준비됨",
+  },
+} as const
 
 type ProviderStatus = "Active" | "Inactive" | "Error"
 type AuthType = "API Key" | "OAuth2" | "Bearer Token"
@@ -122,9 +344,9 @@ const MODEL_FIELDS = [
 type ModelField = (typeof MODEL_FIELDS)[number]
 
 const AUTO_DETECT_PROVIDERS = [
-  { id: "naver-store", name: "Naver Store", color: "#03C75A", badge: "N", apiUrl: "https://api.commerce.naver.com/v1", authType: "API Key" as AuthType },
-  { id: "g2g", name: "G2G", color: "#E87A2A", badge: "G2G", apiUrl: "https://api.g2g.com/v2", authType: "API Key" as AuthType },
-  { id: "g2a", name: "G2A", color: "#F05A23", badge: "G2A", apiUrl: "https://api.g2a.com/v2", authType: "OAuth2" as AuthType },
+  { id: "naver-store", name: "네이버 스토어", color: "#03C75A", badge: "N", apiUrl: "https://api.commerce.naver.com/v1", authType: "API Key" as AuthType },
+  { id: "g2g", name: "롯데몰", color: "#E87A2A", badge: "롯데몰", apiUrl: "https://api.g2g.com/v2", authType: "API Key" as AuthType },
+  { id: "g2a", name: "지마켓", color: "#F05A23", badge: "지마켓", apiUrl: "https://api.g2a.com/v2", authType: "OAuth2" as AuthType },
   { id: "eneba", name: "Eneba", color: "#FF6B35", badge: "E", apiUrl: "https://api.eneba.com/v2", authType: "API Key" as AuthType },
   { id: "kinguin", name: "Kinguin", color: "#1A73E8", badge: "K", apiUrl: "https://gateway.kinguin.net/esa/api/v2", authType: "API Key" as AuthType },
   { id: "keysforge", name: "KeysForge", color: "#34A853", badge: "KF", apiUrl: "https://api.keysforge.com/v1", authType: "Bearer Token" as AuthType },
@@ -369,8 +591,8 @@ const initialProviders: Provider[] = [
   },
   {
     id: "g2a",
-    name: "G2A Marketplace",
-    badge: "G2A",
+    name: "지마켓",
+    badge: "지마켓",
     color: "#F05A23",
     enabled: true,
     status: "Active",
@@ -468,7 +690,8 @@ function maskSecret(secret: string) {
   return `${secret.slice(0, 4)}${"•".repeat(Math.max(secret.length - 8, 10))}${secret.slice(-4)}`
 }
 
-export default function Providers() {
+export default function Providers({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const [currency, setCurrency] = useState<Currency>("USD")
   const [providers, setProviders] = useState<Provider[]>(initialProviders)
   const [configProvider, setConfigProvider] = useState<string | null>(null)
@@ -863,7 +1086,8 @@ export default function Providers() {
 
   return (
     <DashboardLayout
-      title="Providers"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
@@ -871,10 +1095,10 @@ export default function Providers() {
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-5">
           <div className="flex flex-col gap-3 rounded-xl border border-[rgba(0,0,0,0.08)] bg-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Procurement network</p>
-              <h1 className="mt-1 text-[20px] font-semibold tracking-[-0.32px] text-[#181925]">External Providers</h1>
+              <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.procurementNetwork}</p>
+              <h1 className="mt-1 text-[20px] font-semibold tracking-[-0.32px] text-[#181925]">{t.externalProviders}</h1>
               <p className="mt-1 text-[13px] tracking-[-0.32px] text-[#666666]">
-                External key suppliers for automatic fulfillment
+                {t.externalProvidersDesc}
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -884,7 +1108,7 @@ export default function Providers() {
                 className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[rgba(0,0,0,0.03)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.05)] hover:text-[#181925]"
               >
                 <Code2 className="size-3.5" strokeWidth={2.2} />
-                Manual API
+                {t.manualApi}
               </button>
               <button
                 type="button"
@@ -892,7 +1116,7 @@ export default function Providers() {
                 className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7f7ae6]"
               >
                 <Plus className="size-3.5" strokeWidth={2.2} />
-                Add Provider
+                {t.addProvider}
               </button>
             </div>
           </div>
@@ -937,7 +1161,7 @@ export default function Providers() {
                   <div className="mt-3 rounded-lg border border-[rgba(0,0,0,0.06)] bg-[#FAFAFA] px-3 py-2.5">
                     <div className="flex items-center justify-between gap-2">
                       <div className="min-w-0">
-                        <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">API Base URL</p>
+                        <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.apiBaseUrl}</p>
                         <p className="mt-0.5 truncate text-[12px] tracking-[-0.32px] text-[#181925]">{provider.apiUrl}</p>
                       </div>
                       <span
@@ -951,10 +1175,10 @@ export default function Providers() {
 
                   <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2.5 border-y border-[rgba(0,0,0,0.06)] py-3">
                     {[
-                      { label: "Total Fetched", value: provider.totalFetched.toLocaleString(), icon: Package },
-                      { label: "Success Rate", value: provider.successRate, icon: Shield },
-                      { label: "Avg Response", value: provider.avgResponse, icon: Clock },
-                      { label: "Products Mapped", value: provider.productsMapped.toString(), icon: Zap },
+                      { label: t.totalFetched, value: provider.totalFetched.toLocaleString(), icon: Package },
+                      { label: t.successRate, value: provider.successRate, icon: Shield },
+                      { label: t.avgResponse, value: provider.avgResponse, icon: Clock },
+                      { label: t.productsMapped, value: provider.productsMapped.toString(), icon: Zap },
                     ].map((stat) => {
                       const Icon = stat.icon
                       return (
@@ -985,7 +1209,7 @@ export default function Providers() {
                       className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[rgba(0,0,0,0.03)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.05)] hover:text-[#181925]"
                     >
                       <Settings className="size-3.5" strokeWidth={2.1} />
-                      Configure
+                      {t.configure}
                     </button>
                   </div>
                 </div>
@@ -1016,7 +1240,7 @@ export default function Providers() {
                     {selectedProvider.name}
                   </DialogTitle>
                   <DialogDescription className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">
-                    Connection settings, product mappings, and fulfillment rules
+                    {t.connectionSettings}
                   </DialogDescription>
                 </div>
               </div>
@@ -1027,12 +1251,12 @@ export default function Providers() {
                 <section>
                   <div className="mb-3 flex items-center gap-2">
                     <Shield className="size-3.5 text-[#918DF6]" strokeWidth={2.1} />
-                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">Connection</h3>
+                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">{t.connection}</h3>
                   </div>
                   <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_180px]">
                     <div>
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        API Base URL
+                        {t.apiBaseUrl}
                       </label>
                       <input
                         type="text"
@@ -1043,7 +1267,7 @@ export default function Providers() {
                     </div>
                     <div>
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        Auth Type
+                        {t.authType}
                       </label>
                       <div className="flex h-8 items-center">
                         <span
@@ -1062,7 +1286,7 @@ export default function Providers() {
                   <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-end">
                     <div className="flex-1">
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        {selectedProvider.authType === "OAuth2" ? "Access Token" : "API Key / Token"}
+                        {selectedProvider.authType === "OAuth2" ? t.accessToken : t.apiKeyToken}
                       </label>
                       <div className="flex h-8 items-center rounded-lg border border-[rgba(0,0,0,0.1)] bg-white px-2.5">
                         <input
@@ -1094,7 +1318,7 @@ export default function Providers() {
                         className={`size-3.5 ${testingProvider === selectedProvider.id ? "animate-spin" : ""}`}
                         strokeWidth={2.1}
                       />
-                      Test Connection
+                      {t.testConnection}
                     </button>
                   </div>
                 </section>
@@ -1104,18 +1328,18 @@ export default function Providers() {
                 <section>
                   <div className="mb-3 flex items-center gap-2">
                     <Package className="size-3.5 text-[#918DF6]" strokeWidth={2.1} />
-                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">Product Mappings</h3>
+                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">{t.productMappings}</h3>
                   </div>
                   <div className="overflow-x-auto rounded-lg border border-[rgba(0,0,0,0.08)]">
                     <table className="min-w-[640px] w-full">
                       <thead className="bg-[#FAFAFA]">
-                        <tr className="border-b border-[rgba(0,0,0,0.08)]">
+                         <tr className="border-b border-[rgba(0,0,0,0.08)]">
                           {[
-                            "Product",
-                            "External SKU",
-                            "Priority",
-                            "Auto-fetch",
-                            "Fallback",
+                            t.product,
+                            t.externalSku,
+                            t.priority,
+                            t.autoFetch,
+                            t.fallback,
                           ].map((label) => (
                             <th
                               key={label}
@@ -1190,29 +1414,29 @@ export default function Providers() {
                 <section>
                   <div className="mb-3 flex items-center gap-2">
                     <Zap className="size-3.5 text-[#918DF6]" strokeWidth={2.1} />
-                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">Fulfillment Rules</h3>
+                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">{t.fulfillmentRules}</h3>
                   </div>
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     <div className="rounded-lg border border-[rgba(0,0,0,0.08)] bg-[#FAFAFA] px-3 py-2.5">
-                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Max Retries</p>
+                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.maxRetries}</p>
                       <p className="mt-1 text-[14px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
                         {selectedProvider.maxRetries}
                       </p>
                     </div>
                     <div className="rounded-lg border border-[rgba(0,0,0,0.08)] bg-[#FAFAFA] px-3 py-2.5">
-                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Retry Delay</p>
+                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.retryDelay}</p>
                       <p className="mt-1 text-[14px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
                         {selectedProvider.retryDelay}
                       </p>
                     </div>
                     <div className="rounded-lg border border-[rgba(0,0,0,0.08)] bg-[#FAFAFA] px-3 py-2.5">
-                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Rate Limit</p>
+                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.rateLimit}</p>
                       <p className="mt-1 text-[14px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
                         {selectedProvider.rateLimit}/min
                       </p>
                     </div>
                     <div className="rounded-lg border border-[rgba(0,0,0,0.08)] bg-[#FAFAFA] px-3 py-2.5">
-                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Webhook URL</p>
+                      <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.webhookUrl}</p>
                       <div className="mt-1 flex items-start gap-2">
                         <p className="min-w-0 flex-1 truncate text-[11px] tracking-[-0.32px] text-[#181925]">
                           {selectedProvider.webhookUrl}
@@ -1239,18 +1463,18 @@ export default function Providers() {
                 <section>
                   <div className="mb-3 flex items-center gap-2">
                     <Clock className="size-3.5 text-[#918DF6]" strokeWidth={2.1} />
-                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">Recent Activity</h3>
+                    <h3 className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">{t.recentActivity}</h3>
                   </div>
                   <div className="overflow-x-auto rounded-lg border border-[rgba(0,0,0,0.08)]">
                     <table className="min-w-[600px] w-full">
                       <thead className="bg-[#FAFAFA]">
-                        <tr className="border-b border-[rgba(0,0,0,0.08)]">
+                         <tr className="border-b border-[rgba(0,0,0,0.08)]">
                           {[
-                            "Timestamp",
-                            "Product",
-                            "Status",
-                            "Key Type",
-                            "Response time",
+                            t.timestamp,
+                            t.product,
+                            t.status,
+                            t.keyType,
+                            t.responseTime,
                           ].map((label) => (
                             <th
                               key={label}
@@ -1311,10 +1535,10 @@ export default function Providers() {
         >
           <DialogHeader className="border-b border-[rgba(0,0,0,0.08)] px-5 py-4">
             <DialogTitle className="text-[16px] font-medium tracking-[-0.32px] text-[#181925]">
-              Add Provider
+              {t.addProviderTitle}
             </DialogTitle>
             <DialogDescription className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">
-              Let AI analyze supplier documentation and prepare your provider configuration.
+              {t.addProviderDesc}
             </DialogDescription>
 
             <div className="mt-4 flex items-center gap-2">
@@ -1361,7 +1585,7 @@ export default function Providers() {
                       }}
                     >
                       <FileText className="size-3.5" strokeWidth={2} />
-                      Paste docs
+                      {t.pasteDocs}
                     </button>
                     <button
                       type="button"
@@ -1373,7 +1597,7 @@ export default function Providers() {
                       }}
                     >
                       <Globe className="size-3.5" strokeWidth={2} />
-                      Enter URL
+                      {t.enterUrl}
                     </button>
                     <button
                       type="button"
@@ -1385,32 +1609,32 @@ export default function Providers() {
                       }}
                     >
                       <Search className="size-3.5" strokeWidth={2} />
-                      Auto-detect
+                      {t.autoDetect}
                     </button>
                   </div>
 
                   {wizardMode === "paste" ? (
                     <div>
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        API documentation
+                        {t.apiDocumentation}
                       </label>
                       <div className="rounded-xl border border-[rgba(0,0,0,0.1)] bg-white p-3 shadow-[0_1px_1px_rgba(0,0,0,0.03)]">
                         <textarea
                           value={wizardDocsInput}
                           onChange={(event) => setWizardDocsInput(event.target.value)}
-                          placeholder="Paste your supplier's API documentation here..."
+                          placeholder={t.pasteDocsPlaceholder}
                           className="h-64 w-full resize-none bg-transparent text-[13px] tracking-[-0.32px] text-[#181925] outline-none placeholder:text-[#999999]"
                         />
                       </div>
                       <div className="mt-2 flex items-center gap-2 text-[11px] tracking-[-0.32px] text-[#999999]">
                         <Upload className="size-3.5" strokeWidth={2} />
-                        Raw text, JSON, or OpenAPI spec supported.
+                        {t.rawTextSupported}
                       </div>
                     </div>
                   ) : wizardMode === "url" ? (
                     <div>
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        Documentation URL
+                        {t.documentationUrl}
                       </label>
                       <div className="flex h-10 items-center rounded-xl border border-[rgba(0,0,0,0.1)] bg-white px-3 shadow-[0_1px_1px_rgba(0,0,0,0.03)]">
                         <LinkIcon className="mr-2 size-3.5 shrink-0 text-[#999999]" strokeWidth={2} />
@@ -1423,13 +1647,13 @@ export default function Providers() {
                         />
                       </div>
                       <p className="mt-2 text-[11px] tracking-[-0.32px] text-[#999999]">
-                        Paste a public documentation link and AI will inspect the provider setup.
+                        {t.pasteUrlNote}
                       </p>
                     </div>
                   ) : (
                     <div>
                       <p className="mb-3 text-[12px] tracking-[-0.32px] text-[#666666]">
-                        Select a known provider to auto-fill configuration and skip to review.
+                        {t.selectKnownProvider}
                       </p>
                       <div className="grid grid-cols-3 gap-2.5">
                         {AUTO_DETECT_PROVIDERS.map((ap) => (
@@ -1467,7 +1691,7 @@ export default function Providers() {
                           opacity: wizardHasInput ? 1 : 0.75,
                         }}
                       >
-                        Analyze
+                        {t.analyze}
                         <ArrowRight className="size-3.5" strokeWidth={2.1} />
                       </button>
                     </div>
@@ -1478,12 +1702,12 @@ export default function Providers() {
               {wizardStep === 2 ? (
                 <div className="flex h-full flex-col gap-5">
                   <div>
-                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">AI Analysis</p>
+                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">{t.aiAnalysis}</p>
                     <h3 className="mt-1 text-[20px] font-semibold tracking-[-0.32px] text-[#181925]">
-                      Building your provider configuration
+                      {t.buildingConfig}
                     </h3>
                     <p className="mt-1 text-[13px] tracking-[-0.32px] text-[#666666]">
-                      Simulating documentation parsing, endpoint discovery, and auth inference.
+                      {t.buildingConfigDesc}
                     </p>
                   </div>
 
@@ -1512,7 +1736,7 @@ export default function Providers() {
                               <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">{step.label}</p>
                             </div>
                             <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">
-                              {isDone ? "Done" : isCurrent ? "Running" : "Queued"}
+                              {isDone ? t.done : isCurrent ? t.running : t.queued}
                             </span>
                           </div>
                         )
@@ -1526,20 +1750,20 @@ export default function Providers() {
                 <div className="flex flex-col gap-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">Review Configuration</p>
+                      <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">{t.reviewConfig}</p>
                       <h3 className="mt-1 text-[18px] font-semibold tracking-[-0.32px] text-[#181925]">
-                        AI-generated provider setup
+                        {t.aiGeneratedSetup}
                       </h3>
                     </div>
                     <span className="inline-flex items-center rounded-full bg-[rgba(52,168,83,0.1)] px-2.5 py-1 text-[11px] font-medium tracking-[-0.32px] text-[#34A853]">
-                      High confidence
+                      {t.highConfidence}
                     </span>
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        Provider Name
+                        {t.providerName}
                       </label>
                       <input
                         type="text"
@@ -1551,7 +1775,7 @@ export default function Providers() {
 
                     <div className="sm:col-span-2">
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        API Base URL
+                        {t.apiBaseUrl}
                       </label>
                       <input
                         type="text"
@@ -1563,7 +1787,7 @@ export default function Providers() {
 
                     <div className="sm:col-span-2">
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        Auth Type
+                        {t.authType}
                       </label>
                       <div className="flex flex-wrap gap-2">
                         {(["API Key", "OAuth2", "Bearer Token"] as const).map((authType) => (
@@ -1585,7 +1809,7 @@ export default function Providers() {
 
                     <div className="sm:col-span-2">
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        {wizardConfig.authType === "OAuth2" ? "API Key / Token" : "API Key / Token"}
+                        {wizardConfig.authType === "OAuth2" ? t.apiKeyToken : t.apiKeyToken}
                       </label>
                       <div className="flex h-8 items-center rounded-lg border border-[rgba(0,0,0,0.1)] bg-white px-2.5">
                         <input
@@ -1611,7 +1835,7 @@ export default function Providers() {
 
                     <div>
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        Rate Limit
+                        {t.rateLimit}
                       </label>
                       <input
                         type="text"
@@ -1623,7 +1847,7 @@ export default function Providers() {
 
                     <div>
                       <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                        Max Retries
+                        {t.maxRetries}
                       </label>
                       <input
                         type="number"
@@ -1642,14 +1866,14 @@ export default function Providers() {
                       className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[rgba(0,0,0,0.04)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.06)] hover:text-[#181925]"
                     >
                       <ArrowLeft className="size-3.5" strokeWidth={2.1} />
-                      Back
+                      {t.back}
                     </button>
                     <button
                       type="button"
                       onClick={() => setWizardStep(4)}
                       className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[12px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7f7ae6]"
                     >
-                      Test Connection
+                      {t.testConnectionBtn}
                       <ArrowRight className="size-3.5" strokeWidth={2.1} />
                     </button>
                   </div>
@@ -1659,31 +1883,31 @@ export default function Providers() {
               {wizardStep === 4 ? (
                 <div className="flex h-full flex-col gap-4">
                   <div>
-                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">Test Connection</p>
+                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">{t.testConnectionTitle}</p>
                     <h3 className="mt-1 text-[18px] font-semibold tracking-[-0.32px] text-[#181925]">
-                      Validating the generated provider config
+                      {t.validatingConfig}
                     </h3>
                   </div>
 
                   {!connectionTestComplete ? (
                     <div className="flex flex-1 flex-col items-center justify-center rounded-2xl border border-[rgba(145,141,246,0.12)] bg-[rgba(145,141,246,0.04)] px-6 py-10 text-center">
                       <Loader2 className="size-8 animate-spin text-[#918DF6]" strokeWidth={2.2} />
-                      <p className="mt-4 text-[15px] font-medium tracking-[-0.32px] text-[#181925]">Testing provider connection...</p>
+                      <p className="mt-4 text-[15px] font-medium tracking-[-0.32px] text-[#181925]">{t.testingConnection}</p>
                       <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">
-                        Checking auth, base URL reachability, and endpoint compatibility.
+                        {t.testingConnectionDesc}
                       </p>
                     </div>
                   ) : (
                     <div className="rounded-2xl border border-[rgba(52,168,83,0.14)] bg-[rgba(52,168,83,0.05)] p-4">
                       <div className="flex items-center gap-2 text-[#34A853]">
                         <CheckCircle2 className="size-4" strokeWidth={2.2} />
-                        <p className="text-[14px] font-semibold tracking-[-0.32px]">Connected successfully</p>
+                        <p className="text-[14px] font-semibold tracking-[-0.32px]">{t.connectedSuccessfully}</p>
                       </div>
                       <div className="mt-4 grid gap-3 sm:grid-cols-3">
                         {[
-                          { label: "Response time", value: "340ms" },
-                          { label: "API version", value: "v2.1" },
-                          { label: "Available endpoints", value: "12" },
+                          { label: t.responseTimeLabel, value: "340ms" },
+                          { label: t.apiVersion, value: "v2.1" },
+                          { label: t.availableEndpoints, value: "12" },
                         ].map((item) => (
                           <div key={item.label} className="rounded-xl border border-[rgba(0,0,0,0.06)] bg-white px-3 py-3">
                             <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{item.label}</p>
@@ -1701,7 +1925,7 @@ export default function Providers() {
                       className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[rgba(0,0,0,0.04)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.06)] hover:text-[#181925]"
                     >
                       <ArrowLeft className="size-3.5" strokeWidth={2.1} />
-                      Back
+                      {t.back}
                     </button>
                     <button
                       type="button"
@@ -1713,7 +1937,7 @@ export default function Providers() {
                         opacity: connectionTestComplete ? 1 : 0.75,
                       }}
                     >
-                      Continue
+                      {t.continue}
                       <ArrowRight className="size-3.5" strokeWidth={2.1} />
                     </button>
                   </div>
@@ -1723,21 +1947,21 @@ export default function Providers() {
               {wizardStep === 5 ? (
                 <div className="flex flex-col gap-4">
                   <div>
-                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">Product Mapping</p>
+                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">{t.productMapping}</p>
                     <h3 className="mt-1 text-[18px] font-semibold tracking-[-0.32px] text-[#181925]">
-                      Choose which products this provider should fulfill
+                      {t.chooseProducts}
                     </h3>
                     <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">
-                      AI pre-mapped {wizardMappings.filter((mapping) => mapping.selected).length} of {wizardProducts.length} products.
+                      {t.aiPreMapped} {wizardMappings.filter((mapping) => mapping.selected).length} {t.ofProducts} {wizardProducts.length} {t.products}
                     </p>
                   </div>
 
                   <div className="overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)]">
                     <div className="grid grid-cols-[44px_minmax(0,1.4fr)_minmax(0,1fr)_140px] gap-3 border-b border-[rgba(0,0,0,0.06)] bg-[#FAFAFA] px-3 py-2">
-                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Map</span>
-                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Product</span>
-                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">External SKU</span>
-                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Priority</span>
+                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.map}</span>
+                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.product}</span>
+                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.externalSkuCol}</span>
+                      <span className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.priorityCol}</span>
                     </div>
 
                     <div className="max-h-[320px] overflow-y-auto">
@@ -1800,14 +2024,14 @@ export default function Providers() {
                       className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[rgba(0,0,0,0.04)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.06)] hover:text-[#181925]"
                     >
                       <ArrowLeft className="size-3.5" strokeWidth={2.1} />
-                      Back
+                      {t.back}
                     </button>
                     <button
                       type="button"
                       onClick={handleSaveProvider}
                       className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[12px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7f7ae6]"
                     >
-                      Save Provider
+                      {t.saveProvider}
                       <ArrowRight className="size-3.5" strokeWidth={2.1} />
                     </button>
                   </div>
@@ -1826,15 +2050,15 @@ export default function Providers() {
         >
           <DialogHeader className="border-b border-[rgba(0,0,0,0.08)] px-5 py-4">
             <DialogTitle className="text-[16px] font-medium tracking-[-0.32px] text-[#181925]">
-              Manual API Integration
+              {t.manualApiTitle}
             </DialogTitle>
             <DialogDescription className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">
-              Configure a custom API endpoint and map response fields to your internal model.
+              {t.manualApiDesc}
             </DialogDescription>
 
             <div className="mt-4 flex items-center gap-2">
               {[1, 2, 3].map((stepNumber, index) => {
-                const labels = ["API Config", "Response", "Mapping"]
+                const labels = [t.apiConfig, t.response, t.mapping]
                 const isActive = manualApiStep === stepNumber
                 const isComplete = manualApiStep > stepNumber
 
@@ -1903,14 +2127,14 @@ export default function Providers() {
 
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <label className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">Headers</label>
+                    <label className="text-[12px] font-medium tracking-[-0.32px] text-[#666666]">{t.headers}</label>
                     <button
                       type="button"
                       onClick={handleAddManualHeader}
                       className="inline-flex h-6 items-center gap-1 rounded-full bg-[rgba(0,0,0,0.03)] px-2 text-[11px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.05)]"
                     >
                       <Plus className="size-3" strokeWidth={2.2} />
-                      Add
+                      {t.add}
                     </button>
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -1945,14 +2169,14 @@ export default function Providers() {
 
                 <div>
                   <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                    Authentication
+                    {t.authentication}
                   </label>
                   <div className="flex flex-wrap gap-1.5">
                     {([
-                      { value: "none", label: "None" },
-                      { value: "apikey", label: "API Key" },
-                      { value: "bearer", label: "Bearer Token" },
-                      { value: "basic", label: "Basic Auth" },
+                      { value: "none", label: t.none },
+                      { value: "apikey", label: t.apiKey },
+                      { value: "bearer", label: t.bearerToken },
+                      { value: "basic", label: t.basicAuth },
                     ] as const).map((auth) => (
                       <button
                         key={auth.value}
@@ -2000,7 +2224,7 @@ export default function Providers() {
                 {manualApiMethod !== "GET" ? (
                   <div>
                     <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                      Request Body
+                      {t.requestBody}
                     </label>
                     <textarea
                       value={manualApiBody}
@@ -2025,12 +2249,12 @@ export default function Providers() {
                     {manualApiTesting ? (
                       <>
                         <Loader2 className="size-3.5 animate-spin" strokeWidth={2.1} />
-                        Testing...
+                        {t.testing}
                       </>
                     ) : (
                       <>
                         <Send className="size-3.5" strokeWidth={2.1} />
-                        Send Test Request
+                        {t.sendTestRequest}
                       </>
                     )}
                   </button>
@@ -2042,9 +2266,9 @@ export default function Providers() {
               <div className="flex flex-col gap-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">Response Preview</p>
+                    <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">{t.responsePreview}</p>
                     <h3 className="mt-1 text-[18px] font-semibold tracking-[-0.32px] text-[#181925]">
-                      API response received
+                      {t.apiResponseReceived}
                     </h3>
                   </div>
                 </div>
@@ -2070,14 +2294,14 @@ export default function Providers() {
                     className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[rgba(0,0,0,0.04)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.06)] hover:text-[#181925]"
                   >
                     <ArrowLeft className="size-3.5" strokeWidth={2.1} />
-                    Back
+                    {t.back}
                   </button>
                   <button
                     type="button"
                     onClick={() => setManualApiStep(3)}
                     className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[12px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7f7ae6]"
                   >
-                    Continue to Mapping
+                    {t.continueToMapping}
                     <ArrowRight className="size-3.5" strokeWidth={2.1} />
                   </button>
                 </div>
@@ -2087,12 +2311,12 @@ export default function Providers() {
             {manualApiStep === 3 ? (
               <div className="flex flex-col gap-5">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#918DF6]">Step 3</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#918DF6]">{t.step3}</p>
                   <h3 className="mt-1.5 text-[20px] font-semibold tracking-[-0.4px] text-[#181925]">
-                    Response Mapping
+                    {t.responseMapping}
                   </h3>
                   <p className="mt-1 text-[13px] leading-relaxed tracking-[-0.2px] text-[#888888]">
-                    Drag fields from the JSON tree onto model fields, or click to select and map. You can also set fixed string values.
+                    {t.responseMappingDesc}
                   </p>
                 </div>
 
@@ -2100,7 +2324,7 @@ export default function Providers() {
                   <div className="flex flex-col rounded-xl border border-[rgba(0,0,0,0.08)] shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                     <div className="flex items-center gap-2 border-b border-[rgba(0,0,0,0.06)] bg-gradient-to-b from-[#FAFAFA] to-[#F6F6F7] px-4 py-2.5">
                       <Code2 className="size-3.5 text-[#918DF6]" strokeWidth={2} />
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.4px] text-[#777777]">JSON Response</p>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.4px] text-[#777777]">{t.jsonResponse}</p>
                     </div>
                     <div className="flex-1 overflow-auto px-1 py-2" style={{ fontFamily: "'SF Mono', 'Fira Code', 'JetBrains Mono', monospace" }}>
                       {(function renderTree(nodes: JsonNode[], depth: number): React.ReactNode {
@@ -2197,7 +2421,7 @@ export default function Providers() {
                   <div className="flex flex-col rounded-xl border border-[rgba(0,0,0,0.08)] shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                     <div className="flex items-center gap-2 border-b border-[rgba(0,0,0,0.06)] bg-gradient-to-b from-[#FAFAFA] to-[#F6F6F7] px-4 py-2.5">
                       <Package className="size-3.5 text-[#918DF6]" strokeWidth={2} />
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.4px] text-[#777777]">Model Fields</p>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.4px] text-[#777777]">{t.modelFields}</p>
                       <span className="ml-auto rounded-full bg-[rgba(145,141,246,0.1)] px-2 py-0.5 text-[10px] font-semibold text-[#918DF6]">
                         {manualApiMappings.length}/{MODEL_FIELDS.length}
                       </span>
@@ -2208,7 +2432,7 @@ export default function Providers() {
                         <div className="mb-3 flex items-center gap-2 rounded-lg border border-[rgba(145,141,246,0.2)] bg-[rgba(145,141,246,0.04)] px-3 py-2">
                           <GitBranch className="size-3 shrink-0 text-[#918DF6]" strokeWidth={2.2} />
                           <div className="min-w-0 flex-1">
-                            <p className="text-[9px] font-semibold uppercase tracking-[0.4px] text-[#918DF6]">Selected path</p>
+                            <p className="text-[9px] font-semibold uppercase tracking-[0.4px] text-[#918DF6]">{t.selectedPath}</p>
                             <div className="mt-0.5 flex flex-wrap gap-1">
                               {manualApiSelectedPath.split(/\.(?![^[]*\])/).map((segment, i) => (
                                 <span
@@ -2300,7 +2524,7 @@ export default function Providers() {
                                         boxShadow: mode === "path" ? "0 1px 2px rgba(0,0,0,0.06)" : "none",
                                       }}
                                     >
-                                      Map
+                                      {t.mapBtn}
                                     </button>
                                     <button
                                       type="button"
@@ -2312,7 +2536,7 @@ export default function Providers() {
                                         boxShadow: mode === "fixed" ? "0 1px 2px rgba(0,0,0,0.06)" : "none",
                                       }}
                                     >
-                                      Fixed
+                                      {t.fixed}
                                     </button>
                                   </div>
                                 ) : null}
@@ -2371,11 +2595,11 @@ export default function Providers() {
                                       className="inline-flex h-6 items-center gap-1.5 rounded-full bg-[rgba(145,141,246,0.1)] px-2.5 text-[10px] font-semibold tracking-[-0.2px] text-[#918DF6] transition-colors hover:bg-[rgba(145,141,246,0.18)]"
                                     >
                                       <GitBranch className="size-2.5" strokeWidth={2.2} />
-                                      Map selected path
+                                      {t.mapSelectedPath}
                                     </button>
                                   ) : (
                                     <p className="text-[10px] tracking-[-0.2px] text-[#BBBBBB]">
-                                      Select or drag a JSON field here
+                                      {t.selectOrDrag}
                                     </p>
                                   )}
                                 </div>
@@ -2393,7 +2617,7 @@ export default function Providers() {
                                         if (val) handleAddFixedValue(field, val)
                                       }
                                     }}
-                                    placeholder="Enter fixed value..."
+                                    placeholder={t.enterFixedValue}
                                     className="h-7 flex-1 rounded-lg border border-[rgba(99,102,241,0.2)] bg-[rgba(99,102,241,0.03)] px-2.5 text-[11px] tracking-[-0.2px] text-[#181925] outline-none transition-colors placeholder:text-[#BBBBBB] focus:border-[rgba(99,102,241,0.4)] focus:ring-1 focus:ring-[rgba(99,102,241,0.15)]"
                                   />
                                   <button
@@ -2410,7 +2634,7 @@ export default function Providers() {
                                     }}
                                   >
                                     <Check className="size-2.5" strokeWidth={2.5} />
-                                    Set
+                                    {t.set}
                                   </button>
                                 </div>
                               ) : null}
@@ -2429,7 +2653,7 @@ export default function Providers() {
                     className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-[rgba(0,0,0,0.04)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.06)] hover:text-[#181925]"
                   >
                     <ArrowLeft className="size-3.5" strokeWidth={2.1} />
-                    Back
+                    {t.back}
                   </button>
                   <button
                     type="button"
@@ -2441,7 +2665,7 @@ export default function Providers() {
                       opacity: manualApiMappings.length > 0 ? 1 : 0.75,
                     }}
                   >
-                    Save Provider
+                    {t.saveProvider}
                     <ArrowRight className="size-3.5" strokeWidth={2.1} />
                   </button>
                 </div>

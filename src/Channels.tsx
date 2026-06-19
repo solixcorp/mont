@@ -14,6 +14,84 @@ import {
   DialogClose,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    title: "Channels",
+    deliveryChannels: "Delivery Channels",
+    manageDescription: "Manage how orders are delivered to customers",
+    addChannel: "Add Channel",
+    channels: "channels",
+    active: "active",
+    today: "today",
+    noChannels: "No channels registered",
+    noChannelsDescription: "Add a channel to start delivering orders",
+    sent: "sent",
+    settings: "Settings",
+    deleteChannel: "Delete Channel",
+    configuration: "Configuration",
+    noConfig: "No configuration available for this channel type.",
+    saveSettings: "Save Settings",
+    deliveryHistory: "Delivery History",
+    last5: "Last 5 deliveries",
+    addChannelTitle: "Add Channel",
+    addChannelDescription: "Select a delivery channel type. Install plugins from the Plugin Store to unlock more options.",
+    builtIn: "Built-in",
+    pluginStoreLabel: "Plugin Store",
+    installFromPluginStore: "Install from Plugin Store",
+    installedLabel: "Installed",
+    channelName: "Channel Name",
+    channelNamePlaceholder: "e.g. Primary {name}",
+    configureDescription: "Configure your new {name} delivery channel.",
+    cancel: "Cancel",
+    saveChannel: "Save Channel",
+    delivered: "Delivered",
+    failed: "Failed",
+    pending: "Pending",
+    statusCode: "Status Code",
+    latency: "Latency",
+    copied: "Copied",
+    copy: "Copy",
+  },
+  kr: {
+    title: "채널",
+    deliveryChannels: "배송 채널",
+    manageDescription: "고객에게 주문을 배송하는 방법을 관리하세요",
+    addChannel: "채널 추가",
+    channels: "채널",
+    active: "활성",
+    today: "오늘",
+    noChannels: "등록된 채널이 없습니다",
+    noChannelsDescription: "주문 배송을 시작하려면 채널을 추가하세요",
+    sent: "발송",
+    settings: "설정",
+    deleteChannel: "채널 삭제",
+    configuration: "설정",
+    noConfig: "이 채널 유형에 대한 설정이 없습니다.",
+    saveSettings: "설정 저장",
+    deliveryHistory: "배송 내역",
+    last5: "최근 5건",
+    addChannelTitle: "채널 추가",
+    addChannelDescription: "배송 채널 유형을 선택하세요. 플러그인 스토어에서 플러그인을 설치하면 더 많은 옵션을 사용할 수 있습니다.",
+    builtIn: "기본 제공",
+    pluginStoreLabel: "플러그인 스토어",
+    installFromPluginStore: "플러그인 스토어에서 설치",
+    installedLabel: "설치됨",
+    channelName: "채널 이름",
+    channelNamePlaceholder: "예: 기본 {name}",
+    configureDescription: "새 {name} 배송 채널을 설정하세요.",
+    cancel: "취소",
+    saveChannel: "채널 저장",
+    delivered: "배송 완료",
+    failed: "실패",
+    pending: "대기 중",
+    statusCode: "상태 코드",
+    latency: "지연 시간",
+    copied: "복사됨",
+    copy: "복사",
+  },
+} as const
 
 type ChannelType = "Email" | "Telegram" | "SMS" | "WhatsApp" | "KakaoTalk" | "Webhook" | "Discord" | "LINE" | "Slack"
 
@@ -226,7 +304,7 @@ function SuccessRateBar({ rate }: { rate: number }) {
   )
 }
 
-function OverflowMenu({ onDelete, onSettings }: { onDelete: () => void; onSettings: () => void }) {
+function OverflowMenu({ onDelete, onSettings, settingsLabel, deleteLabel }: { onDelete: () => void; onSettings: () => void; settingsLabel: string; deleteLabel: string }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -249,7 +327,7 @@ function OverflowMenu({ onDelete, onSettings }: { onDelete: () => void; onSettin
               className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[13px] tracking-[-0.32px] text-[#181925] transition-colors hover:bg-[rgba(0,0,0,0.03)]"
             >
               <Settings className="size-3.5 text-[#666666]" strokeWidth={2} />
-              Settings
+              {settingsLabel}
             </button>
             <div className="mx-2 my-1 h-px bg-[rgba(0,0,0,0.06)]" />
             <button
@@ -257,7 +335,7 @@ function OverflowMenu({ onDelete, onSettings }: { onDelete: () => void; onSettin
               className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[13px] tracking-[-0.32px] text-[#D93025] transition-colors hover:bg-[rgba(217,48,37,0.04)]"
             >
               <Trash2 className="size-3.5" strokeWidth={2} />
-              Delete Channel
+              {deleteLabel}
             </button>
           </div>
         </>
@@ -271,11 +349,15 @@ function PluginCard({
   selected,
   onSelect,
   onInstall,
+  installLabel,
+  installedLabel,
 }: {
   plugin: DeliveryPlugin
   selected: boolean
   onSelect: () => void
   onInstall: () => void
+  installLabel: string
+  installedLabel: string
 }) {
   return (
     <button
@@ -321,14 +403,14 @@ function PluginCard({
             className="inline-flex h-6 items-center gap-1 rounded-full border border-[rgba(0,0,0,0.08)] px-2 text-[11px] font-medium tracking-[-0.32px] text-[#666666] hover:bg-[rgba(0,0,0,0.02)]"
           >
             <Download className="size-3" strokeWidth={2} />
-            Install from Plugin Store
+            {installLabel}
           </span>
         </div>
       )}
       {plugin.installed && plugin.pluginType === "plugin" && (
         <div className="mt-2 flex items-center gap-1">
           <Check className="size-3 text-[#34A853]" strokeWidth={2.5} />
-          <span className="text-[11px] font-medium tracking-[-0.32px] text-[#34A853]">Installed</span>
+          <span className="text-[11px] font-medium tracking-[-0.32px] text-[#34A853]">{installedLabel}</span>
         </div>
       )}
     </button>
@@ -344,7 +426,7 @@ function formatTimestamp(iso: string) {
   return `${month}/${day} ${hours}:${minutes}`
 }
 
-function JsonBlock({ label, data }: { label: string; data: unknown }) {
+function JsonBlock({ label, data, copiedLabel = "Copied", copyLabel = "Copy" }: { label: string; data: unknown; copiedLabel?: string; copyLabel?: string }) {
   const [copied, setCopied] = useState(false)
   const json = JSON.stringify(data, null, 2)
   const handleCopy = () => {
@@ -358,7 +440,7 @@ function JsonBlock({ label, data }: { label: string; data: unknown }) {
         <span className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{label}</span>
         <button onClick={handleCopy} className="flex items-center gap-1 text-[11px] tracking-[-0.32px] text-[#918DF6] hover:text-[#7B77E0]">
           <Copy className="size-3" strokeWidth={2} />
-          {copied ? "Copied" : "Copy"}
+          {copied ? copiedLabel : copyLabel}
         </button>
       </div>
       <pre className="max-h-[220px] overflow-auto rounded-md bg-[#1a1a2e] p-3 text-[11px] leading-relaxed text-[#e0e0e0]">
@@ -368,7 +450,7 @@ function JsonBlock({ label, data }: { label: string; data: unknown }) {
   )
 }
 
-function LogRow({ log, isLast, onSelect }: { log: DeliveryLog; isLast: boolean; onSelect: () => void }) {
+function LogRow({ log, isLast, onSelect, locale = "en" }: { log: DeliveryLog; isLast: boolean; onSelect: () => void; locale?: Locale }) {
   return (
     <div className={!isLast ? "border-b border-[rgba(0,0,0,0.06)]" : ""}>
       <button
@@ -383,7 +465,7 @@ function LogRow({ log, isLast, onSelect }: { log: DeliveryLog; isLast: boolean; 
               {formatTimestamp(log.timestamp)}
             </span>
           </div>
-          <StatusDot status={log.status} />
+          <StatusDot status={log.status} locale={locale} />
         </div>
         <div className="flex items-center justify-between pl-5">
           <div className="min-w-0 flex-1">
@@ -453,11 +535,14 @@ function ConfigInput({ field, onValueChange }: { field: ConfigField; onValueChan
   )
 }
 
-function StatusDot({ status }: { status: DeliveryLog["status"] }) {
+function StatusDot({ status, locale = "en" }: { status: DeliveryLog["status"]; locale?: Locale }) {
+  const labels = locale === "kr"
+    ? { delivered: "배송 완료", failed: "실패", pending: "대기 중" }
+    : { delivered: "Delivered", failed: "Failed", pending: "Pending" }
   const config = {
-    delivered: { color: "#34A853", bg: "rgba(52,168,83,0.1)", label: "Delivered", icon: CheckCircle2 },
-    failed: { color: "#D93025", bg: "rgba(217,48,37,0.1)", label: "Failed", icon: XCircle },
-    pending: { color: "#E37400", bg: "rgba(227,116,0,0.1)", label: "Pending", icon: AlertCircle },
+    delivered: { color: "#34A853", bg: "rgba(52,168,83,0.1)", label: labels.delivered, icon: CheckCircle2 },
+    failed: { color: "#D93025", bg: "rgba(217,48,37,0.1)", label: labels.failed, icon: XCircle },
+    pending: { color: "#E37400", bg: "rgba(227,116,0,0.1)", label: labels.pending, icon: AlertCircle },
   }
   const c = config[status]
   const Icon = c.icon
@@ -477,12 +562,15 @@ function ChannelDetailSheet({
   open,
   onOpenChange,
   plugins,
+  locale = "en",
 }: {
   channel: Channel | null
   open: boolean
   onOpenChange: (open: boolean) => void
   plugins: DeliveryPlugin[]
+  locale?: Locale
 }) {
+  const t = translations[locale]
   const [activeTab, setActiveTab] = useState<SheetTab>("settings")
   const [configValues, setConfigValues] = useState<Record<string, string>>({})
   const [selectedLog, setSelectedLog] = useState<DeliveryLog | null>(null)
@@ -506,8 +594,8 @@ function ChannelDetailSheet({
   }
 
   const tabs: { key: SheetTab; label: string; icon: typeof Settings }[] = [
-    { key: "settings", label: "Settings", icon: Settings },
-    { key: "logs", label: "Logs", icon: FileText },
+    { key: "settings", label: t.settings, icon: Settings },
+    { key: "logs", label: t.deliveryHistory, icon: FileText },
   ]
 
   return (
@@ -561,7 +649,7 @@ function ChannelDetailSheet({
               <div className="flex items-center gap-2">
                 <Settings className="size-4 text-[#666666]" strokeWidth={2} />
                 <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">
-                  {channel.type} Configuration
+                  {channel.type} {t.configuration}
                 </p>
               </div>
               {fields.length > 0 ? (
@@ -572,12 +660,12 @@ function ChannelDetailSheet({
                 </div>
               ) : (
                 <p className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                  No configuration available for this channel type.
+                  {t.noConfig}
                 </p>
               )}
               <div className="pt-2">
                 <button className="flex h-9 items-center rounded-full bg-[#918DF6] px-5 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]">
-                  Save Settings
+                  {t.saveSettings}
                 </button>
               </div>
             </div>
@@ -586,15 +674,15 @@ function ChannelDetailSheet({
               <div className="flex items-center gap-2 mb-3">
                 <FileText className="size-4 text-[#666666]" strokeWidth={2} />
                 <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">
-                  Delivery History
+                  {t.deliveryHistory}
                 </p>
                 <span className="ml-auto text-[11px] tracking-[-0.32px] text-[#999999]">
-                  Last 5 deliveries
+                  {t.last5}
                 </span>
               </div>
               <div className="flex flex-col gap-0">
                 {logs.map((log, idx) => (
-                  <LogRow key={log.id} log={log} isLast={idx === logs.length - 1} onSelect={() => setSelectedLog(log)} />
+                  <LogRow key={log.id} log={log} isLast={idx === logs.length - 1} onSelect={() => setSelectedLog(log)} locale={locale} />
                 ))}
               </div>
             </div>
@@ -615,10 +703,10 @@ function ChannelDetailSheet({
             </DialogHeader>
             <div className="flex max-h-[calc(85vh-96px)] flex-col gap-4 overflow-y-auto pr-1">
               <div className="flex items-center gap-4">
-                <StatusDot status={selectedLog.status} />
+                <StatusDot status={selectedLog.status} locale={locale} />
                 <div className="flex items-center gap-4">
                   <div>
-                    <span className="text-[11px] tracking-[-0.32px] text-[#999999]">Status Code</span>
+                    <span className="text-[11px] tracking-[-0.32px] text-[#999999]">{t.statusCode}</span>
                     <p className={`text-[13px] font-semibold tabular-nums tracking-[-0.32px] ${
                       selectedLog.statusCode && selectedLog.statusCode < 300 ? "text-[#34A853]" : selectedLog.statusCode && selectedLog.statusCode >= 400 ? "text-[#D93025]" : "text-[#999999]"
                     }`}>
@@ -626,7 +714,7 @@ function ChannelDetailSheet({
                     </p>
                   </div>
                   <div>
-                    <span className="text-[11px] tracking-[-0.32px] text-[#999999]">Latency</span>
+                    <span className="text-[11px] tracking-[-0.32px] text-[#999999]">{t.latency}</span>
                     <p className="text-[13px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">{selectedLog.deliveryTime}</p>
                   </div>
                 </div>
@@ -638,9 +726,9 @@ function ChannelDetailSheet({
                 </div>
               )}
 
-              <JsonBlock label="Request" data={selectedLog.request} />
-              <JsonBlock label="Headers" data={selectedLog.headers} />
-              {selectedLog.response && <JsonBlock label="Response" data={selectedLog.response} />}
+              <JsonBlock label="Request" data={selectedLog.request} copiedLabel={t.copied} copyLabel={t.copy} />
+              <JsonBlock label="Headers" data={selectedLog.headers} copiedLabel={t.copied} copyLabel={t.copy} />
+              {selectedLog.response && <JsonBlock label="Response" data={selectedLog.response} copiedLabel={t.copied} copyLabel={t.copy} />}
             </div>
           </DialogContent>
         )}
@@ -651,7 +739,8 @@ function ChannelDetailSheet({
 
 type DialogStep = "select" | "configure"
 
-export default function Channels() {
+export default function Channels({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const [currency, setCurrency] = useState<Currency>("KRW")
   const [channels, setChannels] = useState<Channel[]>(initialChannels)
   const [plugins, setPlugins] = useState<DeliveryPlugin[]>(deliveryPlugins)
@@ -727,7 +816,8 @@ export default function Channels() {
 
   return (
     <DashboardLayout
-      title="Channels"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
@@ -747,10 +837,10 @@ export default function Channels() {
                 </span>
                 <div>
                   <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">
-                    Delivery Channels
+                    {t.deliveryChannels}
                   </h2>
                   <p className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                    Manage how orders are delivered to customers
+                    {t.manageDescription}
                   </p>
                 </div>
               </div>
@@ -761,39 +851,41 @@ export default function Channels() {
                   }
                 >
                   <Plus className="size-3.5" strokeWidth={2.5} />
-                  Add Channel
+                  {t.addChannel}
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[520px]">
                   {dialogStep === "select" ? (
                     <>
                       <DialogHeader>
                         <DialogTitle className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">
-                          Add Channel
+                          {t.addChannelTitle}
                         </DialogTitle>
                         <DialogDescription className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                          Select a delivery channel type. Install plugins from the Plugin Store to unlock more options.
+                          {t.addChannelDescription}
                         </DialogDescription>
                       </DialogHeader>
                       <div className="flex flex-col gap-4 py-1">
                         <div>
                           <p className="mb-2 text-[12px] font-medium uppercase tracking-[0.5px] text-[#999999]">
-                            Built-in
+                            {t.builtIn}
                           </p>
                           <div className="grid grid-cols-2 gap-2">
-                            {builtinPlugins.map((p) => (
+                             {builtinPlugins.map((p) => (
                               <PluginCard
                                 key={p.id}
                                 plugin={p}
                                 selected={selectedPlugin?.id === p.id}
                                 onSelect={() => handleSelectPlugin(p)}
                                 onInstall={() => handleInstallPlugin(p.id)}
+                                installLabel={t.installFromPluginStore}
+                                installedLabel={t.installedLabel}
                               />
                             ))}
                           </div>
                         </div>
                         <div>
                           <p className="mb-2 text-[12px] font-medium uppercase tracking-[0.5px] text-[#999999]">
-                            Plugin Store
+                            {t.pluginStoreLabel}
                           </p>
                           <div className="grid grid-cols-2 gap-2">
                             {storePlugins.map((p) => (
@@ -803,6 +895,8 @@ export default function Channels() {
                                 selected={selectedPlugin?.id === p.id}
                                 onSelect={() => handleSelectPlugin(p)}
                                 onInstall={() => handleInstallPlugin(p.id)}
+                                installLabel={t.installFromPluginStore}
+                                installedLabel={t.installedLabel}
                               />
                             ))}
                           </div>
@@ -836,19 +930,19 @@ export default function Channels() {
                           )}
                         </div>
                         <DialogDescription className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                          Configure your new {selectedPlugin?.name} delivery channel.
+                          {t.configureDescription.replace("{name}", selectedPlugin?.name ?? "")}
                         </DialogDescription>
                       </DialogHeader>
                       <div className="flex flex-col gap-4 py-2">
                         <div>
                           <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                            Channel Name
+                            {t.channelName}
                           </label>
                           <input
                             type="text"
                             value={newName}
                             onChange={(e) => setNewName(e.target.value)}
-                            placeholder={`e.g. Primary ${selectedPlugin?.name}`}
+                            placeholder={t.channelNamePlaceholder.replace("{name}", selectedPlugin?.name ?? "")}
                             className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none"
                           />
                         </div>
@@ -867,13 +961,13 @@ export default function Channels() {
                       </div>
                       <DialogFooter>
                         <DialogClose render={<Button variant="outline" />}>
-                          Cancel
+                          {t.cancel}
                         </DialogClose>
                         <button
                           onClick={handleAdd}
                           className="flex h-9 items-center rounded-lg bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]"
                         >
-                          Save Channel
+                          {t.saveChannel}
                         </button>
                       </DialogFooter>
                     </>
@@ -888,19 +982,19 @@ export default function Channels() {
               <div className="flex items-center gap-4 px-5 py-2.5">
                 <div className="flex items-center gap-1.5">
                   <span className="text-[12px] font-medium tabular-nums tracking-[-0.32px] text-[#181925]">{channels.length}</span>
-                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">channels</span>
+                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.channels}</span>
                 </div>
                 <div className="h-3 w-px bg-[rgba(0,0,0,0.08)]" />
                 <div className="flex items-center gap-1.5">
                   <span className="size-1.5 rounded-full bg-[#34A853]" />
                   <span className="text-[12px] font-medium tabular-nums tracking-[-0.32px] text-[#181925]">{channels.filter((c) => c.active).length}</span>
-                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">active</span>
+                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.active}</span>
                 </div>
                 <div className="h-3 w-px bg-[rgba(0,0,0,0.08)]" />
                 <div className="flex items-center gap-1.5">
                   <Zap className="size-3 text-[#E37400]" strokeWidth={2} />
                   <span className="text-[12px] font-medium tabular-nums tracking-[-0.32px] text-[#181925]">472</span>
-                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">today</span>
+                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.today}</span>
                 </div>
                 <div className="ml-auto flex items-center gap-1">
                   {[...new Set(channels.map((c) => c.type))].map((type) => {
@@ -925,10 +1019,10 @@ export default function Channels() {
                 <div className="flex flex-col items-center justify-center py-12">
                   <Send className="size-8 text-[#CCCCCC]" strokeWidth={1.5} />
                   <p className="mt-3 text-[14px] font-medium tracking-[-0.32px] text-[#999999]">
-                    No channels registered
+                    {t.noChannels}
                   </p>
                   <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#CCCCCC]">
-                    Add a channel to start delivering orders
+                    {t.noChannelsDescription}
                   </p>
                 </div>
               ) : (
@@ -979,7 +1073,7 @@ export default function Channels() {
                             {stats.lastDelivery}
                           </span>
                           <span className="text-[rgba(0,0,0,0.15)]">·</span>
-                          <span className="shrink-0 tabular-nums">{stats.deliveryCount} sent</span>
+                          <span className="shrink-0 tabular-nums">{stats.deliveryCount} {t.sent}</span>
                         </div>
                       </div>
 
@@ -995,6 +1089,8 @@ export default function Channels() {
                           <OverflowMenu
                             onSettings={() => handleOpenChannel(ch)}
                             onDelete={() => handleDelete(ch.id)}
+                            settingsLabel={t.settings}
+                            deleteLabel={t.deleteChannel}
                           />
                         </span>
                       </div>
@@ -1012,6 +1108,7 @@ export default function Channels() {
         open={sheetOpen}
         onOpenChange={setSheetOpen}
         plugins={plugins}
+        locale={locale}
       />
     </DashboardLayout>
   )

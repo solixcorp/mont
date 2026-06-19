@@ -1,14 +1,24 @@
 import type React from "react"
 
+// ─── Platform Icons ──────────────────────────────────────────
+
+const NaverIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="size-full">
+    <path d="M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845Z"/>
+  </svg>
+)
+
 // ─── Constants ───────────────────────────────────────────────
 
 export const KRW_RATE = 1450
 
 // ─── Types ───────────────────────────────────────────────────
 
+export type OrderStatus = "Delivered" | "Processing" | "Failed" | "ManualRequired"
+
 export type OrderItem = {
   keyCode: string
-  status: "Delivered" | "Processing" | "Failed"
+  status: OrderStatus
 }
 
 export type FlowTiming = {
@@ -24,7 +34,7 @@ export type Order = {
   storeName?: string
   amount: number
   quantity?: number
-  status: "Delivered" | "Processing" | "Failed"
+  status: OrderStatus
   time: string
   product: string
   customer: string
@@ -58,24 +68,48 @@ export function formatKRW(n: number) {
 
 // ─── Platform Badges ─────────────────────────────────────────
 
-export const platformBadges: Record<string, { bg: string; label: string; textSize: string }> = {
-  "Naver Store": { bg: "bg-[#03C75A]", label: "N", textSize: "text-[9px]" },
-  "G2G": { bg: "bg-[#E87A2A]", label: "G2G", textSize: "text-[7px]" },
-  "G2A": { bg: "bg-[#F05A23]", label: "G2A", textSize: "text-[7px]" },
-  "Direct": { bg: "bg-[#918DF6]", label: "D", textSize: "text-[9px]" },
+export const platformBadges: Record<string, { bg: string; label: string; textSize: string; icon?: React.FC }> = {
+  "네이버 스토어": { bg: "bg-[#03C75A]", label: "N", textSize: "text-[9px]", icon: NaverIcon },
+  "롯데몰": { bg: "bg-[#E40046]", label: "L", textSize: "text-[9px]" },
+  "지마켓": { bg: "bg-[#00A650]", label: "G", textSize: "text-[9px]" },
+  "쿠팡": { bg: "bg-[#E31837]", label: "C", textSize: "text-[9px]" },
+}
+
+export function PlatformBadgeIcon({ badge, size = "size-4" }: { badge: typeof platformBadges[string]; size?: string }) {
+  const Icon = badge.icon
+  return (
+    <span className={`${badge.bg} inline-flex ${size} shrink-0 items-center justify-center rounded p-0.5 font-bold text-white ${badge.textSize}`}>
+      {Icon ? <Icon /> : badge.label}
+    </span>
+  )
 }
 
 // ─── Status Badge ────────────────────────────────────────────
 
-export function StatusBadge({ status }: { status: "Delivered" | "Processing" | "Failed" }) {
+const statusLabelsKR: Record<string, string> = {
+  Delivered: "발송 완료",
+  Processing: "발송 준비중",
+  Failed: "발송 실패",
+  ManualRequired: "수동 발송 필요",
+}
+
+export function StatusBadge({ status, locale = "en" }: { status: OrderStatus; locale?: "en" | "kr" }) {
   const styles = {
     Delivered: "bg-[#34A853] text-white",
     Processing: "bg-[#E37400] text-white",
     Failed: "bg-[#D93025] text-white",
+    ManualRequired: "bg-[#1A73E8] text-white",
   }
+  const label = locale === "kr" ? statusLabelsKR[status] : (status === "ManualRequired" ? "Manual Required" : status)
   return (
-    <span className={`inline-flex items-center rounded-full px-3 py-1 text-[13px] font-semibold ${styles[status]}`}>
-      {status}
+    <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-semibold ${styles[status]}`}>
+      {status === "Processing" && (
+        <svg className="size-3 animate-spin" viewBox="0 0 12 12" fill="none">
+          <circle cx="6" cy="6" r="5" stroke="currentColor" strokeOpacity="0.3" strokeWidth="2" />
+          <path d="M6 1a5 5 0 0 1 5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      )}
+      {label}
     </span>
   )
 }
@@ -105,16 +139,24 @@ export const deliveryChannels: Record<string, { icon: React.ReactNode; color: st
   },
 }
 
-export function DeliveryChannel({ channel }: { channel: string }) {
+const channelLabelsKR: Record<string, string> = {
+  Telegram: "텔레그램",
+  Email: "이메일",
+  SMS: "문자",
+  WhatsApp: "왓츠앱",
+}
+
+export function DeliveryChannel({ channel, locale = "en" }: { channel: string; locale?: "en" | "kr" }) {
   const ch = deliveryChannels[channel]
   if (!ch) return null
+  const label = locale === "kr" ? (channelLabelsKR[channel] ?? channel) : channel
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-semibold tracking-[-0.32px]"
       style={{ backgroundColor: ch.bg, color: ch.color }}
     >
       {ch.icon}
-      {channel}
+      {label}
     </span>
   )
 }
@@ -140,7 +182,7 @@ export const deliveryPlugins: DeliveryPlugin[] = [
   {
     id: "email",
     name: "Email",
-    author: "Mont",
+    author: "Linko",
     description: "Deliver product keys via email",
     pluginType: "builtin",
     iconBg: "#2C78FC",
@@ -152,7 +194,7 @@ export const deliveryPlugins: DeliveryPlugin[] = [
   {
     id: "telegram",
     name: "Telegram",
-    author: "Mont",
+    author: "Linko",
     description: "Send keys through Telegram bot",
     pluginType: "builtin",
     iconBg: "#2AABEE",
@@ -164,7 +206,7 @@ export const deliveryPlugins: DeliveryPlugin[] = [
   {
     id: "sms",
     name: "SMS",
-    author: "Mont",
+    author: "Linko",
     description: "Deliver keys via SMS text message",
     pluginType: "builtin",
     iconBg: "#33C758",
@@ -176,7 +218,7 @@ export const deliveryPlugins: DeliveryPlugin[] = [
   {
     id: "whatsapp",
     name: "WhatsApp",
-    author: "Mont",
+    author: "Linko",
     description: "Send keys through WhatsApp messaging",
     pluginType: "builtin",
     iconBg: "#25D366",
@@ -188,7 +230,7 @@ export const deliveryPlugins: DeliveryPlugin[] = [
   {
     id: "webhook",
     name: "Webhook",
-    author: "Mont",
+    author: "Linko",
     description: "Deliver via custom webhook endpoint",
     pluginType: "builtin",
     iconBg: "#E37400",

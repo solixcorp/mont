@@ -9,6 +9,74 @@ import {
 } from "@/components/ui/dialog"
 import DashboardLayout from "@/DashboardLayout"
 import type { Currency } from "@/shared"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    title: "Merchants",
+    platforms: "Platforms",
+    pluginStore: "Plugin Store",
+    platformsAvailable: "platforms available",
+    connected: "connected",
+    totalOrders: "total orders",
+    notConnected: "Not connected",
+    connect: "Connect",
+    disconnect: "Disconnect",
+    settings: "Settings",
+    browsePlugins: "Browse community plugins to extend Linko",
+    all: "All",
+    merchant: "Merchant",
+    provider: "Provider",
+    delivery: "Delivery",
+    installs: "installs",
+    installed: "Installed",
+    install: "Install",
+    uninstall: "Uninstall",
+    connectTitle: "Connect {name}",
+    connectDescription: "Enter your credentials to connect this platform.",
+    apiKey: "API Key",
+    apiKeyPlaceholder: "Enter your API key",
+    storeId: "Store / Seller ID",
+    storeIdPlaceholder: "Enter your store ID",
+    enableAutoDelivery: "Enable auto-delivery for new orders",
+    cancel: "Cancel",
+    save: "Save",
+    settingsTitle: "{name} Settings",
+    orders: "orders",
+  },
+  kr: {
+    title: "판매처",
+    platforms: "플랫폼",
+    pluginStore: "플러그인 스토어",
+    platformsAvailable: "개 플랫폼 사용 가능",
+    connected: "연결됨",
+    totalOrders: "총 주문",
+    notConnected: "연결되지 않음",
+    connect: "연결",
+    disconnect: "연결 해제",
+    settings: "설정",
+    browsePlugins: "커뮤니티 플러그인 둘러보기",
+    all: "전체",
+    merchant: "마켓플레이스",
+    provider: "공급자",
+    delivery: "배송",
+    installs: "설치",
+    installed: "설치됨",
+    install: "설치",
+    uninstall: "제거",
+    connectTitle: "{name} 연결",
+    connectDescription: "이 플랫폼에 연결할 자격 증명을 입력하세요.",
+    apiKey: "API 키",
+    apiKeyPlaceholder: "API 키를 입력하세요",
+    storeId: "스토어 / 판매자 ID",
+    storeIdPlaceholder: "스토어 ID를 입력하세요",
+    enableAutoDelivery: "새 주문에 대해 자동 배송 활성화",
+    cancel: "취소",
+    save: "저장",
+    settingsTitle: "{name} 설정",
+    orders: "주문",
+  },
+} as const
 
 type Merchant = {
   id: string
@@ -149,7 +217,7 @@ const platformSettingsConfigs: Record<string, PlatformSettingsConfig> = {
 const initialMerchants: Merchant[] = [
   {
     id: "naver",
-    name: "Naver Store",
+    name: "네이버 스토어",
     connected: true,
     iconBg: "#03C75A",
     iconLabel: "N",
@@ -160,10 +228,10 @@ const initialMerchants: Merchant[] = [
   },
   {
     id: "g2g",
-    name: "G2G",
+    name: "롯데몰",
     connected: true,
     iconBg: "#E87A2A",
-    iconLabel: "G2G",
+    iconLabel: "롯데몰",
     storeName: "VexoraDigital",
     connectedSince: "2026-01-08",
     orderCount: 892,
@@ -171,10 +239,10 @@ const initialMerchants: Merchant[] = [
   },
   {
     id: "g2a",
-    name: "G2A",
+    name: "지마켓",
     connected: false,
     iconBg: "#F05A23",
-    iconLabel: "G2A",
+    iconLabel: "지마켓",
     description: "Connect your G2A Marketplace seller account to auto-deliver game keys and digital products",
   },
   {
@@ -206,8 +274,8 @@ const initialPlugins: Plugin[] = [
     id: "steam-market",
     name: "Steam Market Bridge",
     author: "@steamdev",
-    description: "Sync Steam Community Market listings with Mont inventory",
-    fullDescription: "Bridge your Steam Community Market listings directly into Mont. Automatically sync item listings, track market prices, and manage inventory across both platforms with real-time updates.",
+    description: "Sync Steam Community Market listings with Linko inventory",
+    fullDescription: "Bridge your Steam Community Market listings directly into Linko. Automatically sync item listings, track market prices, and manage inventory across both platforms with real-time updates.",
     category: "Merchant",
     iconBg: "#1B2838",
     iconLabel: "S",
@@ -344,7 +412,8 @@ const categoryIcon: Record<PluginCategory, typeof Store> = {
 const pluginFilters = ["All", "Merchant", "Provider", "Delivery"] as const
 type PluginFilter = (typeof pluginFilters)[number]
 
-export default function Merchants() {
+export default function Merchants({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const [currency, setCurrency] = useState<Currency>("KRW")
   const [merchants, setMerchants] = useState<Merchant[]>(initialMerchants)
   const [plugins, setPlugins] = useState<Plugin[]>(initialPlugins)
@@ -470,7 +539,8 @@ export default function Merchants() {
 
   return (
     <DashboardLayout
-      title="Merchants"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency((c) => (c === "USD" ? "KRW" : "USD"))}
     >
@@ -485,7 +555,7 @@ export default function Merchants() {
             }`}
           >
             <Store className="size-3.5" strokeWidth={2} />
-            Platforms
+            {t.platforms}
             <span className={`text-[11px] tabular-nums ${activeTab === "platforms" ? "text-[#918DF6]" : "text-[#999999]"}`}>
               {merchants.length}
             </span>
@@ -499,7 +569,7 @@ export default function Merchants() {
             }`}
           >
             <Package className="size-3.5" strokeWidth={2} />
-            Plugin Store
+            {t.pluginStore}
             <span className={`text-[11px] tabular-nums ${activeTab === "plugins" ? "text-[#918DF6]" : "text-[#999999]"}`}>
               {plugins.length}
             </span>
@@ -509,11 +579,11 @@ export default function Merchants() {
         {activeTab === "platforms" ? (
           <>
             <p className="mb-4 text-[13px] tracking-[-0.32px] text-[#666666]">
-              <span className="tabular-nums">{merchants.length}</span> platforms available
+              <span className="tabular-nums">{merchants.length}</span> {t.platformsAvailable}
               {" · "}
-              <span className="tabular-nums">{connectedCount}</span> connected
+              <span className="tabular-nums">{connectedCount}</span> {t.connected}
               {" · "}
-              <span className="tabular-nums">{totalOrders.toLocaleString("en-US")}</span> total orders
+              <span className="tabular-nums">{totalOrders.toLocaleString("en-US")}</span> {t.totalOrders}
             </p>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -545,7 +615,7 @@ export default function Merchants() {
                 </div>
               </div>
               <div className="mt-2.5 flex items-center gap-3 text-[12px] tracking-[-0.32px] text-[#666666]">
-                <span className="tabular-nums">{m.orderCount?.toLocaleString("en-US")} orders</span>
+                <span className="tabular-nums">{m.orderCount?.toLocaleString("en-US")} {t.orders}</span>
                 <span className="text-[#CCCCCC]">·</span>
                 <span className="tabular-nums text-[#999999]">{m.apiKey}</span>
               </div>
@@ -555,14 +625,14 @@ export default function Merchants() {
                   className="flex h-7 items-center gap-1 rounded-full border border-[rgba(0,0,0,0.08)] bg-white px-2.5 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.02)]"
                 >
                   <Unplug className="size-3" strokeWidth={2} />
-                  Disconnect
+                  {t.disconnect}
                 </button>
                 <button
                   onClick={() => openSettings(m)}
                   className="flex h-7 items-center gap-1 rounded-full border border-[rgba(0,0,0,0.08)] bg-white px-2.5 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.02)]"
                 >
                   <Settings className="size-3" strokeWidth={2} />
-                  Settings
+                  {t.settings}
                 </button>
               </div>
             </div>
@@ -590,7 +660,7 @@ export default function Merchants() {
                   <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">{m.name}</p>
                   <div className="flex items-center gap-1.5">
                     <span className="inline-block size-1.5 rounded-full bg-[#CCCCCC]" />
-                    <span className="text-[12px] tracking-[-0.32px] text-[#999999]">Not connected</span>
+                    <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.notConnected}</span>
                   </div>
                 </div>
               </div>
@@ -602,7 +672,7 @@ export default function Merchants() {
                   onClick={() => setConnectTarget(m)}
                   className="flex h-7 items-center rounded-full bg-[#918DF6] px-3 text-[12px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#9580FF]"
                 >
-                  Connect
+                  {t.connect}
                 </button>
               </div>
             </div>
@@ -612,7 +682,7 @@ export default function Merchants() {
         ) : (
           <>
             <p className="mb-4 text-[13px] tracking-[-0.32px] text-[#666666]">
-              Browse community plugins to extend Mont
+              {t.browsePlugins}
             </p>
 
             <div className="mb-4 flex items-center gap-2">
@@ -627,7 +697,7 @@ export default function Merchants() {
               }`}
             >
               {f !== "All" && (() => { const Icon = categoryIcon[f as PluginCategory]; return <Icon className="size-3.5" strokeWidth={2} /> })()}
-              {f}
+              {f === "All" ? t.all : f === "Merchant" ? t.merchant : f === "Provider" ? t.provider : t.delivery}
             </button>
           ))}
         </div>
@@ -658,13 +728,13 @@ export default function Merchants() {
               </div>
               <p className="mt-2 line-clamp-2 text-[13px] leading-snug tracking-[-0.32px] text-[#666666]">{p.description}</p>
               <div className="mt-3 flex items-center gap-2">
-                <span className="rounded-md border border-[rgba(0,0,0,0.08)] px-1.5 py-0.5 text-[11px] font-medium tracking-[-0.32px] text-[#666666]">{p.category}</span>
-                <span className="text-[12px] tabular-nums tracking-[-0.32px] text-[#999999]">{formatInstalls(p.installs)} installs</span>
+                <span className="rounded-md border border-[rgba(0,0,0,0.08)] px-1.5 py-0.5 text-[11px] font-medium tracking-[-0.32px] text-[#666666]">{p.category === "Merchant" ? t.merchant : p.category === "Provider" ? t.provider : t.delivery}</span>
+                <span className="text-[12px] tabular-nums tracking-[-0.32px] text-[#999999]">{formatInstalls(p.installs)} {t.installs}</span>
                 <span className="ml-auto">
                   {p.installed ? (
                     <span className="flex h-7 items-center gap-1 rounded-full bg-[#34A853]/10 px-2.5 text-[12px] font-medium tracking-[-0.32px] text-[#34A853]">
                       <Check className="size-3" strokeWidth={2.5} />
-                      Installed
+                      {t.installed}
                     </span>
                   ) : (
                     <span
@@ -673,7 +743,7 @@ export default function Merchants() {
                       className="flex h-7 items-center gap-1 rounded-full border border-[rgba(0,0,0,0.08)] px-2.5 text-[12px] font-medium tracking-[-0.32px] text-[#666666] hover:bg-[rgba(0,0,0,0.02)]"
                     >
                       <Download className="size-3" strokeWidth={2} />
-                      Install
+                      {t.install}
                     </span>
                   )}
                 </span>
@@ -700,35 +770,35 @@ export default function Merchants() {
           <DialogContent className="sm:max-w-md" showCloseButton>
             <DialogHeader>
               <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-                Connect {connectTarget.name}
+                {t.connectTitle.replace("{name}", connectTarget.name)}
               </DialogTitle>
               <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
-                Enter your credentials to connect this platform.
+                {t.connectDescription}
               </DialogDescription>
             </DialogHeader>
 
             <div className="flex flex-col gap-4">
               <div>
                 <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                  API Key
+                  {t.apiKey}
                 </label>
                 <input
                   type="text"
                   value={connectApiKey}
                   onChange={(e) => setConnectApiKey(e.target.value)}
-                  placeholder="Enter your API key"
+                  placeholder={t.apiKeyPlaceholder}
                   className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none"
                 />
               </div>
               <div>
                 <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                  Store / Seller ID
+                  {t.storeId}
                 </label>
                 <input
                   type="text"
                   value={connectStoreId}
                   onChange={(e) => setConnectStoreId(e.target.value)}
-                  placeholder="Enter your store ID"
+                  placeholder={t.storeIdPlaceholder}
                   className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none"
                 />
               </div>
@@ -739,7 +809,7 @@ export default function Merchants() {
                   className="size-4 rounded border-[rgba(0,0,0,0.12)] accent-[#918DF6]"
                 />
                 <span className="text-[13px] tracking-[-0.32px] text-[#181925]">
-                  Enable auto-delivery for new orders
+                  {t.enableAutoDelivery}
                 </span>
               </label>
 
@@ -748,13 +818,13 @@ export default function Merchants() {
                   onClick={() => { setConnectTarget(null); setConnectApiKey(""); setConnectStoreId("") }}
                   className="flex h-8 items-center rounded-full border border-[rgba(0,0,0,0.08)] bg-white px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.02)]"
                 >
-                  Cancel
+                  {t.cancel}
                 </button>
                 <button
                   onClick={handleConnect}
                   className="flex h-8 items-center rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#9580FF]"
                 >
-                  Connect
+                  {t.connect}
                 </button>
               </div>
             </div>
@@ -795,8 +865,8 @@ export default function Merchants() {
               <p className="text-[14px] leading-relaxed tracking-[-0.32px] text-[#666666]">{selectedPlugin.fullDescription}</p>
 
               <div className="flex items-center gap-3">
-                <span className="rounded-md border border-[rgba(0,0,0,0.08)] px-2 py-0.5 text-[12px] font-medium tracking-[-0.32px] text-[#666666]">{selectedPlugin.category}</span>
-                <span className="text-[13px] tabular-nums tracking-[-0.32px] text-[#999999]">{formatInstalls(selectedPlugin.installs)} installs</span>
+                <span className="rounded-md border border-[rgba(0,0,0,0.08)] px-2 py-0.5 text-[12px] font-medium tracking-[-0.32px] text-[#666666]">{selectedPlugin.category === "Merchant" ? t.merchant : selectedPlugin.category === "Provider" ? t.provider : t.delivery}</span>
+                <span className="text-[13px] tabular-nums tracking-[-0.32px] text-[#999999]">{formatInstalls(selectedPlugin.installs)} {t.installs}</span>
                 <span className="text-[13px] tabular-nums tracking-[-0.32px] text-[#999999]">{selectedPlugin.version}</span>
               </div>
 
@@ -810,7 +880,7 @@ export default function Merchants() {
                     onClick={() => handleToggleInstall(selectedPlugin.id)}
                     className="flex h-8 items-center gap-1.5 rounded-full border border-[#D93025]/20 bg-[#D93025]/[0.06] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#D93025] transition-colors hover:bg-[#D93025]/10"
                   >
-                    Uninstall
+                    {t.uninstall}
                   </button>
                 ) : (
                   <button
@@ -818,7 +888,7 @@ export default function Merchants() {
                     className="flex h-8 items-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#9580FF]"
                   >
                     <Download className="size-3.5" strokeWidth={2} />
-                    Install
+                    {t.install}
                   </button>
                 )}
               </div>
@@ -966,7 +1036,7 @@ export default function Merchants() {
             <DialogContent className="sm:max-w-2xl" showCloseButton>
               <DialogHeader>
                 <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-                  {settingsTarget.name} Settings
+                  {t.settingsTitle.replace("{name}", settingsTarget.name)}
                 </DialogTitle>
                 <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
                   {config.description}
@@ -996,13 +1066,13 @@ export default function Merchants() {
                     onClick={() => setSettingsTarget(null)}
                     className="flex h-8 items-center rounded-full border border-[rgba(0,0,0,0.08)] bg-white px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.02)]"
                   >
-                    Cancel
+                    {t.cancel}
                   </button>
                   <button
                     onClick={handleSaveSettings}
                     className="flex h-8 items-center rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#9580FF]"
                   >
-                    Save
+                    {t.save}
                   </button>
                 </div>
               </div>

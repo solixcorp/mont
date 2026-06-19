@@ -45,6 +45,166 @@ import {
 } from "@/components/ui/dialog"
 import { DeliveryChannel, deliveryChannels } from "@/shared"
 import type { Currency } from "@/shared"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    title: "Inventory",
+    totalKeys: "Total Keys",
+    available: "Available",
+    reserved: "Reserved",
+    delivered: "Delivered",
+    ofTotal: "of total",
+    lowStock: "Low stock:",
+    left: "left",
+    searchPlaceholder: "Search by ID, product, key, customer, tag...",
+    product: "Product",
+    keyAsset: "Key / Asset",
+    status: "Status",
+    added: "Added",
+    deliveredTo: "Delivered to",
+    allKeysLoaded: (count: number) => `All ${count} keys loaded`,
+    keysLoaded: "keys loaded",
+    of: "of",
+    details: "Details",
+    activity: "Activity",
+    statusLabel: "Status",
+    addedLabel: "Added",
+    keyDetails: "Key Details",
+    keyCode: "Key Code",
+    redemptionLink: "Redemption Link",
+    openLink: "Open Link",
+    licenseFile: "License File",
+    keyImage: "Key Image",
+    subscription: "Subscription",
+    plan: "Plan",
+    price: "Price",
+    start: "Start",
+    end: "End",
+    deliveryLinkCode: "Delivery Link Code",
+    deliveryInfo: "Delivery Info",
+    recipient: "Recipient",
+    channel: "Channel",
+    deliveredLabel: "Delivered",
+    urlExpiration: "URL Expiration",
+    deliveryUrl: "Delivery URL",
+    noDeliveryUrl: "No delivery URL",
+    expireUrl: "Expire URL",
+    notDelivered: "Not delivered",
+    availableDesc: "This key is available and waiting to be assigned",
+    reservedDesc: "This key is reserved for an upcoming order",
+    expiredDesc: "This key has expired and can no longer be delivered",
+    heldDesc: "This key is on hold and excluded from auto-delivery",
+    deactivatedDesc: "This key has been deactivated",
+    noInfoDesc: "No delivery information available",
+    tags: "Tags",
+    noTags: "No tags",
+    addTag: "Add tag...",
+    releaseHold: "Release Hold",
+    hold: "Hold",
+    reactivate: "Reactivate",
+    deactivate: "Deactivate",
+    delete: "Delete",
+    noActivity: "No activity yet",
+    noActivityDesc: "Access events will appear here once the delivery link is visited",
+    deleteItem: "Delete Item",
+    holdItem: "Hold Item",
+    releaseHoldItem: "Release Hold",
+    deactivateItem: "Deactivate Item",
+    reactivateItem: "Reactivate Item",
+    expireDeliveryUrl: "Expire Delivery URL",
+    deleteConfirm: (product: string, id: string) => `Are you sure you want to delete "${product}" (${id})? This action cannot be undone.`,
+    holdConfirm: (product: string, id: string) => `Are you sure you want to hold "${product}" (${id})?`,
+    unholdConfirm: (product: string, id: string) => `Are you sure you want to release the hold on "${product}" (${id})?`,
+    deactivateConfirm: (product: string, id: string) => `Are you sure you want to deactivate "${product}" (${id})? The key will no longer be available for delivery.`,
+    expireConfirm: (product: string, id: string) => `Are you sure you want to expire the delivery URL for "${product}" (${id})? The recipient will no longer be able to access the delivery link.`,
+    reactivateConfirm: (product: string, id: string) => `Are you sure you want to reactivate "${product}" (${id})?`,
+    cancel: "Cancel",
+    confirm: "Confirm",
+    expired: "Expired",
+    customer: "Customer",
+    deliveries: "Deliveries",
+    products: "Products",
+  },
+  kr: {
+    title: "재고",
+    totalKeys: "전체 키",
+    available: "사용 가능",
+    reserved: "예약됨",
+    delivered: "배송됨",
+    ofTotal: "전체 대비",
+    lowStock: "재고 부족:",
+    left: "남음",
+    searchPlaceholder: "ID, 상품, 키, 고객, 태그로 검색...",
+    product: "상품",
+    keyAsset: "키 / 자산",
+    status: "상태",
+    added: "추가일",
+    deliveredTo: "배송 대상",
+    allKeysLoaded: (count: number) => `전체 ${count}개 키 로드 완료`,
+    keysLoaded: "개 키 로드됨",
+    of: "/",
+    details: "상세",
+    activity: "활동",
+    statusLabel: "상태",
+    addedLabel: "추가일",
+    keyDetails: "키 상세",
+    keyCode: "키 코드",
+    redemptionLink: "교환 링크",
+    openLink: "링크 열기",
+    licenseFile: "라이선스 파일",
+    keyImage: "키 이미지",
+    subscription: "구독",
+    plan: "플랜",
+    price: "가격",
+    start: "시작",
+    end: "종료",
+    deliveryLinkCode: "배송 링크 코드",
+    deliveryInfo: "배송 정보",
+    recipient: "수신자",
+    channel: "채널",
+    deliveredLabel: "배송일",
+    urlExpiration: "URL 만료",
+    deliveryUrl: "배송 URL",
+    noDeliveryUrl: "배송 URL 없음",
+    expireUrl: "URL 만료 처리",
+    notDelivered: "미배송",
+    availableDesc: "이 키는 할당 대기 중입니다",
+    reservedDesc: "이 키는 다음 주문을 위해 예약되어 있습니다",
+    expiredDesc: "이 키는 만료되어 더 이상 배송할 수 없습니다",
+    heldDesc: "이 키는 보류 중이며 자동 배송에서 제외됩니다",
+    deactivatedDesc: "이 키는 비활성화되었습니다",
+    noInfoDesc: "배송 정보가 없습니다",
+    tags: "태그",
+    noTags: "태그 없음",
+    addTag: "태그 추가...",
+    releaseHold: "보류 해제",
+    hold: "보류",
+    reactivate: "재활성화",
+    deactivate: "비활성화",
+    delete: "삭제",
+    noActivity: "활동 없음",
+    noActivityDesc: "배송 링크가 방문되면 접근 이벤트가 여기에 표시됩니다",
+    deleteItem: "항목 삭제",
+    holdItem: "항목 보류",
+    releaseHoldItem: "보류 해제",
+    deactivateItem: "항목 비활성화",
+    reactivateItem: "항목 재활성화",
+    expireDeliveryUrl: "배송 URL 만료",
+    deleteConfirm: (product: string, id: string) => `"${product}" (${id})를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`,
+    holdConfirm: (product: string, id: string) => `"${product}" (${id})를 보류하시겠습니까?`,
+    unholdConfirm: (product: string, id: string) => `"${product}" (${id})의 보류를 해제하시겠습니까?`,
+    deactivateConfirm: (product: string, id: string) => `"${product}" (${id})를 비활성화하시겠습니까? 키는 더 이상 배송에 사용할 수 없습니다.`,
+    expireConfirm: (product: string, id: string) => `"${product}" (${id})의 배송 URL을 만료하시겠습니까? 수신자는 더 이상 배송 링크에 접근할 수 없습니다.`,
+    reactivateConfirm: (product: string, id: string) => `"${product}" (${id})를 재활성화하시겠습니까?`,
+    cancel: "취소",
+    confirm: "확인",
+    expired: "만료됨",
+    customer: "고객",
+    deliveries: "배송",
+    products: "상품",
+  },
+} as const
 
 export type InventoryStatus = "Available" | "Reserved" | "Delivered" | "Expired" | "Held" | "Deactivated"
 
@@ -232,7 +392,8 @@ function getAvailableByProduct(items: InventoryItem[]): { product: string; avail
 
 const PAGE_SIZE = 15
 
-export default function Inventory() {
+export default function Inventory({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const [currency, setCurrency] = useState<Currency>("KRW")
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState("All")
@@ -400,15 +561,16 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
   }
 
   const summaryCards = [
-    { label: "Total Keys", value: counts.total, icon: Database, color: "#918DF6", pct: 100 },
-    { label: "Available", value: counts.available, icon: Key, color: "#34A853", pct: Math.round((counts.available / counts.total) * 100) },
-    { label: "Reserved", value: counts.reserved, icon: Clock, color: "#E37400", pct: Math.round((counts.reserved / counts.total) * 100) },
-    { label: "Delivered", value: counts.delivered, icon: CheckCircle2, color: "#1A73E8", pct: Math.round((counts.delivered / counts.total) * 100) },
+    { label: t.totalKeys, value: counts.total, icon: Database, color: "#918DF6", pct: 100 },
+    { label: t.available, value: counts.available, icon: Key, color: "#34A853", pct: Math.round((counts.available / counts.total) * 100) },
+    { label: t.reserved, value: counts.reserved, icon: Clock, color: "#E37400", pct: Math.round((counts.reserved / counts.total) * 100) },
+    { label: t.delivered, value: counts.delivered, icon: CheckCircle2, color: "#1A73E8", pct: Math.round((counts.delivered / counts.total) * 100) },
   ]
 
   return (
     <DashboardLayout
-      title="Inventory"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
@@ -439,7 +601,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                   </span>
                 </div>
                 <p className="mt-2 text-[12px] font-medium tabular-nums tracking-[-0.32px]" style={{ color: card.color }}>
-                  {card.pct}% of total
+                  {card.pct}% {t.ofTotal}
                 </p>
               </div>
             )
@@ -453,11 +615,11 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
           >
             <AlertTriangle className="size-4 shrink-0 text-[#E37400]" strokeWidth={2} />
             <p className="text-[13px] font-medium tracking-[-0.32px] text-[#666666]">
-              Low stock:{" "}
+              {t.lowStock}{" "}
               {lowStockProducts.map((p, i) => (
                 <span key={p.product}>
                   <span className="font-semibold text-[#181925]">{p.product}</span>
-                  <span className="text-[#999999]"> ({p.available} left)</span>
+                  <span className="text-[#999999]"> ({p.available} {t.left})</span>
                   {i < lowStockProducts.length - 1 && <span className="text-[#999999]"> · </span>}
                 </span>
               ))}
@@ -506,7 +668,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by ID, product, key, customer, tag..."
+                placeholder={t.searchPlaceholder}
                 className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-[rgba(0,0,0,0.015)] pl-9 pr-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none focus:border-[#918DF6]/40 focus:bg-white"
               />
             </div>
@@ -516,11 +678,11 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
             <table className="w-full">
               <thead className="sticky top-0 z-10 bg-[#FAFAFA]">
                 <tr className="border-b border-[rgba(0,0,0,0.08)]">
-                  <th className="px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Product</th>
-                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Key / Asset</th>
-                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Status</th>
-                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Added</th>
-                  <th className="min-w-[220px] px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Delivered to</th>
+                  <th className="px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.product}</th>
+                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.keyAsset}</th>
+                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.status}</th>
+                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.added}</th>
+                  <th className="min-w-[220px] px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.deliveredTo}</th>
                 </tr>
               </thead>
               <tbody>
@@ -697,12 +859,12 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
               <Loader2 className="size-4 animate-spin text-[#999999]" strokeWidth={2} />
             ) : allLoaded ? (
               <p className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                All {filtered.length} keys loaded
+                {t.allKeysLoaded(filtered.length)}
               </p>
             ) : (
               <p className="text-[13px] tracking-[-0.32px] text-[#666666]">
-                <span className="font-medium tabular-nums text-[#181925]">{visibleItems.length}</span> of{" "}
-                <span className="font-medium tabular-nums text-[#181925]">{filtered.length}</span> keys loaded
+                <span className="font-medium tabular-nums text-[#181925]">{visibleItems.length}</span> {t.of}{" "}
+                <span className="font-medium tabular-nums text-[#181925]">{filtered.length}</span> {t.keysLoaded}
               </p>
             )}
           </div>
@@ -724,7 +886,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
 
             {selectedItem.status === "Delivered" && selectedItem.deliveryCode && accessLogs[selectedItem.deliveryCode] && (
               <div className="flex items-center gap-1 border-b border-[rgba(0,0,0,0.08)] pb-0">
-                {([{ value: "details", label: "Details" }, { value: "activity", label: "Activity" }] as const).map((tab) => (
+                {([{ value: "details", label: t.details }, { value: "activity", label: t.activity }] as const).map((tab) => (
                   <button
                     key={tab.value}
                     onClick={() => setInventoryDetailTab(tab.value)}
@@ -748,7 +910,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
               {/* Status & Category */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Status</p>
+                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.statusLabel}</p>
                   <div className="mt-1">
                     <span
                       className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold"
@@ -760,7 +922,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                   </div>
                 </div>
                 <div>
-                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Added</p>
+                  <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.addedLabel}</p>
                   <p className="mt-1 text-[13px] font-medium tracking-[-0.32px] text-[#181925]">{selectedItem.addedDate}</p>
                 </div>
               </div>
@@ -769,12 +931,12 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
 
               {/* Key & Delivery */}
               <div>
-                <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Key Details</p>
+                <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.keyDetails}</p>
                 <div className="mt-2 grid grid-cols-1 gap-y-2.5">
                   <div>
                     {selectedItem.keyType === "key" && (
                       <>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Key Code</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.keyCode}</p>
                         <div className="mt-0.5 flex items-center gap-2">
                           <p className="font-mono text-[13px] font-semibold tracking-[0.5px] text-[#181925]">
                             {showKeyCode ? selectedItem.keyCode : maskKey(selectedItem.keyCode)}
@@ -806,7 +968,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                     )}
                     {selectedItem.keyType === "link" && (
                       <>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Redemption Link</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.redemptionLink}</p>
                         <div className="mt-1 flex items-center gap-2">
                           <a
                             href={selectedItem.keyCode}
@@ -815,7 +977,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                             className="inline-flex items-center gap-1.5 rounded-lg border border-[rgba(26,115,232,0.2)] bg-[rgba(26,115,232,0.04)] px-3 py-1.5 text-[12px] font-medium text-[#1A73E8] transition-colors hover:bg-[rgba(26,115,232,0.08)]"
                           >
                             <ExternalLink className="size-3.5" strokeWidth={2} />
-                            Open Link
+                            {t.openLink}
                           </a>
                           <button
                             onClick={() => handleCopyKey(selectedItem.id, selectedItem.keyCode)}
@@ -834,7 +996,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                     )}
                     {selectedItem.keyType === "file" && (
                       <>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">License File</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.licenseFile}</p>
                         <div className="mt-1 flex items-center gap-2 rounded-lg border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.02)] px-3 py-2">
                           <FileText className="size-4 shrink-0 text-[#666666]" strokeWidth={2} />
                           <span className="min-w-0 truncate text-[12px] font-medium tracking-[-0.32px] text-[#181925]">
@@ -856,7 +1018,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                     )}
                     {selectedItem.keyType === "image" && (
                       <>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Key Image</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.keyImage}</p>
                         <div className="mt-1 rounded-lg border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.02)] p-2">
                           <div className="flex aspect-[16/9] items-center justify-center rounded-md bg-[rgba(0,0,0,0.04)]">
                             <div className="flex flex-col items-center gap-1.5 text-[#999999]">
@@ -883,29 +1045,29 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                     )}
                     {selectedItem.keyType === "subscription" && selectedItem.subscription && (
                       <>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Subscription</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.subscription}</p>
                         <div className="mt-1 rounded-lg border border-[rgba(26,115,232,0.15)] bg-[rgba(26,115,232,0.03)] p-3">
                           <div className="flex items-center justify-between">
                             <p className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">{selectedItem.subscription.subscriptionName}</p>
                           </div>
                           <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2">
                             <div>
-                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Plan</p>
+                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.plan}</p>
                               <p className="mt-0.5 text-[12px] font-medium tracking-[-0.32px] text-[#181925]">{selectedItem.subscription.plan}</p>
                             </div>
                             <div>
-                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Price</p>
+                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.price}</p>
                               <p className="mt-0.5 text-[12px] font-medium tracking-[-0.32px] text-[#181925]">{selectedItem.subscription.price}</p>
                             </div>
                             <div>
-                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Start</p>
+                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.start}</p>
                               <p className="mt-0.5 flex items-center gap-1 text-[12px] font-medium tracking-[-0.32px] text-[#181925]">
                                 <CalendarDays className="size-3 text-[#999999]" strokeWidth={2} />
                                 {selectedItem.subscription.startDate}
                               </p>
                             </div>
                             <div>
-                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">End</p>
+                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.end}</p>
                               <p className="mt-0.5 flex items-center gap-1 text-[12px] font-medium tracking-[-0.32px] text-[#181925]">
                                 <CalendarDays className="size-3 text-[#999999]" strokeWidth={2} />
                                 {selectedItem.subscription.endDate}
@@ -914,7 +1076,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                           </div>
                           {selectedItem.deliveryCode && (
                             <div className="mt-2.5 border-t border-[rgba(0,0,0,0.06)] pt-2">
-                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Delivery Link Code</p>
+                              <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.deliveryLinkCode}</p>
                               <p className="mt-0.5 font-mono text-[11px] tracking-[0.3px] text-[#1A73E8]">{selectedItem.deliveryCode}</p>
                             </div>
                           )}
@@ -924,7 +1086,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                   </div>
                   {selectedItem.deliveredTo && (
                     <div>
-                      <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Delivered to</p>
+                      <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.deliveredTo}</p>
                       <div className="group/customer relative mt-0.5 inline-block">
                         <Link
                           to="/dashboard/customers"
@@ -951,12 +1113,12 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                                 </span>
                                 <div className="min-w-0">
                                   <p className="truncate text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">{selectedItem.deliveredTo}</p>
-                                  <p className="text-[11px] tracking-[-0.32px] text-[#999999]">Customer</p>
+                                  <p className="text-[11px] tracking-[-0.32px] text-[#999999]">{t.customer}</p>
                                 </div>
                               </div>
                               {lastDelivered?.deliveryMethod && (
                                 <div className="mt-2.5 flex items-center gap-2 rounded-lg bg-[rgba(0,0,0,0.02)] px-2.5 py-2">
-                                  <DeliveryChannel channel={lastDelivered.deliveryMethod} />
+                                  <DeliveryChannel channel={lastDelivered.deliveryMethod} locale={locale} />
                                   <span className="truncate text-[11px] font-medium tracking-[-0.32px] text-[#555555]">
                                     {lastDelivered.deliveryTarget}
                                   </span>
@@ -964,11 +1126,11 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                               )}
                               <div className="mt-2 grid grid-cols-2 gap-2">
                                 <div className="rounded-lg bg-[rgba(0,0,0,0.02)] px-2.5 py-1.5">
-                                  <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Deliveries</p>
+                                  <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.deliveries}</p>
                                   <p className="text-[15px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">{deliveredCount}</p>
                                 </div>
                                 <div className="rounded-lg bg-[rgba(0,0,0,0.02)] px-2.5 py-1.5">
-                                  <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">Products</p>
+                                  <p className="text-[10px] font-medium tracking-[-0.32px] text-[#999999]">{t.products}</p>
                                   <p className="text-[15px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">{products.length}</p>
                                 </div>
                               </div>
@@ -1001,18 +1163,18 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                     className="rounded-xl border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.015)] p-4"
                     style={{ boxShadow: "0 1px 1px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.06)" }}
                   >
-                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Delivery Info</p>
+                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.deliveryInfo}</p>
                     <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
                       <div>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Recipient</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.recipient}</p>
                         <p className="mt-0.5 text-[13px] font-medium tracking-[-0.32px] text-[#181925]">{selectedItem.deliveredTo}</p>
                       </div>
                       <div>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Channel</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.channel}</p>
                         <div className="mt-0.5">
                           {selectedItem.deliveryMethod ? (
                             <div className="group/channel relative inline-block">
-                              <DeliveryChannel channel={selectedItem.deliveryMethod} />
+                              <DeliveryChannel channel={selectedItem.deliveryMethod} locale={locale} />
                               {selectedItem.deliveryTarget && (
                                 <div className="pointer-events-none absolute bottom-full left-0 z-50 mb-2 whitespace-nowrap rounded-lg border border-[rgba(0,0,0,0.08)] bg-white px-3 py-2 opacity-0 shadow-lg transition-opacity group-hover/channel:pointer-events-auto group-hover/channel:opacity-100">
                                   <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Sent to</p>
@@ -1026,13 +1188,13 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                         </div>
                       </div>
                       <div>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Delivered</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.deliveredLabel}</p>
                         <p className="mt-0.5 text-[13px] font-medium tabular-nums tracking-[-0.32px] text-[#181925]">
                           {formatDeliveryDate(selectedItem.deliveredDate)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">URL Expiration</p>
+                        <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.urlExpiration}</p>
                         <div className="mt-0.5">
                           {expInfo.isActive ? (
                             <span className="inline-flex items-center gap-1 rounded-full bg-[rgba(227,116,0,0.08)] px-2 py-0.5 text-[12px] font-medium tabular-nums tracking-[-0.32px] text-[#E37400]">
@@ -1042,7 +1204,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                           ) : (
                             <span className="inline-flex items-center gap-1 rounded-full bg-[rgba(217,48,37,0.08)] px-2 py-0.5 text-[12px] font-semibold tracking-[-0.32px] text-[#D93025]">
                               <Ban className="size-3" strokeWidth={2.5} />
-                              Expired
+                              {t.expired}
                             </span>
                           )}
                         </div>
@@ -1051,14 +1213,14 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
 
                     {/* Delivery URL */}
                     <div className="mt-3 border-t border-[rgba(0,0,0,0.06)] pt-3">
-                      <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Delivery URL</p>
+                      <p className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.deliveryUrl}</p>
                       {selectedItem.deliveryExpired ? (
                         <div className="mt-1 flex items-center gap-2">
                           <span className="text-[13px] font-medium tracking-[-0.32px] text-[#999999] line-through">
                             delivery.mont.io/{selectedItem.deliveryCode || "••••••••"}
                           </span>
                           <span className="inline-flex items-center rounded-full bg-[rgba(217,48,37,0.08)] px-2 py-0.5 text-[10px] font-semibold tracking-[-0.32px] text-[#D93025]">
-                            Expired
+                            {t.expired}
                           </span>
                         </div>
                       ) : selectedItem.deliveryCode ? (
@@ -1077,11 +1239,11 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                             className="inline-flex items-center gap-1 rounded-full border border-[#D93025]/20 px-2.5 py-1 text-[11px] font-semibold tracking-[-0.32px] text-[#D93025] transition-colors hover:bg-[#D93025]/[0.04]"
                           >
                             <LinkIcon className="size-3" strokeWidth={2} />
-                            Expire URL
+                            {t.expireUrl}
                           </button>
                         </div>
                       ) : (
-                        <p className="mt-1 text-[13px] tracking-[-0.32px] text-[#999999]">No delivery URL</p>
+                        <p className="mt-1 text-[13px] tracking-[-0.32px] text-[#999999]">{t.noDeliveryUrl}</p>
                       )}
                     </div>
                   </div>
@@ -1100,15 +1262,15 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                   </span>
                   <div>
                     <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">
-                      Not delivered
+                      {t.notDelivered}
                     </p>
                     <p className="text-[12px] tracking-[-0.32px] text-[#999999]">
-                      {selectedItem.status === "Available" ? "This key is available and waiting to be assigned"
-                        : selectedItem.status === "Reserved" ? "This key is reserved for an upcoming order"
-                        : selectedItem.status === "Expired" ? "This key has expired and can no longer be delivered"
-                        : selectedItem.status === "Held" ? "This key is on hold and excluded from auto-delivery"
-                        : selectedItem.status === "Deactivated" ? "This key has been deactivated"
-                        : "No delivery information available"}
+                      {selectedItem.status === "Available" ? t.availableDesc
+                        : selectedItem.status === "Reserved" ? t.reservedDesc
+                        : selectedItem.status === "Expired" ? t.expiredDesc
+                        : selectedItem.status === "Held" ? t.heldDesc
+                        : selectedItem.status === "Deactivated" ? t.deactivatedDesc
+                        : t.noInfoDesc}
                     </p>
                   </div>
                 </div>
@@ -1118,7 +1280,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
 
               {/* Tags */}
               <div>
-                <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Tags</p>
+                <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.tags}</p>
                 <div className="mt-2 flex flex-wrap items-center gap-1.5">
                   {selectedItem.tags.map((tag) => (
                     <span
@@ -1136,7 +1298,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                     </span>
                   ))}
                   {selectedItem.tags.length === 0 && (
-                    <span className="text-[12px] tracking-[-0.32px] text-[#999999]">No tags</span>
+                    <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.noTags}</span>
                   )}
                 </div>
                 <div className="mt-2 flex items-center gap-2">
@@ -1150,7 +1312,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                         handleAddTag(selectedItem.id, tagInput)
                       }
                     }}
-                    placeholder="Add tag..."
+                    placeholder={t.addTag}
                     className="h-7 flex-1 rounded-md border border-[rgba(0,0,0,0.12)] bg-[rgba(0,0,0,0.015)] px-2 text-[12px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none focus:border-[#918DF6]/40 focus:bg-white"
                   />
                   <button
@@ -1171,21 +1333,21 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                   className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(0,0,0,0.12)] px-3.5 py-1.5 text-[12px] font-semibold tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                 >
                   <Pause className="size-3.5" strokeWidth={2} />
-                  {selectedItem.status === "Held" ? "Release Hold" : "Hold"}
+                  {selectedItem.status === "Held" ? t.releaseHold : t.hold}
                 </button>
                 <button
                   onClick={() => setConfirmAction({ type: selectedItem.status === "Deactivated" ? "reactivate" : "deactivate", item: selectedItem })}
                   className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(0,0,0,0.12)] px-3.5 py-1.5 text-[12px] font-semibold tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                 >
                   <Ban className="size-3.5" strokeWidth={2} />
-                  {selectedItem.status === "Deactivated" ? "Reactivate" : "Deactivate"}
+                  {selectedItem.status === "Deactivated" ? t.reactivate : t.deactivate}
                 </button>
                 <button
                   onClick={() => setConfirmAction({ type: "delete", item: selectedItem })}
                   className="inline-flex items-center gap-1.5 rounded-full border border-[#D93025]/20 px-3.5 py-1.5 text-[12px] font-semibold tracking-[-0.32px] text-[#D93025] transition-colors hover:bg-[#D93025]/[0.04]"
                 >
                   <Trash2 className="size-3.5" strokeWidth={2} />
-                  Delete
+                  {t.delete}
                 </button>
               </div>
               </>)}
@@ -1195,8 +1357,8 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                 if (!logs || logs.length === 0) return (
                   <div className="flex flex-col items-center justify-center py-10">
                     <Activity className="size-6 text-[#CCCCCC]" strokeWidth={1.5} />
-                    <p className="mt-3 text-[13px] font-medium tracking-[-0.32px] text-[#999999]">No activity yet</p>
-                    <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#CCCCCC]">Access events will appear here once the delivery link is visited</p>
+                    <p className="mt-3 text-[13px] font-medium tracking-[-0.32px] text-[#999999]">{t.noActivity}</p>
+                    <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#CCCCCC]">{t.noActivityDesc}</p>
                   </div>
                 )
                 return (
@@ -1258,25 +1420,25 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
           <DialogContent className="sm:max-w-sm" showCloseButton>
             <DialogHeader>
               <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-                {confirmAction.type === "delete" ? "Delete Item"
-                  : confirmAction.type === "hold" ? "Hold Item"
-                  : confirmAction.type === "unhold" ? "Release Hold"
-                  : confirmAction.type === "deactivate" ? "Deactivate Item"
-                  : confirmAction.type === "deliveryExpired" ? "Expire Delivery URL"
-                  : "Reactivate Item"}
+                {confirmAction.type === "delete" ? t.deleteItem
+                  : confirmAction.type === "hold" ? t.holdItem
+                  : confirmAction.type === "unhold" ? t.releaseHoldItem
+                  : confirmAction.type === "deactivate" ? t.deactivateItem
+                  : confirmAction.type === "deliveryExpired" ? t.expireDeliveryUrl
+                  : t.reactivateItem}
               </DialogTitle>
               <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
                 {confirmAction.type === "delete"
-                  ? `Are you sure you want to delete "${confirmAction.item.product}" (${confirmAction.item.id})? This action cannot be undone.`
+                  ? t.deleteConfirm(confirmAction.item.product, confirmAction.item.id)
                   : confirmAction.type === "hold"
-                    ? `Are you sure you want to hold "${confirmAction.item.product}" (${confirmAction.item.id})?`
+                    ? t.holdConfirm(confirmAction.item.product, confirmAction.item.id)
                     : confirmAction.type === "unhold"
-                      ? `Are you sure you want to release the hold on "${confirmAction.item.product}" (${confirmAction.item.id})?`
+                      ? t.unholdConfirm(confirmAction.item.product, confirmAction.item.id)
                       : confirmAction.type === "deactivate"
-                        ? `Are you sure you want to deactivate "${confirmAction.item.product}" (${confirmAction.item.id})? The key will no longer be available for delivery.`
+                        ? t.deactivateConfirm(confirmAction.item.product, confirmAction.item.id)
                         : confirmAction.type === "deliveryExpired"
-                          ? `Are you sure you want to expire the delivery URL for "${confirmAction.item.product}" (${confirmAction.item.id})? The recipient will no longer be able to access the delivery link.`
-                          : `Are you sure you want to reactivate "${confirmAction.item.product}" (${confirmAction.item.id})?`}
+                          ? t.expireConfirm(confirmAction.item.product, confirmAction.item.id)
+                          : t.reactivateConfirm(confirmAction.item.product, confirmAction.item.id)}
               </DialogDescription>
             </DialogHeader>
             <div className="flex items-center justify-end gap-2">
@@ -1284,7 +1446,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                 onClick={() => setConfirmAction(null)}
                 className="rounded-full border border-[rgba(0,0,0,0.12)] px-4 py-1.5 text-[13px] font-semibold tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
               >
-                Cancel
+                {t.cancel}
               </button>
               <button
                 onClick={() => {
@@ -1299,7 +1461,7 @@ const [inventoryDetailTab, setInventoryDetailTab] = useState<"details" | "activi
                     : "bg-[#918DF6] hover:bg-[#7B77E0]"
                 }`}
               >
-                {confirmAction.type === "delete" ? "Delete" : confirmAction.type === "deliveryExpired" ? "Expire URL" : "Confirm"}
+                {confirmAction.type === "delete" ? t.delete : confirmAction.type === "deliveryExpired" ? t.expireUrl : t.confirm}
               </button>
             </div>
           </DialogContent>

@@ -14,7 +14,7 @@ export default function NotFound() {
           <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#918DF6]">
             <div className="absolute right-1 top-1 h-4 w-4 rounded-full bg-white" />
           </div>
-          <span className="text-xl font-semibold tracking-tight text-[#181925]">Mont</span>
+          <span className="text-xl font-semibold tracking-tight text-[#181925]">Linko</span>
         </div>
 
         <h1 className="text-8xl font-bold tracking-tight text-[#918DF6] sm:text-[9rem]">404</h1>

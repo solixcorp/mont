@@ -29,6 +29,82 @@ import {
   formatUSD,
   formatKRW,
 } from "@/shared"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    title: "Customers",
+    totalCustomers: "Total Customers",
+    active: "Active",
+    inactive: "Inactive",
+    totalRevenue: "Total Revenue",
+    avgOrderValue: "Avg Order Value",
+    customer: "Customer",
+    platform: "Platform",
+    orders: "Orders",
+    totalSpent: "Total Spent",
+    lastOrder: "Last Order",
+    status: "Status",
+    searchPlaceholder: "Search by name, email, tag...",
+    allCustomersLoaded: "All {count} customers loaded",
+    ofCustomersLoaded: "{visible} of {total} customers loaded",
+    customerProfile: "Customer Profile",
+    totalOrders: "Total Orders",
+    customerSince: "Customer Since",
+    information: "Information",
+    orderLogs: "Order Logs",
+    sendMessage: "Send Message",
+    channelInfo: "Channel Info",
+    tags: "Tags",
+    noTags: "No tags",
+    addTag: "Add tag...",
+    memo: "Memo",
+    memoPlaceholder: "Add a note about this customer...",
+    noOrders: "No orders yet",
+    channel: "Channel",
+    selectChannel: "Select a channel to compose a message",
+    sendingTo: "Sending to",
+    send: "Send",
+    sending: "Sending...",
+    all: "All",
+  },
+  kr: {
+    title: "고객",
+    totalCustomers: "전체 고객",
+    active: "활성",
+    inactive: "비활성",
+    totalRevenue: "총 매출",
+    avgOrderValue: "평균 주문 금액",
+    customer: "고객",
+    platform: "플랫폼",
+    orders: "주문",
+    totalSpent: "총 지출",
+    lastOrder: "마지막 주문",
+    status: "상태",
+    searchPlaceholder: "이름, 이메일, 태그로 검색...",
+    allCustomersLoaded: "전체 {count}명 로드 완료",
+    ofCustomersLoaded: "{total}명 중 {visible}명 로드됨",
+    customerProfile: "고객 프로필",
+    totalOrders: "총 주문",
+    customerSince: "가입일",
+    information: "정보",
+    orderLogs: "주문 내역",
+    sendMessage: "메시지 보내기",
+    channelInfo: "채널 정보",
+    tags: "태그",
+    noTags: "태그 없음",
+    addTag: "태그 추가...",
+    memo: "메모",
+    memoPlaceholder: "이 고객에 대한 메모를 작성하세요...",
+    noOrders: "주문 내역이 없습니다",
+    channel: "채널",
+    selectChannel: "메시지를 작성할 채널을 선택하세요",
+    sendingTo: "발송 대상",
+    send: "보내기",
+    sending: "발송 중...",
+    all: "전체",
+  },
+} as const
 
 type CustomerOrder = {
   orderId: string
@@ -60,7 +136,7 @@ const allCustomers: Customer[] = [
     id: "CUS001",
     name: "\uc774\uc815\ud6a8",
     email: "leolee12@naver.com",
-    platform: "Naver Store",
+    platform: "네이버 스토어",
     totalOrders: 3,
     totalSpent: 84.97,
     lastOrderDate: "Apr 25, 2026",
@@ -79,7 +155,7 @@ const allCustomers: Customer[] = [
     id: "CUS002",
     name: "Alex Turner",
     email: "g2g_buyer_8821",
-    platform: "G2G",
+    platform: "롯데몰",
     totalOrders: 2,
     totalSpent: 85.98,
     lastOrderDate: "Apr 25, 2026",
@@ -97,7 +173,7 @@ const allCustomers: Customer[] = [
     id: "CUS003",
     name: "\uae40\uc218\ud604",
     email: "g2a_user_3347",
-    platform: "G2A",
+    platform: "지마켓",
     totalOrders: 2,
     totalSpent: 25.98,
     lastOrderDate: "Apr 25, 2026",
@@ -115,7 +191,7 @@ const allCustomers: Customer[] = [
     id: "CUS004",
     name: "\ubc15\ubbfc\uc9c0",
     email: "minji_park@naver.com",
-    platform: "Naver Store",
+    platform: "네이버 스토어",
     totalOrders: 2,
     totalSpent: 49.98,
     lastOrderDate: "Apr 25, 2026",
@@ -132,7 +208,7 @@ const allCustomers: Customer[] = [
     id: "CUS005",
     name: "James Kim",
     email: "g2g_buyer_1204",
-    platform: "G2G",
+    platform: "롯데몰",
     totalOrders: 3,
     totalSpent: 139.97,
     lastOrderDate: "Apr 24, 2026",
@@ -151,7 +227,7 @@ const allCustomers: Customer[] = [
     id: "CUS006",
     name: "\ucd5c\uc601\ud638",
     email: "g2a_user_7790",
-    platform: "G2A",
+    platform: "지마켓",
     totalOrders: 1,
     totalSpent: 49.99,
     lastOrderDate: "Apr 24, 2026",
@@ -168,7 +244,7 @@ const allCustomers: Customer[] = [
     id: "CUS007",
     name: "\uc815\ud558\uc740",
     email: "haeun_j@naver.com",
-    platform: "Naver Store",
+    platform: "네이버 스토어",
     totalOrders: 2,
     totalSpent: 69.98,
     lastOrderDate: "Apr 24, 2026",
@@ -186,7 +262,7 @@ const allCustomers: Customer[] = [
     id: "CUS008",
     name: "David Park",
     email: "g2g_buyer_5512",
-    platform: "G2G",
+    platform: "롯데몰",
     totalOrders: 2,
     totalSpent: 39.98,
     lastOrderDate: "Apr 23, 2026",
@@ -204,7 +280,7 @@ const allCustomers: Customer[] = [
     id: "CUS009",
     name: "\uc774\uc11c\uc5f0",
     email: "seoyeon@gmail.com",
-    platform: "Direct",
+    platform: "쿠팡",
     totalOrders: 2,
     totalSpent: 99.98,
     lastOrderDate: "Apr 23, 2026",
@@ -222,7 +298,7 @@ const allCustomers: Customer[] = [
     id: "CUS010",
     name: "\ud55c\uc9c0\ubbfc",
     email: "jimin_han@naver.com",
-    platform: "Naver Store",
+    platform: "네이버 스토어",
     totalOrders: 2,
     totalSpent: 89.98,
     lastOrderDate: "Apr 22, 2026",
@@ -240,7 +316,7 @@ const allCustomers: Customer[] = [
     id: "CUS011",
     name: "\uc624\uc900\uc11c",
     email: "junseo_oh@naver.com",
-    platform: "Naver Store",
+    platform: "네이버 스토어",
     totalOrders: 1,
     totalSpent: 39.99,
     lastOrderDate: "Apr 21, 2026",
@@ -257,7 +333,7 @@ const allCustomers: Customer[] = [
     id: "CUS012",
     name: "Emily Chen",
     email: "g2g_buyer_3345",
-    platform: "G2G",
+    platform: "롯데몰",
     totalOrders: 2,
     totalSpent: 44.00,
     lastOrderDate: "Apr 20, 2026",
@@ -275,7 +351,7 @@ const allCustomers: Customer[] = [
     id: "CUS013",
     name: "Brandon Lee",
     email: "g2g_buyer_1167",
-    platform: "G2G",
+    platform: "롯데몰",
     totalOrders: 1,
     totalSpent: 41.50,
     lastOrderDate: "Apr 18, 2026",
@@ -292,7 +368,7 @@ const allCustomers: Customer[] = [
     id: "CUS014",
     name: "\uae40\ub098\uc5f0",
     email: "nayeon_k@naver.com",
-    platform: "Naver Store",
+    platform: "네이버 스토어",
     totalOrders: 1,
     totalSpent: 59.99,
     lastOrderDate: "Apr 14, 2026",
@@ -309,7 +385,7 @@ const allCustomers: Customer[] = [
     id: "CUS015",
     name: "\uc1a1\uc720\uc9c4",
     email: "yujin_song@gmail.com",
-    platform: "Direct",
+    platform: "쿠팡",
     totalOrders: 1,
     totalSpent: 9.99,
     lastOrderDate: "Apr 13, 2026",
@@ -341,7 +417,8 @@ function getInitials(name: string): string {
 
 const PAGE_SIZE = 10
 
-export default function Customers() {
+export default function Customers({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const [currency, setCurrency] = useState<Currency>("KRW")
   const [searchQuery, setSearchQuery] = useState("")
   const [platformFilter, setPlatformFilter] = useState("All")
@@ -489,15 +566,16 @@ export default function Customers() {
   const avgOrderValue = totalRevenue / customers.reduce((sum, c) => sum + c.totalOrders, 0)
 
   const summaryCards = [
-    { label: "Total Customers", value: totalCustomers.toString(), icon: Users, color: "#918DF6" },
-    { label: "Active", value: activeCustomers.toString(), icon: TrendingUp, color: "#34A853" },
-    { label: "Total Revenue", value: formatUSD(totalRevenue), icon: DollarSign, color: "#1A73E8" },
-    { label: "Avg Order Value", value: formatUSD(avgOrderValue), icon: ShoppingCart, color: "#E37400" },
+    { label: t.totalCustomers, value: totalCustomers.toString(), icon: Users, color: "#918DF6" },
+    { label: t.active, value: activeCustomers.toString(), icon: TrendingUp, color: "#34A853" },
+    { label: t.totalRevenue, value: locale === "kr" ? formatKRW(totalRevenue) : formatUSD(totalRevenue), icon: DollarSign, color: "#1A73E8" },
+    { label: t.avgOrderValue, value: locale === "kr" ? formatKRW(avgOrderValue) : formatUSD(avgOrderValue), icon: ShoppingCart, color: "#E37400" },
   ]
 
   return (
     <DashboardLayout
-      title="Customers"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
@@ -571,7 +649,7 @@ export default function Customers() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by name, email, tag..."
+                placeholder={t.searchPlaceholder}
                 className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-[rgba(0,0,0,0.015)] pl-9 pr-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none focus:border-[#918DF6]/40 focus:bg-white"
               />
             </div>
@@ -582,12 +660,12 @@ export default function Customers() {
             <table className="w-full">
               <thead className="sticky top-0 z-10 bg-[#FAFAFA]">
                 <tr className="border-b border-[rgba(0,0,0,0.08)]">
-                  <th className="px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Customer</th>
-                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Platform</th>
-                  <th className="px-3 py-2.5 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Orders</th>
-                  <th className="px-3 py-2.5 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Total Spent</th>
-                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Last Order</th>
-                  <th className="px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Status</th>
+                  <th className="px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.customer}</th>
+                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.platform}</th>
+                  <th className="px-3 py-2.5 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.orders}</th>
+                  <th className="px-3 py-2.5 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.totalSpent}</th>
+                  <th className="px-3 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.lastOrder}</th>
+                  <th className="px-5 py-2.5 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.status}</th>
                 </tr>
               </thead>
               <tbody>
@@ -642,9 +720,9 @@ export default function Customers() {
                       </td>
                       <td className="px-3 py-3 text-right">
                         <span className="text-[14px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
-                          {formatUSD(customer.totalSpent)}
+                          {locale === "kr" ? formatKRW(customer.totalSpent) : formatUSD(customer.totalSpent)}
                         </span>
-                        {currency === "KRW" && (
+                        {locale === "en" && currency === "KRW" && (
                           <p className="text-[12px] font-medium tabular-nums tracking-[-0.32px] text-[#999999]">
                             {formatKRW(customer.totalSpent)}
                           </p>
@@ -663,7 +741,7 @@ export default function Customers() {
                               : "bg-[rgba(102,102,102,0.08)] text-[#666666]"
                           }`}
                         >
-                          {customer.status}
+                          {customer.status === "Active" ? t.active : t.inactive}
                         </span>
                       </td>
                     </tr>
@@ -679,12 +757,17 @@ export default function Customers() {
               <Loader2 className="size-4 animate-spin text-[#999999]" strokeWidth={2} />
             ) : allLoaded ? (
               <p className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                All {filtered.length} customers loaded
+                {t.allCustomersLoaded.replace("{count}", String(filtered.length))}
               </p>
             ) : (
               <p className="text-[13px] tracking-[-0.32px] text-[#666666]">
-                <span className="font-medium tabular-nums text-[#181925]">{visibleCustomers.length}</span> of{" "}
-                <span className="font-medium tabular-nums text-[#181925]">{filtered.length}</span> customers loaded
+                {locale === "en" ? (
+                  <><span className="font-medium tabular-nums text-[#181925]">{visibleCustomers.length}</span> of{" "}
+                  <span className="font-medium tabular-nums text-[#181925]">{filtered.length}</span> customers loaded</>
+                ) : (
+                  <><span className="font-medium tabular-nums text-[#181925]">{filtered.length}</span>명 중{" "}
+                  <span className="font-medium tabular-nums text-[#181925]">{visibleCustomers.length}</span>명 로드됨</>
+                )}
               </p>
             )}
           </div>
@@ -697,7 +780,7 @@ export default function Customers() {
           <DialogContent className="sm:max-w-2xl" showCloseButton>
             <DialogHeader>
               <DialogTitle className="text-[18px] font-bold tracking-[-0.32px] text-[#181925]">
-                Customer Profile
+                {t.customerProfile}
               </DialogTitle>
               <DialogDescription className="text-[14px] tracking-[-0.32px] text-[#666666]">
                 {selectedCustomer.name} &middot; {selectedCustomer.email}
@@ -725,7 +808,7 @@ export default function Customers() {
                           : "bg-[rgba(102,102,102,0.08)] text-[#666666]"
                       }`}
                     >
-                      {selectedCustomer.status}
+                      {selectedCustomer.status === "Active" ? t.active : t.inactive}
                     </span>
                     {(() => {
                       const badge = platformBadges[selectedCustomer.platform]
@@ -746,30 +829,30 @@ export default function Customers() {
               {/* Stats */}
               <div className="grid grid-cols-4 gap-3">
                 <div className="rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-2.5">
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Total Orders</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.totalOrders}</p>
                   <p className="mt-0.5 text-[18px] font-bold tabular-nums leading-none tracking-[-0.32px] text-[#181925]">
                     {selectedCustomer.totalOrders}
                   </p>
                 </div>
                 <div className="rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-2.5">
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Total Spent</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.totalSpent}</p>
                   <p className="mt-0.5 text-[18px] font-bold tabular-nums leading-none tracking-[-0.32px] text-[#181925]">
-                    {formatUSD(selectedCustomer.totalSpent)}
+                    {locale === "kr" ? formatKRW(selectedCustomer.totalSpent) : formatUSD(selectedCustomer.totalSpent)}
                   </p>
-                  {currency === "KRW" && (
+                  {locale === "en" && currency === "KRW" && (
                     <p className="mt-0.5 text-[11px] font-medium tabular-nums tracking-[-0.32px] text-[#999999]">
                       {formatKRW(selectedCustomer.totalSpent)}
                     </p>
                   )}
                 </div>
                 <div className="rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-2.5">
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Avg Order Value</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.avgOrderValue}</p>
                   <p className="mt-0.5 text-[18px] font-bold tabular-nums leading-none tracking-[-0.32px] text-[#181925]">
-                    {formatUSD(selectedCustomer.totalSpent / selectedCustomer.totalOrders)}
+                    {locale === "kr" ? formatKRW(selectedCustomer.totalSpent / selectedCustomer.totalOrders) : formatUSD(selectedCustomer.totalSpent / selectedCustomer.totalOrders)}
                   </p>
                 </div>
                 <div className="rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-2.5">
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Customer Since</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.customerSince}</p>
                   <p className="mt-0.5 text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">
                     {selectedCustomer.firstOrderDate}
                   </p>
@@ -790,7 +873,7 @@ export default function Customers() {
                         : "text-[#999999] hover:text-[#666666]"
                     }`}
                   >
-                    {tab === "information" ? "Information" : tab === "orders" ? "Order Logs" : "Send Message"}
+                    {tab === "information" ? t.information : tab === "orders" ? t.orderLogs : t.sendMessage}
                   </button>
                 ))}
               </div>
@@ -799,7 +882,7 @@ export default function Customers() {
                 <div className="flex flex-col gap-4">
                   {Object.keys(selectedCustomer.channelData).length > 0 && (
                     <div>
-                      <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Channel Info</p>
+                      <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.channelInfo}</p>
                       <div className="mt-2 rounded-lg border border-[rgba(0,0,0,0.08)]">
                         {Object.entries(selectedCustomer.channelData).map(([key, value], i) => (
                           <div
@@ -815,7 +898,7 @@ export default function Customers() {
                   )}
 
                   <div>
-                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Tags</p>
+                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.tags}</p>
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       {selectedCustomer.tags.map((tag) => (
                         <span
@@ -833,7 +916,7 @@ export default function Customers() {
                         </span>
                       ))}
                       {selectedCustomer.tags.length === 0 && (
-                        <span className="text-[12px] tracking-[-0.32px] text-[#999999]">No tags</span>
+                        <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.noTags}</span>
                       )}
                     </div>
                     <div className="mt-2 flex items-center gap-2">
@@ -847,7 +930,7 @@ export default function Customers() {
                             handleAddTag(selectedCustomer.id, tagInput)
                           }
                         }}
-                        placeholder="Add tag..."
+                        placeholder={t.addTag}
                         className="h-7 flex-1 rounded-md border border-[rgba(0,0,0,0.12)] bg-[rgba(0,0,0,0.015)] px-2 text-[12px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none focus:border-[#918DF6]/40 focus:bg-white"
                       />
                       <button
@@ -860,11 +943,11 @@ export default function Customers() {
                   </div>
 
                   <div>
-                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Memo</p>
+                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.memo}</p>
                     <textarea
                       value={selectedCustomer.memo}
                       onChange={(e) => handleUpdateMemo(selectedCustomer.id, e.target.value)}
-                      placeholder="Add a note about this customer..."
+                      placeholder={t.memoPlaceholder}
                       rows={3}
                       className="mt-2 w-full resize-none rounded-lg border border-[rgba(0,0,0,0.12)] bg-[rgba(0,0,0,0.015)] px-3 py-2 text-[13px] leading-relaxed tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none focus:border-[#918DF6]/40 focus:bg-white"
                     />
@@ -894,15 +977,15 @@ export default function Customers() {
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <DeliveryChannel channel={order.delivery} />
-                          <StatusBadge status={order.status} />
+                          <DeliveryChannel channel={order.delivery} locale={locale} />
+                          <StatusBadge status={order.status} locale={locale} />
                           <span className="text-[13px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
-                            {formatUSD(order.amount)}
+                            {locale === "kr" ? formatKRW(order.amount) : formatUSD(order.amount)}
                           </span>
                         </div>
                       </div>
                     )) : (
-                      <p className="px-3 py-6 text-center text-[13px] tracking-[-0.32px] text-[#999999]">No orders yet</p>
+                      <p className="px-3 py-6 text-center text-[13px] tracking-[-0.32px] text-[#999999]">{t.noOrders}</p>
                     )}
                   </div>
                 </div>
@@ -911,7 +994,7 @@ export default function Customers() {
               {profileTab === "send" && (
                 <div className="flex flex-col gap-4">
                   <div>
-                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Channel</p>
+                    <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.channel}</p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {Object.keys(selectedCustomer.channelData).map((channel) => {
                         const channelType = channel === "Naver ID" || channel === "G2G ID" || channel === "G2A ID" ? null : channel
@@ -980,7 +1063,7 @@ export default function Customers() {
 
                       <div className="flex items-center justify-between">
                         <p className="text-[11px] tracking-[-0.32px] text-[#999999]">
-                          Sending to <span className="font-medium text-[#181925]">{selectedCustomer.channelData[sendChannel]}</span>
+                          {t.sendingTo} <span className="font-medium text-[#181925]">{selectedCustomer.channelData[sendChannel]}</span>
                         </p>
                         <button
                           onClick={handleSendMessage}
@@ -992,14 +1075,14 @@ export default function Customers() {
                           ) : (
                             <Send className="size-3.5" strokeWidth={2} />
                           )}
-                          {sendingMessage ? "Sending..." : "Send"}
+                          {sendingMessage ? t.sending : t.send}
                         </button>
                       </div>
                     </>
                   )}
 
                   {!sendChannel && (
-                    <p className="py-6 text-center text-[13px] tracking-[-0.32px] text-[#999999]">Select a channel to compose a message</p>
+                    <p className="py-6 text-center text-[13px] tracking-[-0.32px] text-[#999999]">{t.selectChannel}</p>
                   )}
                 </div>
               )}

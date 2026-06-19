@@ -6,11 +6,11 @@ import { motion, useInView } from "motion/react"
 /* ------------------------------------------------------------------ */
 
 const orders = [
-  { channel: "Naver Store", product: "Steam Wallet $50", price: "$100" },
-  { channel: "G2G", product: "Windows 11 Pro Key", price: "$24.99" },
-  { channel: "G2A", product: "Xbox Game Pass 3M", price: "$29.99" },
+  { channel: "네이버 스토어", product: "Steam Wallet $50", price: "$100" },
+  { channel: "롯데몰", product: "Windows 11 Pro Key", price: "$24.99" },
+  { channel: "지마켓", product: "Xbox Game Pass 3M", price: "$29.99" },
   { channel: "Website", product: "Spotify Premium 6M", price: "$14.90" },
-  { channel: "Naver Store", product: "Google Play ₩50,000", price: "₩50,000" },
+  { channel: "네이버 스토어", product: "Google Play ₩50,000", price: "₩50,000" },
 ]
 
 const deliveries = [
@@ -52,7 +52,7 @@ export function WorkflowVisualization() {
         className="mb-10 text-center"
       >
         <h2 className="text-3xl font-medium tracking-[-1.8px] text-[#181925] sm:text-4xl">
-          How Mont works
+          How Linko works
         </h2>
         <p className="mt-2 text-base tracking-[-0.32px] text-[#666666]">
           From order chaos to instant delivery
@@ -106,7 +106,7 @@ export function WorkflowVisualization() {
           {/* Arrow → */}
           <FlowArrow />
 
-          {/* ── CENTER: Mont Engine ── */}
+          {/* ── CENTER: Linko Engine ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -119,7 +119,7 @@ export function WorkflowVisualization() {
               <span className="absolute top-1 right-1 size-4 rounded-full bg-white" />
             </div>
 
-            <p className="text-lg font-semibold tracking-[-0.32px] text-[#181925]">Mont</p>
+            <p className="text-lg font-semibold tracking-[-0.32px] text-[#181925]">Linko</p>
 
             <p
               className="text-sm tracking-[-0.32px] text-[#666666]"

@@ -157,7 +157,7 @@ export default function CreateWorkspace() {
             <span className="absolute top-0.5 right-0.5 size-3 rounded-full bg-white" />
           </span>
           <span className="text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">
-            Mont
+            Linko
           </span>
         </div>
         {currentStep < 3 && (

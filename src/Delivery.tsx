@@ -72,7 +72,7 @@ const deliveries: Record<string, DeliveryItem> = {
     keyCode: "5294-7183-6042-9517",
     category: "Gift Card",
     orderId: "9K2BM",
-    platform: "G2G",
+    platform: "롯데몰",
     deliveryMethod: "Email",
     deliveredDate: "Apr 20, 2026",
     customer: "Alex Turner",
@@ -85,7 +85,7 @@ const deliveries: Record<string, DeliveryItem> = {
     keys: ["XGP9-L2R7-M5QA-8VNK", "XGP4-T8WN-3KPL-6RMJ", "XGP7-Q5DF-9HXC-2YBT"],
     category: "Subscription",
     orderId: "3F8QN",
-    platform: "G2A",
+    platform: "지마켓",
     deliveryMethod: "SMS",
     deliveredDate: "Apr 18, 2026",
     customer: "김수현",
@@ -100,7 +100,7 @@ const deliveries: Record<string, DeliveryItem> = {
     downloadUrl: "https://cdn.bvemarket.com/files/EldenRing_DLC_ShadowErdtree.zip",
     category: "Game DLC",
     orderId: "6R5VC",
-    platform: "G2G",
+    platform: "롯데몰",
     deliveryMethod: "Telegram",
     deliveredDate: "Apr 19, 2026",
     customer: "James Kim",
@@ -113,7 +113,7 @@ const deliveries: Record<string, DeliveryItem> = {
     activationUrl: "https://activate.adobe.com/redeem?code=F7N2Q9PV8WLX3HDJ",
     category: "Software",
     orderId: "8M3KP",
-    platform: "Naver Store",
+    platform: "네이버 스토어",
     deliveryMethod: "Email",
     deliveredDate: "Apr 17, 2026",
     customer: "정하은",
@@ -127,7 +127,7 @@ const deliveries: Record<string, DeliveryItem> = {
     formPlaceholder: "your@email.com",
     category: "Subscription",
     orderId: "5T4NR",
-    platform: "Direct",
+    platform: "쿠팡",
     deliveryMethod: "Email",
     deliveredDate: "Apr 13, 2026",
     customer: "이서연",
@@ -140,7 +140,7 @@ const deliveries: Record<string, DeliveryItem> = {
     keyCode: "6VMR2-X8KQH-4PZ7L-9WNBT-3YCFK",
     category: "Software",
     orderId: "5A9EQ",
-    platform: "G2G",
+    platform: "롯데몰",
     deliveryMethod: "Telegram",
     deliveredDate: "Apr 9, 2026",
     customer: "Brandon Lee",
@@ -461,7 +461,7 @@ export default function Delivery() {
             to="/"
             className="mt-6 text-[14px] font-medium tracking-[-0.32px] text-[#918DF6] hover:underline"
           >
-            Go to Mont homepage
+            Go to Linko homepage
           </Link>
         </motion.div>
       </div>
@@ -602,7 +602,7 @@ export default function Delivery() {
           </p>
         </motion.div>
 
-        {/* Footer — Powered by Mont */}
+        {/* Footer — Powered by Linko */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -616,7 +616,7 @@ export default function Delivery() {
                 <span className="absolute top-[1px] right-[1px] size-2 rounded-full bg-white" />
               </span>
               <span className="text-[13px] font-medium tracking-[-0.32px] text-[#666666]">
-                Powered by Mont
+                Powered by Linko
               </span>
             </Link>
             <p className="text-[12px] tracking-[-0.32px] text-[#999999]">

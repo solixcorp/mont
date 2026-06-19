@@ -20,6 +20,66 @@ import {
   formatUSD,
   formatKRW,
 } from "@/shared"
+import type { Locale } from "@/locale"
+
+// ─── Translations ────────────────────────────────────────────
+
+const translations = {
+  en: {
+    title: "Analytics",
+    orders: "orders",
+    revenue: "Revenue",
+    revenueBreakdown: "Revenue breakdown",
+    ordersTitle: "Orders",
+    orderBreakdown: "Order breakdown",
+    today: "Today",
+    yesterday: "Yesterday",
+    thisMonth: "This Month",
+    days: "days",
+    platformBreakdown: "Platform Breakdown",
+    revenueShareByPlatform: "Revenue share by platform",
+    topProducts: "Top Products",
+    top5ByRevenue: "Top 5 by revenue",
+    product: "Product",
+    trend: "Trend",
+    deliveryPerformance: "Delivery Performance",
+    avgDeliveryTimeSuccess: "Avg delivery time & success rate",
+    avgTime: "Avg Time",
+    successRate: "Success Rate",
+    customerMetrics: "Customer Metrics",
+    newVsReturning: "New vs returning & top customers",
+    new: "New",
+    returning: "Returning",
+    topCustomers: "Top Customers",
+  },
+  kr: {
+    title: "분석",
+    orders: "주문",
+    revenue: "매출",
+    revenueBreakdown: "매출 분석",
+    ordersTitle: "주문",
+    orderBreakdown: "주문 분석",
+    today: "오늘",
+    yesterday: "어제",
+    thisMonth: "이번 달",
+    days: "일",
+    platformBreakdown: "플랫폼 분포",
+    revenueShareByPlatform: "플랫폼별 매출 비율",
+    topProducts: "인기 상품",
+    top5ByRevenue: "매출 상위 5개",
+    product: "상품",
+    trend: "추세",
+    deliveryPerformance: "배송 성과",
+    avgDeliveryTimeSuccess: "평균 배송 시간 및 성공률",
+    avgTime: "평균 시간",
+    successRate: "성공률",
+    customerMetrics: "고객 지표",
+    newVsReturning: "신규 vs 재방문 & 상위 고객",
+    new: "신규",
+    returning: "재방문",
+    topCustomers: "상위 고객",
+  },
+} as const
 
 // ─── Types ───────────────────────────────────────────────────
 
@@ -57,10 +117,10 @@ function generateOrdersData(range: TimeRange) {
 }
 
 const platformBreakdown = [
-  { name: "Naver Store", value: 42, color: "#34A853" },
-  { name: "G2G", value: 31, color: "#1A73E8" },
-  { name: "G2A", value: 19, color: "#E37400" },
-  { name: "Direct", value: 8, color: "#918DF6" },
+  { name: "네이버 스토어", value: 42, color: "#34A853" },
+  { name: "롯데몰", value: 31, color: "#1A73E8" },
+  { name: "지마켓", value: 19, color: "#E37400" },
+  { name: "쿠팡", value: 8, color: "#918DF6" },
 ]
 
 const topProducts = [
@@ -142,9 +202,10 @@ function MiniSparkline({ data, color }: { data: number[]; color: string }) {
 
 // ─── Analytics Page ──────────────────────────────────────────
 
-export default function Analytics() {
+export default function Analytics({ locale = "en" }: { locale?: Locale }) {
   const [currency, setCurrency] = useState<Currency>("KRW")
   const [range, setRange] = useState<TimeRange>("7d")
+  const t = translations[locale]
 
   const revenueData = useMemo(() => generateRevenueData(range), [range])
   const ordersData = useMemo(() => generateOrdersData(range), [range])
@@ -157,12 +218,12 @@ export default function Analytics() {
 
   return (
     <DashboardLayout
-      title="Analytics"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
       <div className="flex flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden px-6 pt-4 pb-6 lg:px-8">
-        {/* Time Range Selector */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1 rounded-full border border-[rgba(0,0,0,0.08)] bg-white p-1" style={{ boxShadow: cardShadow }}>
             {ranges.map((r) => (
@@ -181,7 +242,7 @@ export default function Analytics() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-[13px] tracking-[-0.32px] text-[#999999]">
-              {totalOrders.toLocaleString()} orders
+              {totalOrders.toLocaleString()} {t.orders}
             </span>
             <span className="text-[13px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
               {fmtRevenue(totalRevenue)}
@@ -189,24 +250,22 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Revenue + Orders — Numeric Cards */}
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {/* Revenue Card */}
           <Card>
             <div className="px-5 pt-4 pb-5">
               <div className="flex items-center justify-between">
-                <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">Revenue</h2>
+                <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">{t.revenue}</h2>
                 <div className="flex items-center gap-1.5">
                   <TrendingUp className="size-3.5 text-[#34A853]" strokeWidth={2.5} />
                   <span className="text-[14px] font-semibold tabular-nums tracking-[-0.32px] text-[#34A853]">+8.2%</span>
                 </div>
               </div>
-              <p className="text-[13px] tracking-[-0.32px] text-[#999999]">Revenue breakdown</p>
+              <p className="text-[13px] tracking-[-0.32px] text-[#999999]">{t.revenueBreakdown}</p>
 
               <div className="mt-5 grid grid-cols-3 gap-3">
                 <div className="relative overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-3">
                   <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[#34A853]" />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Today</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.today}</p>
                   <p className="mt-1.5 text-[20px] font-semibold tabular-nums leading-tight tracking-[-0.32px] text-[#181925]">
                     {fmtRevenue(7990)}
                   </p>
@@ -217,7 +276,7 @@ export default function Analytics() {
                 </div>
                 <div className="relative overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-3">
                   <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[rgba(52,168,83,0.4)]" />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Yesterday</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.yesterday}</p>
                   <p className="mt-1.5 text-[20px] font-semibold tabular-nums leading-tight tracking-[-0.32px] text-[#181925]">
                     {fmtRevenue(9450)}
                   </p>
@@ -227,12 +286,12 @@ export default function Analytics() {
                 </div>
                 <div className="relative overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-3">
                   <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[rgba(52,168,83,0.2)]" />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">This Month</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.thisMonth}</p>
                   <p className="mt-1.5 text-[20px] font-semibold tabular-nums leading-tight tracking-[-0.32px] text-[#181925]">
                     {fmtRevenue(totalRevenue)}
                   </p>
                   <p className="mt-1 text-[11px] tabular-nums tracking-[-0.32px] text-[#999999]">
-                    {revenueData.length} days
+                    {revenueData.length} {t.days}
                   </p>
                 </div>
               </div>
@@ -268,22 +327,21 @@ export default function Analytics() {
             </div>
           </Card>
 
-          {/* Orders Card */}
           <Card>
             <div className="px-5 pt-4 pb-5">
               <div className="flex items-center justify-between">
-                <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">Orders</h2>
+                <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">{t.ordersTitle}</h2>
                 <div className="flex items-center gap-1.5">
                   <TrendingUp className="size-3.5 text-[#1A73E8]" strokeWidth={2.5} />
                   <span className="text-[14px] font-semibold tabular-nums tracking-[-0.32px] text-[#1A73E8]">+12.5%</span>
                 </div>
               </div>
-              <p className="text-[13px] tracking-[-0.32px] text-[#999999]">Order breakdown</p>
+              <p className="text-[13px] tracking-[-0.32px] text-[#999999]">{t.orderBreakdown}</p>
 
               <div className="mt-5 grid grid-cols-3 gap-3">
                 <div className="relative overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-3">
                   <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[#1A73E8]" />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Today</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.today}</p>
                   <p className="mt-1.5 text-[20px] font-semibold tabular-nums leading-tight tracking-[-0.32px] text-[#181925]">
                     290
                   </p>
@@ -294,7 +352,7 @@ export default function Analytics() {
                 </div>
                 <div className="relative overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-3">
                   <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[rgba(26,115,232,0.4)]" />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Yesterday</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.yesterday}</p>
                   <p className="mt-1.5 text-[20px] font-semibold tabular-nums leading-tight tracking-[-0.32px] text-[#181925]">
                     310
                   </p>
@@ -304,12 +362,12 @@ export default function Analytics() {
                 </div>
                 <div className="relative overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)] px-3 py-3">
                   <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[rgba(26,115,232,0.2)]" />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">This Month</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.thisMonth}</p>
                   <p className="mt-1.5 text-[20px] font-semibold tabular-nums leading-tight tracking-[-0.32px] text-[#181925]">
                     {totalOrders.toLocaleString()}
                   </p>
                   <p className="mt-1 text-[11px] tabular-nums tracking-[-0.32px] text-[#999999]">
-                    {ordersData.length} days
+                    {ordersData.length} {t.days}
                   </p>
                 </div>
               </div>
@@ -346,11 +404,9 @@ export default function Analytics() {
           </Card>
         </div>
 
-        {/* Platform Breakdown + Top Products */}
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,320px)_minmax(0,1fr)]">
-          {/* Platform Breakdown */}
           <Card>
-            <CardHeader title="Platform Breakdown" subtitle="Revenue share by platform" />
+            <CardHeader title={t.platformBreakdown} subtitle={t.revenueShareByPlatform} />
             <div className="flex flex-col gap-3.5 px-5 pb-5">
               {platformBreakdown.map((p) => (
                 <div key={p.name} className="flex items-center gap-3">
@@ -374,17 +430,16 @@ export default function Analytics() {
             </div>
           </Card>
 
-          {/* Top Products */}
           <Card>
-            <CardHeader title="Top Products" subtitle="Top 5 by revenue" />
+            <CardHeader title={t.topProducts} subtitle={t.top5ByRevenue} />
             <div className="overflow-hidden">
               <table className="w-full table-fixed">
                 <thead>
                   <tr className="border-b border-[rgba(0,0,0,0.08)]">
-                    <th className="px-5 pb-2 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Product</th>
-                    <th className="px-3 pb-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Revenue</th>
-                    <th className="px-3 pb-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Orders</th>
-                    <th className="px-5 pb-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">Trend</th>
+                    <th className="px-5 pb-2 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.product}</th>
+                    <th className="px-3 pb-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.revenue}</th>
+                    <th className="px-3 pb-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.ordersTitle}</th>
+                    <th className="px-5 pb-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">{t.trend}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -412,18 +467,16 @@ export default function Analytics() {
           </Card>
         </div>
 
-        {/* Delivery Performance + Customer Metrics */}
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {/* Delivery Performance */}
           <Card>
-            <CardHeader title="Delivery Performance" subtitle="Avg delivery time & success rate" />
+            <CardHeader title={t.deliveryPerformance} subtitle={t.avgDeliveryTimeSuccess} />
             <div className="grid grid-cols-2 gap-4 px-5 pb-2">
               <div className="flex items-center gap-2.5">
                 <span className="flex size-9 items-center justify-center rounded-lg bg-[#918DF6]/10">
                   <Clock className="size-4 text-[#918DF6]" strokeWidth={2} />
                 </span>
                 <div>
-                  <p className="text-[12px] tracking-[-0.32px] text-[#999999]">Avg Time</p>
+                  <p className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.avgTime}</p>
                   <p className="text-[18px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">2.4s</p>
                 </div>
               </div>
@@ -432,7 +485,7 @@ export default function Analytics() {
                   <CheckCircle2 className="size-4 text-[#34A853]" strokeWidth={2} />
                 </span>
                 <div>
-                  <p className="text-[12px] tracking-[-0.32px] text-[#999999]">Success Rate</p>
+                  <p className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.successRate}</p>
                   <p className="text-[18px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">99.7%</p>
                 </div>
               </div>
@@ -489,15 +542,14 @@ export default function Analytics() {
             </div>
           </Card>
 
-          {/* Customer Metrics */}
           <Card>
-            <CardHeader title="Customer Metrics" subtitle="New vs returning & top customers" />
+            <CardHeader title={t.customerMetrics} subtitle={t.newVsReturning} />
             <div className="grid grid-cols-2 gap-4 px-5 pb-4">
               <div className="relative overflow-hidden rounded-lg border border-[rgba(0,0,0,0.08)] px-4 py-3">
                 <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[#1A73E8]" />
                 <div className="flex items-center gap-2">
                   <UserPlus className="size-4 text-[#1A73E8]" strokeWidth={2} />
-                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">New</span>
+                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.new}</span>
                 </div>
                 <p className="mt-1 text-[22px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">342</p>
                 <div className="mt-1 flex items-center gap-1">
@@ -509,7 +561,7 @@ export default function Analytics() {
                 <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-[#918DF6]" />
                 <div className="flex items-center gap-2">
                   <Users className="size-4 text-[#918DF6]" strokeWidth={2} />
-                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">Returning</span>
+                  <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{t.returning}</span>
                 </div>
                 <p className="mt-1 text-[22px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">1,247</p>
                 <div className="mt-1 flex items-center gap-1">
@@ -519,7 +571,6 @@ export default function Analytics() {
               </div>
             </div>
 
-            {/* Ratio bar */}
             <div className="px-5 pb-4">
               <div className="flex h-[8px] w-full overflow-hidden rounded-full">
                 <div className="h-full bg-[#1A73E8]" style={{ width: "21.5%" }} />
@@ -528,20 +579,19 @@ export default function Analytics() {
               <div className="mt-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-[12px] tracking-[-0.32px] text-[#666666]">
                   <span className="size-2 rounded-full bg-[#1A73E8]" />
-                  New 21.5%
+                  {t.new} 21.5%
                 </span>
                 <span className="flex items-center gap-1.5 text-[12px] tracking-[-0.32px] text-[#666666]">
                   <span className="size-2 rounded-full bg-[#918DF6]" />
-                  Returning 78.5%
+                  {t.returning} 78.5%
                 </span>
               </div>
             </div>
 
-            {/* Top Customers */}
             <div className="border-t border-[rgba(0,0,0,0.08)] px-5 pt-3 pb-4">
               <div className="mb-2 flex items-center gap-1.5">
                 <Crown className="size-3.5 text-[#E37400]" strokeWidth={2} />
-                <span className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">Top Customers</span>
+                <span className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">{t.topCustomers}</span>
               </div>
               <div className="flex flex-col gap-2">
                 {topCustomers.map((c, i) => (
@@ -553,7 +603,7 @@ export default function Analytics() {
                       {c.name}
                     </span>
                     <span className="shrink-0 text-[13px] tabular-nums tracking-[-0.32px] text-[#666666]">
-                      {c.orders} orders
+                      {c.orders} {t.orders}
                     </span>
                     <span className="w-20 shrink-0 text-right text-[14px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
                       {fmtRevenue(c.spent)}

@@ -46,3 +46,23 @@ bun dev         # development server
 ## UI Rules
 
 - No inline expand/collapse or accordion patterns on action buttons. When a user clicks an action (row, button, card), always open a new Dialog/popup — never expand content below the trigger.
+
+## spec-graph
+
+Requirements and delivery phases are tracked with [spec-graph](https://github.com/tyeongkim/spec-graph).
+
+| Path | Purpose |
+|------|---------|
+| `.spec-graph/entities/` | TOML entity files (source of truth, commit these) |
+| `.agents/skills/spec-*` | Agent skills (graph, planner, executor, verifier) |
+| `.cursor/hooks.json` | Session context + validate-on-edit hooks |
+| `skills-lock.json` | Pin installed skill versions |
+
+```bash
+spec-graph init                    # once per repo (already done)
+spec-graph validate                # after graph edits
+spec-graph impact REQ-001          # before changing an entity
+bunx --bun skills add https://github.com/tyeongkim/spec-graph.git --skill '*' --agent cursor -y
+```
+
+Install CLI: `brew install tyeongkim/tap/spec-graph`

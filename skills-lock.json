@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "spec-executor": {
+      "source": "tyeongkim/spec-graph",
+      "sourceType": "github",
+      "skillPath": "skills/spec-executor/SKILL.md",
+      "computedHash": "a95ba640f32eb3e1be32cd440df550300c808cdd209dd28ca5df155f93efd148"
+    },
+    "spec-graph": {
+      "source": "tyeongkim/spec-graph",
+      "sourceType": "github",
+      "skillPath": "skills/spec-graph/SKILL.md",
+      "computedHash": "8e78d3871cc181a419e054197cb5371832608d03f5e920c13febba76fc54fd06"
+    },
+    "spec-planner": {
+      "source": "tyeongkim/spec-graph",
+      "sourceType": "github",
+      "skillPath": "skills/spec-planner/SKILL.md",
+      "computedHash": "57d71c6d5a97b8291c56243efcfa4cc5d7b15af5abe3d652aee045448d3cdb39"
+    },
+    "spec-verifier": {
+      "source": "tyeongkim/spec-graph",
+      "sourceType": "github",
+      "skillPath": "skills/spec-verifier/SKILL.md",
+      "computedHash": "b30f76e2536cfd865aed9f262b5faa392035925cf3176ae56ef28100717ce7cf"
+    }
+  }
+}

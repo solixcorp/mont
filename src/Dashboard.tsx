@@ -11,11 +11,53 @@ import {
   type Order,
   type Currency,
   StatusBadge,
-  DeliveryChannel,
-  platformBadges,
   formatUSD,
   formatKRW,
 } from "@/shared"
+import type { Locale } from "@/locale"
+
+// ─── Translations ────────────────────────────────────────────
+
+const translations = {
+  en: {
+    title: "Overview",
+    totalOrders: "Total Orders",
+    revenue: "Revenue",
+    deliverySuccess: "Delivery Success",
+    avgDeliveryTime: "Avg Delivery Time",
+    recentOrders: "Recent Orders",
+    last6: "Last 6 transactions",
+    viewAll: "View all",
+    platformSplit: "Platform Split",
+    orderDistribution: "Order distribution",
+    allInventory: "All Inventory",
+    keysRemaining: "Keys remaining",
+    all: "All",
+    manualRequired: "Manual Required",
+    delivered: "Delivered",
+    failed: "Failed",
+    searchOrders: "Search orders...",
+  },
+  kr: {
+    title: "개요",
+    totalOrders: "총 주문",
+    revenue: "매출",
+    deliverySuccess: "배송 성공률",
+    avgDeliveryTime: "평균 배송 시간",
+    recentOrders: "최근 주문",
+    last6: "최근 6건",
+    viewAll: "전체 보기",
+    platformSplit: "플랫폼 분포",
+    orderDistribution: "주문 분포",
+    allInventory: "전체 재고",
+    keysRemaining: "남은 키",
+    all: "전체",
+    manualRequired: "수동 주문 필요",
+    delivered: "발송됨",
+    failed: "발송실패",
+    searchOrders: "주문 검색...",
+  },
+} as const
 
 // ─── Mock Data ───────────────────────────────────────────────
 
@@ -29,19 +71,22 @@ const sparklineData = {
 }
 
 const platformData = [
-  { name: "Naver Store", value: 42, color: "#34A853" },
-  { name: "G2G", value: 35, color: "#1A73E8" },
-  { name: "G2A", value: 18, color: "#E37400" },
-  { name: "Direct", value: 5, color: "#918DF6" },
+  { name: "네이버 스토어", value: 42, color: "#34A853" },
+  { name: "롯데몰", value: 35, color: "#1A73E8" },
+  { name: "지마켓", value: 18, color: "#E37400" },
+  { name: "쿠팡", value: 5, color: "#918DF6" },
 ]
 
 const orders: Order[] = [
-  { id: "4X7PA", platform: "Naver Store", storeName: "건렬이의 디지털스토어", amount: 29.99, status: "Delivered", time: "2분 전", product: "캔바 프로 Canva PRO 12개월", customer: "이정효", email: "leolee12@naver.com", phone: "010-9803-2514", delivery: "Telegram", deliveryTarget: "@mont_delivery_bot", keyCode: "XXXX-XXXX-7F3M", recipientName: "이정효", recipientPhone: "010-9803-2514", customerMemo: "leolee12@naver.com", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-7F3M", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.3s", deliverySent: "1.2s", deliveryConfirmed: "2.1s" } },
-  { id: "9K2BM", platform: "G2G", storeName: "G2G Marketplace", amount: 42.99, status: "Delivered", time: "8분 전", product: "Steam Wallet $50 Gift Card", customer: "Alex Turner", email: "g2g_buyer_8821", phone: "010-3421-7788", delivery: "Email", deliveryTarget: "g2g_buyer_8821", keyCode: "XXXX-XXXX-A2K9", recipientName: "Alex Turner", recipientPhone: "010-3421-7788", customerMemo: "g2g_buyer_8821", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-A2K9", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.5s", deliverySent: "1.8s", deliveryConfirmed: "3.0s" } },
-  { id: "3F8QN", platform: "G2A", storeName: "G2A Marketplace", amount: 12.99, status: "Processing", time: "15분 전", product: "Xbox Game Pass Ultimate 1개월", customer: "김수현", email: "g2a_user_3347", phone: "010-5567-1234", delivery: "SMS", deliveryTarget: "010-5567-1234", keyCode: "XXXX-XXXX-9D1P", recipientName: "김수현", recipientPhone: "010-5567-1234", customerMemo: "", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-9D1P", status: "Processing" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.4s", deliverySent: "1.1s" } },
-  { id: "7W1DL", platform: "Naver Store", storeName: "몽키디지털", amount: 24.99, status: "Delivered", time: "23분 전", product: "Windows 11 Pro Key", customer: "박민지", email: "minji_park@naver.com", phone: "010-8812-3390", delivery: "Email", deliveryTarget: "minji_park@naver.com", keyCode: "XXXX-XXXX-QW8E", recipientName: "박민지", recipientPhone: "010-8812-3390", customerMemo: "minji_park@naver.com", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-QW8E", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.2s", deliverySent: "0.9s", deliveryConfirmed: "1.5s" } },
-  { id: "6R5VC", platform: "G2G", storeName: "G2G Marketplace", amount: 59.99, status: "Delivered", time: "41분 전", product: "Elden Ring Shadow of the Erdtree DLC", customer: "James Kim", email: "g2g_buyer_1204", phone: "010-2290-4567", delivery: "Telegram", deliveryTarget: "@mont_delivery_bot", keyCode: "XXXX-XXXX-5TN2", recipientName: "James Kim", recipientPhone: "010-2290-4567", customerMemo: "", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-5TN2", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.6s", deliverySent: "2.1s", deliveryConfirmed: "3.4s" } },
-  { id: "2H9TE", platform: "G2A", storeName: "G2A Marketplace", amount: 49.99, status: "Failed", time: "1시간 전", product: "FIFA 25 Ultimate Edition", customer: "최영호", email: "g2a_user_7790", phone: "010-7741-9023", delivery: "WhatsApp", deliveryTarget: "+82 10-7741-9023", keyCode: "XXXX-XXXX-0000", recipientName: "최영호", recipientPhone: "010-7741-9023", customerMemo: "g2a_user_7790", adminMemo: "WhatsApp 재발송 필요", errorStep: "Step 3 — Key Delivery", errorMessage: "WhatsApp API timeout: recipient unreachable after 3 retries. Key reserved but not delivered.", quantity: 1, items: [{ keyCode: "XXXX-XXXX-0000", status: "Failed" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.4s", deliverySent: "1.5s" } },
+  { id: "4X7PA", platform: "네이버 스토어", storeName: "건렬이의 디지털스토어", amount: 29.99, status: "Delivered", time: "2분 전", product: "캔바 프로 Canva PRO 12개월", customer: "이정효", email: "leolee12@naver.com", phone: "010-9803-2514", delivery: "Telegram", deliveryTarget: "@mont_delivery_bot", keyCode: "XXXX-XXXX-7F3M", recipientName: "이정효", recipientPhone: "010-9803-2514", customerMemo: "leolee12@naver.com", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-7F3M", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.3s", deliverySent: "1.2s", deliveryConfirmed: "2.1s" } },
+  { id: "9K2BM", platform: "롯데몰", storeName: "롯데몰", amount: 42.99, status: "Delivered", time: "8분 전", product: "Steam Wallet $50 Gift Card", customer: "Alex Turner", email: "g2g_buyer_8821", phone: "010-3421-7788", delivery: "Email", deliveryTarget: "g2g_buyer_8821", keyCode: "XXXX-XXXX-A2K9", recipientName: "Alex Turner", recipientPhone: "010-3421-7788", customerMemo: "g2g_buyer_8821", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-A2K9", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.5s", deliverySent: "1.8s", deliveryConfirmed: "3.0s" } },
+  { id: "3F8QN", platform: "지마켓", storeName: "지마켓", amount: 12.99, status: "Processing", time: "15분 전", product: "Xbox Game Pass Ultimate 1개월", customer: "김수현", email: "g2a_user_3347", phone: "010-5567-1234", delivery: "SMS", deliveryTarget: "010-5567-1234", keyCode: "XXXX-XXXX-9D1P", recipientName: "김수현", recipientPhone: "010-5567-1234", customerMemo: "", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-9D1P", status: "Processing" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.4s", deliverySent: "1.1s" } },
+  { id: "7W1DL", platform: "네이버 스토어", storeName: "몽키디지털", amount: 24.99, status: "Delivered", time: "23분 전", product: "Windows 11 Pro Key", customer: "박민지", email: "minji_park@naver.com", phone: "010-8812-3390", delivery: "Email", deliveryTarget: "minji_park@naver.com", keyCode: "XXXX-XXXX-QW8E", recipientName: "박민지", recipientPhone: "010-8812-3390", customerMemo: "minji_park@naver.com", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-QW8E", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.2s", deliverySent: "0.9s", deliveryConfirmed: "1.5s" } },
+  { id: "6R5VC", platform: "롯데몰", storeName: "롯데몰", amount: 59.99, status: "Delivered", time: "41분 전", product: "Elden Ring Shadow of the Erdtree DLC", customer: "James Kim", email: "g2g_buyer_1204", phone: "010-2290-4567", delivery: "Telegram", deliveryTarget: "@mont_delivery_bot", keyCode: "XXXX-XXXX-5TN2", recipientName: "James Kim", recipientPhone: "010-2290-4567", customerMemo: "", adminMemo: "", quantity: 1, items: [{ keyCode: "XXXX-XXXX-5TN2", status: "Delivered" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.6s", deliverySent: "2.1s", deliveryConfirmed: "3.4s" } },
+  { id: "2H9TE", platform: "지마켓", storeName: "지마켓", amount: 49.99, status: "Failed", time: "1시간 전", product: "FIFA 25 Ultimate Edition", customer: "최영호", email: "g2a_user_7790", phone: "010-7741-9023", delivery: "WhatsApp", deliveryTarget: "+82 10-7741-9023", keyCode: "XXXX-XXXX-0000", recipientName: "최영호", recipientPhone: "010-7741-9023", customerMemo: "g2a_user_7790", adminMemo: "WhatsApp 재발송 필요", errorStep: "Step 3 — Key Delivery", errorMessage: "WhatsApp API timeout: recipient unreachable after 3 retries. Key reserved but not delivered.", quantity: 1, items: [{ keyCode: "XXXX-XXXX-0000", status: "Failed" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.4s", deliverySent: "1.5s" } },
+  { id: "5M3JK", platform: "네이버 스토어", storeName: "건렬이의 디지털스토어", amount: 34.99, status: "ManualRequired", time: "32분 전", product: "Adobe Creative Cloud 1개월", customer: "한소영", email: "soyoung_h@naver.com", phone: "010-6634-8821", delivery: "Email", deliveryTarget: "soyoung_h@naver.com", keyCode: "", recipientName: "한소영", recipientPhone: "010-6634-8821", customerMemo: "soyoung_h@naver.com", adminMemo: "수동 키 입력 대기", quantity: 1, items: [{ keyCode: "", status: "ManualRequired" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "—", deliverySent: "—" } },
+  { id: "8N4WQ", platform: "롯데몰", storeName: "롯데몰", amount: 19.99, status: "Failed", time: "2시간 전", product: "Netflix Gift Card $25", customer: "David Park", email: "g2g_buyer_5512", phone: "010-1199-4400", delivery: "Telegram", deliveryTarget: "@mont_delivery_bot", keyCode: "XXXX-XXXX-0000", recipientName: "David Park", recipientPhone: "010-1199-4400", customerMemo: "", adminMemo: "자동 배송 타임아웃", errorStep: "Step 3 — Key Delivery", errorMessage: "Auto-delivery timed out after 60s. Bot unresponsive.", quantity: 1, items: [{ keyCode: "XXXX-XXXX-0000", status: "Failed" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "0.3s", deliverySent: "60.0s" } },
+  { id: "1P6RZ", platform: "지마켓", storeName: "지마켓", amount: 14.99, status: "ManualRequired", time: "45분 전", product: "Spotify Premium 3개월", customer: "정우진", email: "g2a_user_2281", phone: "010-3345-6677", delivery: "SMS", deliveryTarget: "010-3345-6677", keyCode: "", recipientName: "정우진", recipientPhone: "010-3345-6677", customerMemo: "", adminMemo: "재고 부족 — 수동 키 발급 필요", quantity: 1, items: [{ keyCode: "", status: "ManualRequired" }], flowTiming: { orderCreated: "0.0s", licenseAssigned: "—", deliverySent: "—" } },
 ]
 
 const inventory = [
@@ -193,20 +238,36 @@ function MetricCard({
 
 // ─── Dashboard ───────────────────────────────────────────────
 
-export default function Dashboard() {
+export default function Dashboard({ locale = "en" }: { locale?: Locale }) {
   const navigate = useNavigate()
   const [currency, setCurrency] = useState<Currency>("KRW")
+  const [orderTab, setOrderTab] = useState<"all" | "manual" | "delivered" | "failed">("all")
+  const t = translations[locale]
+
+  const filteredOrders = (() => {
+    switch (orderTab) {
+      case "manual":
+        return orders.filter((o) => o.status === "Failed" || o.status === "ManualRequired")
+      case "delivered":
+        return orders.filter((o) => o.status === "Delivered")
+      case "failed":
+        return orders.filter((o) => o.status === "Failed")
+      default:
+        return orders
+    }
+  })()
 
   return (
     <DashboardLayout
-      title="Overview"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
         <div className="flex flex-1 flex-col gap-4 px-6 pt-4 pb-4 lg:px-8">
           <div className="grid shrink-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <MetricCard
-              label="Total Orders"
+              label={t.totalOrders}
               value="2,847"
               change="+12.5%"
               dotColor="#1A73E8"
@@ -215,7 +276,7 @@ export default function Dashboard() {
               formatter={(v) => `${v.toLocaleString()} orders`}
             />
             <MetricCard
-              label="Revenue"
+              label={t.revenue}
               value={currency === "KRW" ? "₩70,168,800" : "$48,392"}
               change="+8.2%"
               dotColor="#34A853"
@@ -225,7 +286,7 @@ export default function Dashboard() {
               formatter={(v) => currency === "KRW" ? formatKRW(v) : formatUSD(v)}
             />
             <MetricCard
-              label="Delivery Success"
+              label={t.deliverySuccess}
               value="99.7%"
               change="+0.3%"
               dotColor="#34A853"
@@ -234,7 +295,7 @@ export default function Dashboard() {
               formatter={(v) => `${v}%`}
             />
             <MetricCard
-              label="Avg Delivery Time"
+              label={t.avgDeliveryTime}
               value="2.4s"
               change="-0.8s"
               dotColor="#918DF6"
@@ -252,88 +313,135 @@ export default function Dashboard() {
               <div className="flex items-center justify-between px-5 pt-4 pb-3">
                 <div>
                   <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">
-                    Recent Orders
+                    {t.recentOrders}
                   </h2>
                   <p className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                    Last 6 transactions
+                    {t.last6}
                   </p>
                 </div>
                 <button
                   onClick={() => navigate("/dashboard/orders")}
                   className="flex items-center gap-1 text-[13px] font-medium tracking-[-0.32px] text-[#918DF6] transition-colors hover:text-[#9580FF]"
                 >
-                  View all
+                  {t.viewAll}
                   <ArrowRight className="size-3.5" strokeWidth={2} />
                 </button>
               </div>
               <div className="flex items-center gap-3 px-5 pb-3">
-                <select className="h-9 w-24 shrink-0 appearance-none rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] font-medium tracking-[-0.32px] text-[#181925] outline-none">
-                  <option>All</option>
-                  <option>Naver Store</option>
-                  <option>G2G</option>
-                  <option>G2A</option>
-                </select>
+                <div className="flex shrink-0 rounded-lg border border-[rgba(0,0,0,0.10)] bg-[rgba(0,0,0,0.02)] p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setOrderTab("all")}
+                    className={`rounded-md px-3 py-1.5 text-[13px] font-medium tracking-[-0.32px] transition-all ${
+                      orderTab === "all"
+                        ? "bg-white text-[#181925] shadow-sm"
+                        : "text-[#666666] hover:text-[#181925]"
+                    }`}
+                  >
+                    {t.all}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOrderTab("manual")}
+                    className={`rounded-md px-3 py-1.5 text-[13px] font-medium tracking-[-0.32px] transition-all ${
+                      orderTab === "manual"
+                        ? "bg-white text-[#181925] shadow-sm"
+                        : "text-[#666666] hover:text-[#181925]"
+                    }`}
+                  >
+                    {t.manualRequired}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOrderTab("delivered")}
+                    className={`rounded-md px-3 py-1.5 text-[13px] font-medium tracking-[-0.32px] transition-all ${
+                      orderTab === "delivered"
+                        ? "bg-white text-[#181925] shadow-sm"
+                        : "text-[#666666] hover:text-[#181925]"
+                    }`}
+                  >
+                    {t.delivered}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOrderTab("failed")}
+                    className={`rounded-md px-3 py-1.5 text-[13px] font-medium tracking-[-0.32px] transition-all ${
+                      orderTab === "failed"
+                        ? "bg-white text-[#181925] shadow-sm"
+                        : "text-[#666666] hover:text-[#181925]"
+                    }`}
+                  >
+                    {t.failed}
+                  </button>
+                </div>
                 <div className="relative flex-1">
                   <input
                     type="text"
-                    placeholder="Search orders..."
+                    placeholder={t.searchOrders}
                     className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white pl-3 pr-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none"
                   />
                 </div>
               </div>
-              <div className="overflow-y-auto">
-                <div className="grid grid-cols-1 gap-3 p-4 md:grid-cols-2 xl:grid-cols-3">
-                  {orders.map((order) => {
-                    const badge = platformBadges[order.platform]
-                    return (
-                      <button
-                        key={order.id}
-                        type="button"
-                        onClick={() => navigate(`/dashboard/orders?order=${order.id}`)}
-                        className={`flex w-full flex-col rounded-xl border border-[rgba(0,0,0,0.08)] p-4 text-left transition-colors hover:bg-neutral-50/60 ${
-                          order.status === "Failed" ? "bg-[#D93025]/[0.06] border-[#D93025]/25" : "bg-white"
-                        }`}
-                      >
-                        <div className="flex items-start gap-2">
-                          <p className="min-w-0 flex-1 text-[15px] font-semibold leading-snug tracking-[-0.32px] text-[#181925]">
-                            {order.product}
-                          </p>
-                          <StatusBadge status={order.status} />
-                        </div>
-                        <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
-                          <DeliveryChannel channel={order.delivery} />
-                          <span className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">{order.customer}</span>
-                          <span className="text-[#999999]">·</span>
-                          {badge && (
-                            <span className={`${badge.bg} inline-flex size-4 shrink-0 items-center justify-center rounded font-bold text-white ${badge.textSize}`}>
-                              {badge.label}
+              <div className="flex-1 overflow-y-auto">
+                <table className="w-full">
+                  <thead className="sticky top-0 z-10 bg-[#FAFAFA]">
+                    <tr className="border-b border-[rgba(0,0,0,0.06)]">
+                      <th className="px-5 py-2 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
+                        {locale === "kr" ? "상품" : "Product"}
+                      </th>
+                      <th className="px-3 py-2 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
+                        {locale === "kr" ? "상태" : "Status"}
+                      </th>
+                      <th className="px-3 py-2 text-left text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
+                        {locale === "kr" ? "고객" : "Customer"}
+                      </th>
+                      <th className="px-3 py-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
+                        {locale === "kr" ? "금액" : "Amount"}
+                      </th>
+                      <th className="px-5 py-2 text-right text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
+                        {locale === "kr" ? "시간" : "Time"}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredOrders.map((order) => {
+                      const isFailed = order.status === "Failed"
+                      return (
+                        <tr
+                          key={order.id}
+                          onClick={() => navigate(`/dashboard/orders?order=${order.id}`)}
+                          className={`cursor-pointer border-b border-[rgba(0,0,0,0.06)] transition-colors hover:bg-neutral-50 ${
+                            isFailed ? "border-l-[3px] border-l-[#D93025] bg-[#D93025]/[0.02]" : ""
+                          }`}
+                        >
+                          <td className="max-w-[200px] px-5 py-3">
+                            <span className="block truncate text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">
+                              {order.product}
                             </span>
-                          )}
-                          <span className="text-[13px] tracking-[-0.32px] text-[#666666]">{order.platform}</span>
-                          <span className="text-[#999999]">·</span>
-                          <span className="text-[12px] tracking-[-0.32px] text-[#999999]">{order.time}</span>
-                        </div>
-                        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="text-[15px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
-                              {formatUSD(order.amount)}
+                          </td>
+                          <td className="px-3 py-3">
+                            <StatusBadge status={order.status} locale={locale} />
+                          </td>
+                          <td className="px-3 py-3">
+                            <span className="text-[13px] tracking-[-0.32px] text-[#666666]">
+                              {order.customer}
                             </span>
-                            {currency === "KRW" && (
-                              <span className="text-[12px] font-medium tabular-nums tracking-[-0.32px] text-[#999999]">
-                                {formatKRW(order.amount)}
-                              </span>
-                            )}
-                          </div>
-                          {order.status === "Failed" && order.errorMessage && (
-                            <span className="inline-flex items-center rounded-lg bg-[#D93025]/8 px-3 py-1 text-[13px] font-semibold tracking-[-0.2px] text-[#D93025]">
-                              {order.errorStep}
+                          </td>
+                          <td className="px-3 py-3 text-right">
+                            <span className="text-[13px] font-semibold tabular-nums tracking-[-0.32px] text-[#181925]">
+                              {locale === "kr" ? formatKRW(order.amount) : formatUSD(order.amount)}
                             </span>
-                          )}
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
+                          </td>
+                          <td className="px-5 py-3 text-right">
+                            <span className="text-[12px] tracking-[-0.32px] text-[#999999]">
+                              {order.time}
+                            </span>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
 
@@ -343,10 +451,10 @@ export default function Dashboard() {
                 style={{ boxShadow: "0 1px 1px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.06)" }}
               >
                 <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">
-                  Platform Split
+                  {t.platformSplit}
                 </h2>
                 <p className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                  Order distribution
+                  {t.orderDistribution}
                 </p>
                 <div className="mt-4 flex flex-col gap-3">
                   {platformData.map((p) => (
@@ -376,10 +484,10 @@ export default function Dashboard() {
                 style={{ boxShadow: "0 1px 1px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.06)" }}
               >
                 <h2 className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">
-                  All Inventory
+                  {t.allInventory}
                 </h2>
                 <p className="text-[13px] tracking-[-0.32px] text-[#999999]">
-                  Keys remaining
+                  {t.keysRemaining}
                 </p>
                 <div className="mt-3 flex flex-col gap-3">
                   {inventory.map((item) => {

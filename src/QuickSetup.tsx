@@ -26,6 +26,144 @@ import {
   Unplug,
   Upload,
 } from "lucide-react"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    skipForNow: "Skip for now",
+    quickSetup: "Quick Setup",
+    buildFlow: "Build your fulfillment flow",
+    buildFlowDesc: "Connect a merchant, decide how licenses are supplied, and choose delivery channels — wire your automation in one pass.",
+    merchant: "Merchant",
+    product: "Product",
+    license: "License",
+    channel: "Channel",
+    clickToAdd: "Click to add",
+    launchWorkspace: "Launch workspace",
+    connectMerchant: "Connect merchant",
+    productMappings: "Product mappings",
+    configureLicense: "Configure license source",
+    chooseChannels: "Choose delivery channels",
+    connectMerchantDesc: "Choose the storefront platform and enter the credentials Linko should use to pull new orders.",
+    productMappingsDesc: "Manage your product-to-merchant SKU mappings. Add new mappings or remove existing ones.",
+    configureLicenseDesc: "Choose where this mapped product should pull its deliverable inventory from.",
+    chooseChannelsDesc: "Pick one or more customer delivery channels for the final fulfillment handoff.",
+    searchMerchants: "Search merchants…",
+    searchProviders: "Search providers…",
+    cancel: "Cancel",
+    testApi: "Test API",
+    testingApi: "Testing API...",
+    apiTested: "API tested",
+    connect: "Connect",
+    noMappingsYet: "No mappings yet",
+    noMappingsDesc: "Create your first product mapping to bind a merchant listing or external SKU to a Linko product.",
+    whyBeforeLicense: "Why this comes before license source",
+    whyBeforeLicenseDesc: "Linko must know which product an incoming merchant order resolves into before it can decide whether to use manual inventory or provider stock.",
+    mappingsReady: "ready",
+    addMappingNote: "Add at least one mapping to continue",
+    newMapping: "New mapping",
+    doneWithMappings: "Done with mappings",
+    newProductMapping: "New product mapping",
+    newProductMappingDesc: "Select a merchant listing on the left, then pick or create a Linko product on the right.",
+    merchantListing: "Merchant listing",
+    fromMerchant: "From merchant",
+    manual: "Manual",
+    merchantProductId: "Merchant Product ID / SKU",
+    linkoProduct: "Linko product",
+    orCreateNew: "or create new",
+    create: "Create",
+    addMapping: "Add mapping",
+    noListingsSynced: "No listings synced",
+    noListingsSyncedDesc: "Connect and sync the merchant first, or enter the SKU manually.",
+    enterManually: "Enter manually",
+    createProductFirst: "Create the product first",
+    createProductFirstDesc: "License source comes after product mapping. Linko needs a mapped product before it can decide whether to use manual inventory or provider stock.",
+    goToProductMapping: "Go to product mapping",
+    mappedProduct: "Mapped product",
+    sourceType: "Source type",
+    manualUpload: "Manual upload",
+    connectProvider: "Connect provider",
+    inventoryMapping: "Inventory mapping",
+    chooseHow: "Choose how",
+    getsFulfilled: "gets fulfilled",
+    inventoryMappingDesc: "Once the merchant listing matches this product, Linko will use the source below to fetch or reserve the deliverable license.",
+    chooseProvider: "Choose provider",
+    manualInventorySelected: "Manual inventory selected",
+    selectSourceFirst: "Select a source type first, then finish the inventory mapping for",
+    saveLicenseMapping: "Save license mapping",
+    selectOneOrMore: "Select one or more",
+    done: "Done",
+    selected: "selected",
+    apiTestPassed: "API test passed · ready to connect",
+  },
+  kr: {
+    skipForNow: "건너뛰기",
+    quickSetup: "빠른 설정",
+    buildFlow: "배송 플로우 구성",
+    buildFlowDesc: "판매처를 연결하고, 라이선스 공급 방식을 결정하고, 배송 채널을 선택하세요 — 한 번에 자동화를 구성합니다.",
+    merchant: "판매처",
+    product: "상품",
+    license: "라이선스",
+    channel: "채널",
+    clickToAdd: "클릭하여 추가",
+    launchWorkspace: "워크스페이스 시작",
+    connectMerchant: "판매처 연결",
+    productMappings: "상품 매핑",
+    configureLicense: "라이선스 소스 설정",
+    chooseChannels: "배송 채널 선택",
+    connectMerchantDesc: "스토어프론트 플랫폼을 선택하고 Linko가 새 주문을 가져올 때 사용할 인증 정보를 입력하세요.",
+    productMappingsDesc: "상품-판매처 SKU 매핑을 관리합니다. 새 매핑을 추가하거나 기존 매핑을 제거하세요.",
+    configureLicenseDesc: "매핑된 상품이 배송 가능한 재고를 가져올 곳을 선택하세요.",
+    chooseChannelsDesc: "최종 배송 핸드오프를 위한 고객 배송 채널을 하나 이상 선택하세요.",
+    searchMerchants: "판매처 검색…",
+    searchProviders: "공급사 검색…",
+    cancel: "취소",
+    testApi: "API 테스트",
+    testingApi: "API 테스트 중...",
+    apiTested: "API 테스트됨",
+    connect: "연결",
+    noMappingsYet: "매핑 없음",
+    noMappingsDesc: "판매처 리스팅 또는 외부 SKU를 Linko 상품에 바인딩하는 첫 번째 상품 매핑을 생성하세요.",
+    whyBeforeLicense: "라이선스 소스보다 먼저 해야 하는 이유",
+    whyBeforeLicenseDesc: "Linko가 수동 재고를 사용할지 공급사 재고를 사용할지 결정하려면 먼저 판매처 주문이 어떤 상품으로 매핑되는지 알아야 합니다.",
+    mappingsReady: "준비됨",
+    addMappingNote: "계속하려면 매핑을 하나 이상 추가하세요",
+    newMapping: "새 매핑",
+    doneWithMappings: "매핑 완료",
+    newProductMapping: "새 상품 매핑",
+    newProductMappingDesc: "왼쪽에서 판매처 리스팅을 선택한 다음 오른쪽에서 Linko 상품을 선택하거나 생성하세요.",
+    merchantListing: "판매처 리스팅",
+    fromMerchant: "판매처에서",
+    manual: "수동",
+    merchantProductId: "판매처 상품 ID / SKU",
+    linkoProduct: "Linko 상품",
+    orCreateNew: "또는 새로 생성",
+    create: "생성",
+    addMapping: "매핑 추가",
+    noListingsSynced: "동기화된 리스팅 없음",
+    noListingsSyncedDesc: "먼저 판매처를 연결하고 동기화하거나 SKU를 수동으로 입력하세요.",
+    enterManually: "수동 입력",
+    createProductFirst: "먼저 상품을 생성하세요",
+    createProductFirstDesc: "라이선스 소스는 상품 매핑 이후에 설정합니다. Linko가 수동 재고를 사용할지 공급사 재고를 사용할지 결정하려면 매핑된 상품이 필요합니다.",
+    goToProductMapping: "상품 매핑으로 이동",
+    mappedProduct: "매핑된 상품",
+    sourceType: "소스 유형",
+    manualUpload: "수동 업로드",
+    connectProvider: "공급사 연결",
+    inventoryMapping: "재고 매핑",
+    chooseHow: "",
+    getsFulfilled: "배송 방법 선택",
+    inventoryMappingDesc: "판매처 리스팅이 이 상품과 매칭되면, Linko는 아래 소스를 사용하여 배송 가능한 라이선스를 가져오거나 예약합니다.",
+    chooseProvider: "공급사 선택",
+    manualInventorySelected: "수동 재고 선택됨",
+    selectSourceFirst: "먼저 소스 유형을 선택한 다음 재고 매핑을 완료하세요:",
+    saveLicenseMapping: "라이선스 매핑 저장",
+    selectOneOrMore: "하나 이상 선택",
+    done: "완료",
+    selected: "선택됨",
+    apiTestPassed: "API 테스트 통과 · 연결 준비됨",
+  },
+} as const
 
 type MerchantOption = {
   id: string
@@ -102,7 +240,7 @@ type ChannelOption = {
 const merchantOptions: MerchantOption[] = [
   {
     id: "naver",
-    name: "Naver Store",
+    name: "네이버 스토어",
     badge: "N",
     badgeBg: "#03C75A",
     status: "connected",
@@ -111,26 +249,26 @@ const merchantOptions: MerchantOption[] = [
   },
   {
     id: "g2g",
-    name: "G2G",
-    badge: "G2G",
+    name: "롯데몰",
+    badge: "롯데몰",
     badgeBg: "#E87A2A",
     status: "connected",
-    description: "Pull global marketplace orders into Mont automatically.",
+    description: "Pull global marketplace orders into Linko automatically.",
     detail: "Seller Name + API Key",
   },
   {
     id: "website",
-    name: "Mont Website",
+    name: "Linko Website",
     badge: "M",
     badgeBg: "#918DF6",
     status: "ready",
-    description: "Launch a storefront hosted by Mont with direct checkout.",
+    description: "Launch a storefront hosted by Linko with direct checkout.",
     detail: "Site URL + Webhook URL + Webhook Secret",
   },
   {
     id: "g2a",
-    name: "G2A",
-    badge: "G2A",
+    name: "지마켓",
+    badge: "지마켓",
     badgeBg: "#F05A23",
     status: "ready",
     description: "Connect your G2A seller account when you are ready.",
@@ -164,22 +302,22 @@ const merchantOperationalMeta: Record<string, MerchantOperationalMeta> = {
   naver: {
     verificationLabel: "Commerce API verified",
     syncMode: "Webhook + real-time sync",
-    syncDetail: "Paid orders are pushed into Mont the moment checkout completes.",
+    syncDetail: "Paid orders are pushed into Linko the moment checkout completes.",
   },
   g2g: {
     verificationLabel: "Seller API verified",
     syncMode: "Marketplace polling",
-    syncDetail: "Mont checks for new paid orders on a recurring seller sync interval.",
+    syncDetail: "Linko checks for new paid orders on a recurring seller sync interval.",
   },
   g2a: {
     verificationLabel: "Seller credentials verified",
     syncMode: "Marketplace polling",
-    syncDetail: "Mont periodically ingests new paid orders from the G2A seller feed.",
+    syncDetail: "Linko periodically ingests new paid orders from the G2A seller feed.",
   },
   website: {
     verificationLabel: "Webhook secret verified",
     syncMode: "Webhook ingestion",
-    syncDetail: "Your storefront posts checkout events straight into the Mont workflow.",
+    syncDetail: "Your storefront posts checkout events straight into the Linko workflow.",
   },
 }
 
@@ -188,7 +326,7 @@ const merchantGuides: Record<string, MerchantGuide> = {
     title: "Naver registration guide",
     steps: [
       "Open Naver Commerce API settings and create a production app.",
-      "Copy the Store Name, API Key, and Secret Key into Mont.",
+      "Copy the Store Name, API Key, and Secret Key into Linko.",
       "Confirm order access is enabled before testing the connection.",
     ],
     ipLabel: "Add 1.1.1.1 to the Naver Commerce API allowlist before testing.",
@@ -206,7 +344,7 @@ const merchantGuides: Record<string, MerchantGuide> = {
     title: "G2A registration guide",
     steps: [
       "Create or open your G2A seller API application.",
-      "Copy the Seller ID, API Key, and API Secret into Mont.",
+      "Copy the Seller ID, API Key, and API Secret into Linko.",
       "Enable production order access for the credential pair you created.",
     ],
     ipLabel: "Add 1.1.1.1 to the G2A seller API allowlist before testing.",
@@ -215,8 +353,8 @@ const merchantGuides: Record<string, MerchantGuide> = {
     title: "Website registration guide",
     steps: [
       "Set up your storefront webhook endpoint and delivery callback URL.",
-      "Generate a webhook signing secret and save it inside Mont.",
-      "Point your checkout completion webhook to the Mont-compatible payload flow.",
+      "Generate a webhook signing secret and save it inside Linko.",
+      "Point your checkout completion webhook to the Linko-compatible payload flow.",
     ],
     ipLabel: "Allow requests from 1.1.1.1 on your webhook or firewall rules before testing.",
   },
@@ -299,7 +437,7 @@ const licenseOptions: LicenseOption[] = [
 
 const providerOptions: ProviderOption[] = [
   { id: "kinguin", name: "Kinguin API", badge: "K", badgeBg: "#1A73E8" },
-  { id: "g2a-provider", name: "G2A Marketplace", badge: "G2A", badgeBg: "#F05A23" },
+  { id: "g2a-provider", name: "지마켓", badge: "지마켓", badgeBg: "#F05A23" },
   { id: "manual-api", name: "Manual API", badge: "API", badgeBg: "#918DF6" },
 ]
 
@@ -468,7 +606,8 @@ function Connector({
   )
 }
 
-export default function QuickSetup() {
+export default function QuickSetup({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const navigate = useNavigate()
   const [activePanel, setActivePanel] = useState<ActivePanel>(null)
   const [searchQuery, setSearchQuery] = useState("")
@@ -816,7 +955,7 @@ export default function QuickSetup() {
       detail:
         licenseData.type === "provider"
           ? `${productData.name} will request stock from ${licenseNodeName ?? "your provider"} when mapped orders arrive.`
-          : `${productData.name} will consume manual inventory stored inside Mont when mapped orders arrive.`,
+          : `${productData.name} will consume manual inventory stored inside Linko when mapped orders arrive.`,
     }
   }, [productData, licenseData, licenseNodeName])
 
@@ -851,7 +990,7 @@ export default function QuickSetup() {
       {
         label: "Trigger",
         value: merchantData
-          ? `${merchantData.name} is authenticated. ${merchantOps?.syncDetail ?? "Paid orders can now enter Mont."}`
+          ? `${merchantData.name} is authenticated. ${merchantOps?.syncDetail ?? "Paid orders can now enter Linko."}`
           : "Waiting for merchant connection",
       },
       {
@@ -871,7 +1010,7 @@ export default function QuickSetup() {
         value: licenseData
           ? licenseData.type === "provider"
             ? `${licenseNodeName ?? "Provider"} returns a deliverable key`
-            : "Mont reserves one item from manual inventory"
+            : "Linko reserves one item from manual inventory"
           : "Waiting for license source",
       },
       {
@@ -889,31 +1028,31 @@ export default function QuickSetup() {
             <span className="absolute inset-0 rounded-full bg-[#918DF6]" />
             <span className="absolute top-0.5 right-0.5 size-3 rounded-full bg-white" />
           </span>
-          <span className="text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">Mont</span>
+          <span className="text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">Linko</span>
         </div>
         <Link
           to="/dashboard"
           className="text-[13px] font-medium tracking-[-0.32px] text-[#999999] transition-colors hover:text-[#666666]"
         >
-          Skip for now
+          {t.skipForNow}
         </Link>
       </header>
 
         <div className="relative flex flex-1 flex-col overflow-hidden">
           <div className="flex flex-1 flex-col items-center px-6 pt-10 pb-12">
           <div className="text-center">
-            <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">Quick Setup</p>
+            <p className="text-[12px] font-medium tracking-[-0.32px] text-[#918DF6]">{t.quickSetup}</p>
             <h1 className="mt-1 text-[28px] font-bold tracking-[-0.5px] text-[#181925]">
-              Build your fulfillment flow
+              {t.buildFlow}
             </h1>
             <p className="mx-auto mt-2 max-w-lg text-[15px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-              Connect a merchant, decide how licenses are supplied, and choose delivery channels — wire your automation in one pass.
+              {t.buildFlowDesc}
             </p>
           </div>
 
           <div className="mt-14 flex items-center justify-center gap-3 xl:gap-4">
             <FlowNode
-              label="Merchant"
+              label={t.merchant}
               filled={!!merchantData}
               badge={merchantData?.badge}
               badgeBg={merchantData?.badgeBg}
@@ -929,7 +1068,7 @@ export default function QuickSetup() {
               detail={merchantToProduct.detail}
             />
             <FlowNode
-              label="Product"
+              label={t.product}
               filled={!!productData}
               name={productData?.name}
               subtitle={productSubtitle}
@@ -943,7 +1082,7 @@ export default function QuickSetup() {
               detail={productToLicense.detail}
             />
             <FlowNode
-              label="License"
+              label={t.license}
               filled={!!selectedLicense}
               badge={licenseNodeBadge}
               badgeBg={licenseNodeBadgeBg}
@@ -965,7 +1104,7 @@ export default function QuickSetup() {
               detail={licenseToChannel.detail}
             />
             <FlowNode
-              label="Channel"
+              label={t.channel}
               filled={selectedChannels.size > 0}
               name={selectedChannels.size > 0 ? `${selectedChannels.size} channel${selectedChannels.size > 1 ? "s" : ""}` : undefined}
               subtitle={channelSubtitle}
@@ -1008,7 +1147,7 @@ export default function QuickSetup() {
                   className="inline-flex h-12 items-center gap-2.5 rounded-full bg-[#918DF6] px-7 text-[15px] font-semibold tracking-[-0.32px] text-white shadow-[0_12px_32px_rgba(145,141,246,0.28)] transition-all hover:bg-[#7D79E8] hover:shadow-[0_16px_40px_rgba(145,141,246,0.36)]"
                 >
                   <Rocket className="size-4.5" strokeWidth={2} />
-                  Launch workspace
+                  {t.launchWorkspace}
                 </button>
               </motion.div>
             )}
@@ -1019,20 +1158,16 @@ export default function QuickSetup() {
           <DialogContent className="sm:max-w-[720px] max-h-[82vh] overflow-y-auto rounded-[24px] border border-[rgba(0,0,0,0.08)] bg-white p-0 shadow-[0_20px_64px_rgba(24,25,37,0.12)]">
             <DialogHeader className="border-b border-[rgba(0,0,0,0.08)] px-5 py-4 text-left">
               <DialogTitle className="text-[18px] font-semibold tracking-[-0.32px] text-[#181925]">
-                {activePanel === "merchant" && "Connect merchant"}
-                {activePanel === "product" && "Product mappings"}
-                {activePanel === "license" && "Configure license source"}
-                {activePanel === "channel" && "Choose delivery channels"}
+                {activePanel === "merchant" && t.connectMerchant}
+                {activePanel === "product" && t.productMappings}
+                {activePanel === "license" && t.configureLicense}
+                {activePanel === "channel" && t.chooseChannels}
               </DialogTitle>
               <DialogDescription className="mt-1 text-[13px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                {activePanel === "merchant" &&
-                  "Choose the storefront platform and enter the credentials Mont should use to pull new orders."}
-                {activePanel === "product" &&
-                  "Manage your product-to-merchant SKU mappings. Add new mappings or remove existing ones."}
-                {activePanel === "license" &&
-                  "Choose where this mapped product should pull its deliverable inventory from."}
-                {activePanel === "channel" &&
-                  "Pick one or more customer delivery channels for the final fulfillment handoff."}
+                {activePanel === "merchant" && t.connectMerchantDesc}
+                {activePanel === "product" && t.productMappingsDesc}
+                {activePanel === "license" && t.configureLicenseDesc}
+                {activePanel === "channel" && t.chooseChannelsDesc}
               </DialogDescription>
             </DialogHeader>
 
@@ -1046,8 +1181,8 @@ export default function QuickSetup() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={
                       activePanel === "merchant"
-                        ? "Search merchants…"
-                        : "Search providers…"
+                        ? t.searchMerchants
+                        : t.searchProviders
                     }
                     className="w-full bg-transparent text-[13px] tracking-[-0.32px] text-[#181925] outline-none placeholder:text-[#999999]"
                   />
@@ -1107,7 +1242,7 @@ export default function QuickSetup() {
                         </span>
                         <div>
                           <p className="text-[14px] font-semibold tracking-[-0.32px] text-[#181925]">Connect {merchantDraftData.name}</p>
-                          <p className="mt-0.5 text-[12px] tracking-[-0.32px] text-[#666666]">Enter the credentials Mont should use during onboarding.</p>
+                          <p className="mt-0.5 text-[12px] tracking-[-0.32px] text-[#666666]">Enter the credentials Linko should use during onboarding.</p>
                         </div>
                       </div>
 
@@ -1183,7 +1318,7 @@ export default function QuickSetup() {
                         {merchantTestState === "success" ? (
                           <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-[#34A853]/10 px-2 py-1 text-[10px] font-semibold tracking-[-0.32px] text-[#2E7D32]">
                             <CheckCircle2 className="size-3.5" strokeWidth={2.2} />
-                            API test passed · ready to connect
+                            {t.apiTestPassed}
                           </div>
                         ) : null}
                       </div>
@@ -1194,7 +1329,7 @@ export default function QuickSetup() {
                           onClick={closePanel}
                           className="inline-flex h-9 items-center justify-center rounded-xl border border-[rgba(0,0,0,0.08)] px-3.5 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.03)] hover:text-[#181925]"
                         >
-                          Cancel
+                          {t.cancel}
                         </button>
                         <button
                           type="button"
@@ -1202,7 +1337,7 @@ export default function QuickSetup() {
                           disabled={!merchantFormReady || merchantTestState === "testing"}
                           className="inline-flex h-9 min-w-[108px] shrink-0 items-center justify-center whitespace-nowrap rounded-xl border border-[#918DF6]/20 bg-[#918DF6]/10 px-3 text-[13px] font-semibold tracking-[-0.32px] text-[#918DF6] transition-colors hover:bg-[#918DF6]/15 disabled:opacity-40"
                         >
-                          {merchantTestState === "testing" ? "Testing API..." : merchantTestState === "success" ? "API tested" : "Test API"}
+                          {merchantTestState === "testing" ? t.testingApi : merchantTestState === "success" ? t.apiTested : t.testApi}
                         </button>
                         <button
                           type="button"
@@ -1210,7 +1345,7 @@ export default function QuickSetup() {
                           disabled={!merchantFormReady || merchantTestState !== "success"}
                           className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-xl bg-[#918DF6] px-3.5 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7D79E8] disabled:opacity-40"
                         >
-                          Connect {merchantDraftData.name}
+                          {t.connect} {merchantDraftData.name}
                         </button>
                       </div>
                     </div>
@@ -1225,7 +1360,7 @@ export default function QuickSetup() {
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="size-4 text-[#34A853]" strokeWidth={2.2} />
-                          <p className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">Product mappings</p>
+                          <p className="text-[13px] font-semibold tracking-[-0.32px] text-[#181925]">{t.productMappings}</p>
                         </div>
                         <span className="rounded-full bg-[#34A853]/10 px-2 py-0.5 text-[10px] font-semibold tracking-[-0.32px] text-[#2E7D32]">{productMappings.length}</span>
                       </div>
@@ -1262,23 +1397,23 @@ export default function QuickSetup() {
                       <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-[#918DF6]/10 text-[#918DF6]">
                         <Package className="size-5" strokeWidth={1.9} />
                       </div>
-                      <p className="mt-3 text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">No mappings yet</p>
+                       <p className="mt-3 text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">{t.noMappingsYet}</p>
                       <p className="mx-auto mt-1 max-w-md text-[13px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                        Create your first product mapping to bind a merchant listing or external SKU to a Mont product.
+                        {t.noMappingsDesc}
                       </p>
                     </div>
                   )}
 
                   <div className="rounded-xl border border-[rgba(0,0,0,0.08)] bg-white px-3.5 py-3">
-                    <p className="text-[12px] font-semibold tracking-[-0.32px] text-[#181925]">Why this comes before license source</p>
+                    <p className="text-[12px] font-semibold tracking-[-0.32px] text-[#181925]">{t.whyBeforeLicense}</p>
                     <p className="mt-1 text-[11px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                      Mont must know which product an incoming merchant order resolves into before it can decide whether to use manual inventory or provider stock.
+                      {t.whyBeforeLicenseDesc}
                     </p>
                   </div>
 
                   <div className="flex items-center justify-between gap-3 border-t border-[rgba(0,0,0,0.06)] pt-3">
                     <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">
-                      {productMappings.length > 0 ? `${productMappings.length} mapping${productMappings.length > 1 ? "s" : ""} ready` : "Add at least one mapping to continue"}
+                      {productMappings.length > 0 ? `${productMappings.length} mapping${productMappings.length > 1 ? "s" : ""} ${t.mappingsReady}` : t.addMappingNote}
                     </p>
                     <div className="flex items-center gap-2">
                       <button
@@ -1287,7 +1422,7 @@ export default function QuickSetup() {
                         className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-[#918DF6]/20 bg-[#918DF6]/10 px-3 text-[13px] font-semibold tracking-[-0.32px] text-[#918DF6] transition-colors hover:bg-[#918DF6]/15"
                       >
                         <CirclePlus className="size-3.5" strokeWidth={2.2} />
-                        New mapping
+                        {t.newMapping}
                       </button>
                       <button
                         type="button"
@@ -1295,19 +1430,19 @@ export default function QuickSetup() {
                         disabled={productMappings.length === 0}
                         className="inline-flex h-9 items-center justify-center rounded-xl bg-[#918DF6] px-4 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7D79E8] disabled:opacity-40"
                       >
-                        Done with mappings
+                        {t.doneWithMappings}
                       </button>
                     </div>
                   </div>
 
                   <Dialog open={mappingModalOpen} onOpenChange={(open) => !open && closeMappingModal()}>
                     <DialogContent className="sm:max-w-[780px] rounded-[24px] border border-[rgba(0,0,0,0.08)] bg-white p-0 shadow-[0_20px_64px_rgba(24,25,37,0.12)] overflow-hidden">
-                      <DialogHeader className="border-b border-[rgba(0,0,0,0.08)] px-5 py-4 text-left">
+                       <DialogHeader className="border-b border-[rgba(0,0,0,0.08)] px-5 py-4 text-left">
                         <DialogTitle className="text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">
-                          New product mapping
+                          {t.newProductMapping}
                         </DialogTitle>
                         <DialogDescription className="mt-0.5 text-[13px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                          Select a merchant listing on the left, then pick or create a Mont product on the right.
+                          {t.newProductMappingDesc}
                         </DialogDescription>
                       </DialogHeader>
 
@@ -1315,7 +1450,7 @@ export default function QuickSetup() {
 
                         <div className="flex flex-col p-4 gap-3">
                           <div className="flex items-center justify-between">
-                            <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Merchant listing</p>
+                            <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.merchantListing}</p>
                             <div className="inline-flex rounded-full bg-[rgba(0,0,0,0.05)] p-0.5">
                               <button
                                 type="button"
@@ -1326,7 +1461,7 @@ export default function QuickSetup() {
                                     : "text-[#666666] hover:text-[#181925]"
                                 }`}
                               >
-                                From merchant
+                                {t.fromMerchant}
                               </button>
                               <button
                                 type="button"
@@ -1337,7 +1472,7 @@ export default function QuickSetup() {
                                     : "text-[#666666] hover:text-[#181925]"
                                 }`}
                               >
-                                Manual
+                                {t.manual}
                               </button>
                             </div>
                           </div>
@@ -1369,20 +1504,20 @@ export default function QuickSetup() {
                               </div>
                             ) : (
                               <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-[rgba(0,0,0,0.10)] px-4 py-8 text-center">
-                                <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">No listings synced</p>
-                                <p className="mt-1 text-[12px] leading-relaxed tracking-[-0.32px] text-[#999999]">Connect and sync the merchant first, or enter the SKU manually.</p>
+                                <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">{t.noListingsSynced}</p>
+                                <p className="mt-1 text-[12px] leading-relaxed tracking-[-0.32px] text-[#999999]">{t.noListingsSyncedDesc}</p>
                                 <button
                                   type="button"
                                   onClick={() => setProductSkuMode("manual")}
                                   className="mt-3 inline-flex h-7 items-center rounded-full bg-[rgba(0,0,0,0.05)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.08)]"
                                 >
-                                  Enter manually
+                                  {t.enterManually}
                                 </button>
                               </div>
                             )
                           ) : (
                             <div className="space-y-1.5">
-                              <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Merchant Product ID / SKU</p>
+                              <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.merchantProductId}</p>
                               <input
                                 type="text"
                                 value={productMerchantSku}
@@ -1395,7 +1530,7 @@ export default function QuickSetup() {
                         </div>
 
                         <div className="flex flex-col p-4 gap-3">
-                          <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Mont product</p>
+                          <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.linkoProduct}</p>
 
                           <div className="overflow-hidden rounded-xl border border-[rgba(0,0,0,0.08)]">
                             {productOptions.map((product, i) => {
@@ -1430,7 +1565,7 @@ export default function QuickSetup() {
 
                           <div className="flex items-center gap-2.5">
                             <div className="h-px flex-1 bg-[rgba(0,0,0,0.07)]" />
-                            <span className="text-[10px] tracking-[-0.32px] text-[#999999]">or create new</span>
+                            <span className="text-[10px] tracking-[-0.32px] text-[#999999]">{t.orCreateNew}</span>
                             <div className="h-px flex-1 bg-[rgba(0,0,0,0.07)]" />
                           </div>
 
@@ -1470,7 +1605,7 @@ export default function QuickSetup() {
                                   onClick={createInlineProduct}
                                   className="ml-auto inline-flex h-6 shrink-0 items-center rounded-full bg-[#918DF6] px-3 text-[11px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7D79E8]"
                                 >
-                                  Create
+                                  {t.create}
                                 </button>
                               </div>
                             )}
@@ -1484,7 +1619,7 @@ export default function QuickSetup() {
                           onClick={closeMappingModal}
                           className="inline-flex h-9 items-center justify-center rounded-full bg-[rgba(0,0,0,0.04)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.07)] hover:text-[#181925]"
                         >
-                          Cancel
+                          {t.cancel}
                         </button>
                         <button
                           type="button"
@@ -1492,7 +1627,7 @@ export default function QuickSetup() {
                           disabled={!selectedProductId || (productSkuMode === "manual" ? productMerchantSku.trim().length === 0 : selectedImportedListingIds.size === 0)}
                           className="inline-flex h-9 items-center justify-center rounded-full bg-[#918DF6] px-5 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7D79E8] disabled:opacity-40"
                         >
-                          Add mapping
+                          {t.addMapping}
                         </button>
                       </div>
                     </DialogContent>
@@ -1506,28 +1641,28 @@ export default function QuickSetup() {
                     <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-[#918DF6]/10 text-[#918DF6]">
                       <Package className="size-5" strokeWidth={1.9} />
                     </div>
-                    <p className="mt-3 text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">Create the product first</p>
+                    <p className="mt-3 text-[16px] font-semibold tracking-[-0.32px] text-[#181925]">{t.createProductFirst}</p>
                     <p className="mx-auto mt-1 max-w-md text-[13px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                      License source comes after product mapping. Mont needs a mapped product before it can decide whether to use manual inventory or provider stock.
+                      {t.createProductFirstDesc}
                     </p>
                     <button
                       type="button"
                       onClick={() => setActivePanel("product")}
                       className="mt-4 inline-flex h-10 items-center justify-center rounded-xl bg-[#918DF6] px-4 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7D79E8]"
                     >
-                      Go to product mapping
+                      {t.goToProductMapping}
                     </button>
                   </div>
                 ) : (
                   <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
                     <div className="space-y-3">
                       <div className="rounded-2xl border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.015)] px-4 py-3">
-                        <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Mapped product</p>
+                        <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.mappedProduct}</p>
                         <p className="mt-1 text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">{productData.name}</p>
                         <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#666666]">Merchant SKU {productMerchantSku}</p>
                       </div>
 
-                      <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Source type</p>
+                      <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.sourceType}</p>
                       {licenseOptions.map((option) => {
                         const selected = selectedLicense === option.id
                         const Icon = option.icon
@@ -1565,15 +1700,15 @@ export default function QuickSetup() {
                     </div>
 
                     <div className="rounded-2xl border border-[rgba(145,141,246,0.16)] bg-[#918DF6]/[0.04] p-4">
-                      <p className="text-[12px] font-semibold tracking-[-0.32px] text-[#999999]">Inventory mapping</p>
-                      <p className="mt-1 text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">Choose how {productData.name} gets fulfilled</p>
+                      <p className="text-[12px] font-semibold tracking-[-0.32px] text-[#999999]">{t.inventoryMapping}</p>
+                      <p className="mt-1 text-[15px] font-semibold tracking-[-0.32px] text-[#181925]">{t.chooseHow}{productData.name}{t.getsFulfilled}</p>
                       <p className="mt-1 text-[12px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                        Once the merchant listing matches this product, Mont will use the source below to fetch or reserve the deliverable license.
+                        {t.inventoryMappingDesc}
                       </p>
 
                       {selectedLicense === "provider" ? (
                         <div className="mt-4 space-y-2.5">
-                          <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">Choose provider</p>
+                          <p className="text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">{t.chooseProvider}</p>
                           {filteredProviders.map((provider) => {
                             const selected = selectedProvider === provider.id
                             return (
@@ -1606,14 +1741,14 @@ export default function QuickSetup() {
                         </div>
                       ) : selectedLicense === "manual" ? (
                         <div className="mt-4 rounded-xl border border-[rgba(0,0,0,0.08)] bg-white px-3.5 py-3">
-                          <p className="text-[12px] font-semibold tracking-[-0.32px] text-[#181925]">Manual inventory selected</p>
+                          <p className="text-[12px] font-semibold tracking-[-0.32px] text-[#181925]">{t.manualInventorySelected}</p>
                           <p className="mt-1 text-[11px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                            Upload keys, links, files, or subscriptions for {productData.name} in Licenses. Mont will reserve them when matched orders arrive.
+                            Upload keys, links, files, or subscriptions for {productData.name} in Licenses. Linko will reserve them when matched orders arrive.
                           </p>
                         </div>
                       ) : (
                         <div className="mt-4 rounded-xl border border-dashed border-[rgba(145,141,246,0.24)] bg-white px-3.5 py-3 text-[11px] leading-relaxed tracking-[-0.32px] text-[#666666]">
-                          Select a source type first, then finish the inventory mapping for {productData.name}.
+                          {t.selectSourceFirst} {productData.name}.
                         </div>
                       )}
 
@@ -1623,15 +1758,15 @@ export default function QuickSetup() {
                           onClick={closePanel}
                           className="inline-flex h-9 items-center justify-center rounded-xl border border-[rgba(0,0,0,0.08)] px-3.5 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.03)] hover:text-[#181925]"
                         >
-                          Cancel
+                          {t.cancel}
                         </button>
                         <button
                           type="button"
                           onClick={closePanel}
                           disabled={!selectedLicense || (selectedLicense === "provider" && !selectedProvider)}
                           className="inline-flex h-9 items-center justify-center rounded-xl bg-[#918DF6] px-3.5 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7D79E8] disabled:opacity-40"
-                        >
-                          Save license mapping
+                         >
+                          {t.saveLicenseMapping}
                         </button>
                       </div>
                     </div>
@@ -1642,7 +1777,7 @@ export default function QuickSetup() {
               {activePanel === "channel" && (
                 <div className="flex flex-col gap-2">
                   <p className="mb-2 text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">
-                    Select one or more
+                    {t.selectOneOrMore}
                   </p>
                   {channelOptions.map((channel) => {
                     const selected = selectedChannels.has(channel.id)
@@ -1679,14 +1814,14 @@ export default function QuickSetup() {
                       onClick={closePanel}
                       className="inline-flex h-10 items-center justify-center rounded-xl border border-[rgba(0,0,0,0.08)] px-4 text-[13px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.03)] hover:text-[#181925]"
                     >
-                      Cancel
+                      {t.cancel}
                     </button>
                     <button
                       type="button"
                       onClick={closePanel}
                       className="inline-flex h-10 items-center justify-center rounded-xl bg-[#918DF6] px-4 text-[13px] font-semibold tracking-[-0.32px] text-white transition-colors hover:bg-[#7D79E8]"
                     >
-                      Done · {selectedChannels.size} selected
+                      {t.done} · {selectedChannels.size} {t.selected}
                     </button>
                   </div>
                 </div>

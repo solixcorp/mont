@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# spec-graph disposable index (canonical data is .spec-graph/entities/*.toml)
+.spec-graph/graph.db
+.spec-graph/graph.db-wal
+.spec-graph/graph.db-shm
+.spec-graph/.lock

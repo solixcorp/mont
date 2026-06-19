@@ -2,6 +2,64 @@ import { useState, useRef } from "react"
 import { Check, ChevronDown, User, Bell, Camera, Link2 } from "lucide-react"
 import DashboardLayout from "@/DashboardLayout"
 import type { Currency } from "@/shared"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    title: "Settings",
+    profile: "Profile",
+    profileDesc: "Your account information",
+    name: "Name",
+    email: "Email",
+    timezone: "Timezone",
+    saveChanges: "Save Changes",
+    saved: "Saved!",
+    connectedAccounts: "Connected Accounts",
+    connectedAccountsDesc: "Manage your social login connections",
+    notConnected: "Not connected",
+    disconnect: "Disconnect",
+    connect: "Connect",
+    notifications: "Notifications",
+    notificationsDesc: "Configure how you receive alerts",
+    emailNotifications: "Email notifications",
+    emailNotificationsDesc: "Receive order summaries and reports via email",
+    telegramAlerts: "Telegram alerts",
+    telegramAlertsDesc: "Get instant delivery notifications on Telegram",
+    smsAlerts: "SMS alerts",
+    smsAlertsDesc: "Receive critical alerts via SMS",
+    orderAlerts: "Order alerts",
+    orderAlertsDesc: "Notify on every new order received",
+    lowStockAlerts: "Low stock alerts",
+    lowStockAlertsDesc: "Warn when inventory drops below threshold",
+  },
+  kr: {
+    title: "설정",
+    profile: "프로필",
+    profileDesc: "계정 정보",
+    name: "이름",
+    email: "이메일",
+    timezone: "시간대",
+    saveChanges: "변경사항 저장",
+    saved: "저장됨!",
+    connectedAccounts: "연결된 계정",
+    connectedAccountsDesc: "소셜 로그인 연결 관리",
+    notConnected: "연결 안됨",
+    disconnect: "연결 해제",
+    connect: "연결",
+    notifications: "알림",
+    notificationsDesc: "알림 수신 방법 설정",
+    emailNotifications: "이메일 알림",
+    emailNotificationsDesc: "이메일로 주문 요약 및 보고서 수신",
+    telegramAlerts: "텔레그램 알림",
+    telegramAlertsDesc: "텔레그램으로 즉시 배송 알림 수신",
+    smsAlerts: "SMS 알림",
+    smsAlertsDesc: "SMS로 중요 알림 수신",
+    orderAlerts: "주문 알림",
+    orderAlertsDesc: "새 주문이 들어올 때마다 알림",
+    lowStockAlerts: "재고 부족 알림",
+    lowStockAlertsDesc: "재고가 기준치 이하로 떨어지면 경고",
+  },
+} as const
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -65,8 +123,9 @@ const timezones = [
   "Asia/Singapore (SGT, UTC+8)",
 ]
 
-export default function Settings() {
+export default function Settings({ locale = "en" }: { locale?: Locale }) {
   const [currency, setCurrency] = useState<Currency>("KRW")
+  const t = translations[locale]
 
   const [name, setName] = useState("Yuchan")
   const [email, setEmail] = useState("yuchan@vexora.team")
@@ -103,13 +162,14 @@ export default function Settings() {
 
   return (
     <DashboardLayout
-      title="Settings"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
       <div className="flex flex-1 flex-col overflow-y-auto px-6 pt-4 pb-6 lg:px-8">
         <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5">
-          <SectionCard icon={User} title="Profile" description="Your account information">
+          <SectionCard icon={User} title={t.profile} description={t.profileDesc}>
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
                 <input
@@ -153,7 +213,7 @@ export default function Settings() {
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
                   <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                    Name
+                    {t.name}
                   </label>
                   <input
                     type="text"
@@ -164,7 +224,7 @@ export default function Settings() {
                 </div>
                 <div>
                   <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                    Email
+                    {t.email}
                   </label>
                   <input
                     type="email"
@@ -177,7 +237,7 @@ export default function Settings() {
 
               <div>
                 <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#666666]">
-                  Timezone
+                  {t.timezone}
                 </label>
                 <div className="relative">
                   <select
@@ -203,17 +263,17 @@ export default function Settings() {
                   {savedSection === "profile" ? (
                     <span className="flex items-center gap-1.5">
                       <Check className="size-3.5" strokeWidth={2.5} />
-                      Saved!
+                      {t.saved}
                     </span>
                   ) : (
-                    "Save Changes"
+                    t.saveChanges
                   )}
                 </button>
               </div>
             </div>
           </SectionCard>
 
-          <SectionCard icon={Link2} title="Connected Accounts" description="Manage your social login connections">
+          <SectionCard icon={Link2} title={t.connectedAccounts} description={t.connectedAccountsDesc}>
             <div className="flex flex-col gap-0">
               {socialProviders.map((provider, idx) => {
                 const conn = socialConnections[provider.id]
@@ -233,7 +293,7 @@ export default function Settings() {
                       <div>
                         <p className="text-[13px] font-medium tracking-[-0.32px] text-[#181925]">{provider.id}</p>
                         <p className="text-[12px] tracking-[-0.32px] text-[#999999]">
-                          {account ?? "Not connected"}
+                          {account ?? t.notConnected}
                         </p>
                       </div>
                     </div>
@@ -246,7 +306,7 @@ export default function Settings() {
                         }))}
                         className="text-[12px] font-medium tracking-[-0.32px] text-[#999999] transition-colors hover:text-[#D93025]"
                       >
-                        Disconnect
+                        {t.disconnect}
                       </button>
                     ) : (
                       <button
@@ -257,7 +317,7 @@ export default function Settings() {
                         }))}
                         className="flex h-7 items-center rounded-full border border-[rgba(0,0,0,0.12)] px-3 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                       >
-                        Connect
+                        {t.connect}
                       </button>
                     )}
                   </div>
@@ -266,14 +326,14 @@ export default function Settings() {
             </div>
           </SectionCard>
 
-          <SectionCard icon={Bell} title="Notifications" description="Configure how you receive alerts">
+          <SectionCard icon={Bell} title={t.notifications} description={t.notificationsDesc}>
             <div className="flex flex-col gap-0">
               {[
-                { label: "Email notifications", desc: "Receive order summaries and reports via email", checked: emailNotif, onChange: setEmailNotif },
-                { label: "Telegram alerts", desc: "Get instant delivery notifications on Telegram", checked: telegramAlert, onChange: setTelegramAlert },
-                { label: "SMS alerts", desc: "Receive critical alerts via SMS", checked: smsAlert, onChange: setSmsAlert },
-                { label: "Order alerts", desc: "Notify on every new order received", checked: orderAlert, onChange: setOrderAlert },
-                { label: "Low stock alerts", desc: "Warn when inventory drops below threshold", checked: lowStockAlert, onChange: setLowStockAlert },
+                { label: t.emailNotifications, desc: t.emailNotificationsDesc, checked: emailNotif, onChange: setEmailNotif },
+                { label: t.telegramAlerts, desc: t.telegramAlertsDesc, checked: telegramAlert, onChange: setTelegramAlert },
+                { label: t.smsAlerts, desc: t.smsAlertsDesc, checked: smsAlert, onChange: setSmsAlert },
+                { label: t.orderAlerts, desc: t.orderAlertsDesc, checked: orderAlert, onChange: setOrderAlert },
+                { label: t.lowStockAlerts, desc: t.lowStockAlertsDesc, checked: lowStockAlert, onChange: setLowStockAlert },
               ].map((item, idx, arr) => (
                 <div
                   key={item.label}

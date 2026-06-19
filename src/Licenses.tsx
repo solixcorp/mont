@@ -17,6 +17,122 @@ import {
 } from "lucide-react"
 import DashboardLayout from "@/DashboardLayout"
 import type { Currency } from "@/shared"
+import type { Locale } from "@/locale"
+
+const translations = {
+  en: {
+    title: "License Charging",
+    subtitle: "Add and manage license keys for your products",
+    successBanner: "Keys added successfully",
+    product: "Product",
+    selectProduct: "Select a product...",
+    searchProducts: "Search products...",
+    noProductsFound: "No products found",
+    keyType: "Key Type",
+    keyCodes: "Key Codes",
+    urls: "URLs",
+    fileUpload: "File Upload",
+    imageUpload: "Image Upload",
+    subscriptionDetails: "Subscription Details",
+    keyEntered: "key",
+    keysEntered: "keys",
+    urlEntered: "URL",
+    urlsEntered: "URLs",
+    fileSelected: "file",
+    filesSelected: "files",
+    keyCodePlaceholder: "Enter one key per line...\nXXXX-ABCD-1234-EFGH\nXXXX-IJKL-5678-MNOP",
+    linkPlaceholder: "Enter one URL per line...\nhttps://example.com/redeem/abc123\nhttps://example.com/redeem/def456",
+    dropFiles: "Drop files here",
+    dropImages: "Drop images here",
+    orClickToBrowse: "or click to browse from your computer",
+    browseFiles: "Browse Files",
+    subscriptionName: "Subscription Name",
+    subscriptionNamePlaceholder: "e.g. Xbox Game Pass Ultimate",
+    plan: "Plan",
+    planPlaceholder: "e.g. 1 Month",
+    price: "Price",
+    pricePlaceholder: "e.g. $12.99",
+    startDate: "Start Date",
+    endDate: "End Date",
+    preview: "Preview",
+    more: "more",
+    addKey: "Add Key",
+    addKeys: "Add Keys",
+    addUrl: "Add URL",
+    addUrls: "Add URLs",
+    addSubscription: "Add Subscription",
+    uploadFiles: "Upload Files",
+    uploadImages: "Upload Images",
+    today: "Today",
+    thisWeek: "This Week",
+    top: "Top",
+    recentCharges: "Recent Charges",
+    entriesLoaded: "entries loaded",
+    allEntriesLoaded: "All {count} entries loaded",
+    of: "of",
+    keyTypeKeyCode: "Key Code",
+    keyTypeLink: "Link",
+    keyTypeFile: "File",
+    keyTypeImage: "Image",
+    keyTypeSubscription: "Subscription",
+  },
+  kr: {
+    title: "라이선스 충전",
+    subtitle: "상품의 라이선스 키를 추가하고 관리하세요",
+    successBanner: "키가 성공적으로 추가되었습니다",
+    product: "상품",
+    selectProduct: "상품을 선택하세요...",
+    searchProducts: "상품 검색...",
+    noProductsFound: "상품을 찾을 수 없습니다",
+    keyType: "키 유형",
+    keyCodes: "키 코드",
+    urls: "URL",
+    fileUpload: "파일 업로드",
+    imageUpload: "이미지 업로드",
+    subscriptionDetails: "구독 정보",
+    keyEntered: "개 키",
+    keysEntered: "개 키",
+    urlEntered: "개 URL",
+    urlsEntered: "개 URL",
+    fileSelected: "개 파일",
+    filesSelected: "개 파일",
+    keyCodePlaceholder: "한 줄에 하나의 키를 입력하세요...\nXXXX-ABCD-1234-EFGH\nXXXX-IJKL-5678-MNOP",
+    linkPlaceholder: "한 줄에 하나의 URL을 입력하세요...\nhttps://example.com/redeem/abc123\nhttps://example.com/redeem/def456",
+    dropFiles: "여기에 파일을 놓으세요",
+    dropImages: "여기에 이미지를 놓으세요",
+    orClickToBrowse: "또는 클릭하여 컴퓨터에서 선택하세요",
+    browseFiles: "파일 찾아보기",
+    subscriptionName: "구독 이름",
+    subscriptionNamePlaceholder: "예: Xbox Game Pass Ultimate",
+    plan: "플랜",
+    planPlaceholder: "예: 1개월",
+    price: "가격",
+    pricePlaceholder: "예: $12.99",
+    startDate: "시작일",
+    endDate: "종료일",
+    preview: "미리보기",
+    more: "개 더",
+    addKey: "키 추가",
+    addKeys: "키 추가",
+    addUrl: "URL 추가",
+    addUrls: "URL 추가",
+    addSubscription: "구독 추가",
+    uploadFiles: "파일 업로드",
+    uploadImages: "이미지 업로드",
+    today: "오늘",
+    thisWeek: "이번 주",
+    top: "인기",
+    recentCharges: "최근 충전 내역",
+    entriesLoaded: "건 로드됨",
+    allEntriesLoaded: "전체 {count}건 로드 완료",
+    of: "/",
+    keyTypeKeyCode: "키 코드",
+    keyTypeLink: "링크",
+    keyTypeFile: "파일",
+    keyTypeImage: "이미지",
+    keyTypeSubscription: "구독",
+  },
+} as const
 
 // ─── Types ───────────────────────────────────────────────────
 
@@ -105,7 +221,8 @@ const keyTypeLabels: Record<KeyType, string> = {
 
 // ─── Component ───────────────────────────────────────────────
 
-export default function Licenses() {
+export default function Licenses({ locale = "en" }: { locale?: Locale }) {
+  const t = translations[locale]
   const [currency, setCurrency] = useState<Currency>("KRW")
   const [selectedProduct, setSelectedProduct] = useState("")
   const [keyType, setKeyType] = useState<KeyType>("key")
@@ -216,14 +333,15 @@ export default function Licenses() {
 
   return (
     <DashboardLayout
-      title="License Charging"
+      title={t.title}
+      locale={locale}
       currency={currency}
       onCurrencyToggle={() => setCurrency(currency === "USD" ? "KRW" : "USD")}
     >
       <div className="flex flex-1 flex-col overflow-y-auto px-6 pt-4 pb-6 lg:px-8">
         {/* Subtitle */}
         <p className="mb-5 text-[13px] tracking-[-0.32px] text-[#999999]">
-          Add and manage license keys for your products
+          {t.subtitle}
         </p>
 
         {/* Success Banner */}
@@ -231,7 +349,7 @@ export default function Licenses() {
           <div className="mb-4 flex items-center gap-2.5 rounded-xl border border-[#34A853]/20 bg-[#34A853]/[0.06] px-4 py-3">
             <Check className="size-4 text-[#34A853]" strokeWidth={2.5} />
             <p className="text-[13px] font-medium tracking-[-0.32px] text-[#34A853]">
-              Keys added successfully
+              {t.successBanner}
             </p>
           </div>
         )}
@@ -243,7 +361,7 @@ export default function Licenses() {
             {/* Product Selector */}
             <div>
               <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
-                Product
+                {t.product}
               </label>
               <div className="relative" ref={productDropdownRef}>
                 <button
@@ -261,7 +379,7 @@ export default function Licenses() {
                       {selectedProductData.name}
                     </span>
                   ) : (
-                    <span className="min-w-0 flex-1 text-left text-[#CCCCCC]">Select a product...</span>
+                    <span className="min-w-0 flex-1 text-left text-[#CCCCCC]">{t.selectProduct}</span>
                   )}
                   <ChevronDown
                     className={`size-4 shrink-0 text-[#999999] transition-transform ${productDropdownOpen ? "rotate-180" : ""}`}
@@ -279,7 +397,7 @@ export default function Licenses() {
                         type="text"
                         value={productSearch}
                         onChange={(e) => setProductSearch(e.target.value)}
-                        placeholder="Search products..."
+                        placeholder={t.searchProducts}
                         autoFocus
                         className="h-8 w-full rounded-lg border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.02)] px-2.5 text-[12px] tracking-[-0.32px] text-[#181925] placeholder:text-[#CCCCCC] outline-none focus:border-[#918DF6]"
                       />
@@ -287,7 +405,7 @@ export default function Licenses() {
                     <div className="max-h-[240px] overflow-y-auto">
                       {filteredProducts.length === 0 ? (
                         <p className="px-3 py-3 text-center text-[12px] tracking-[-0.32px] text-[#999999]">
-                          No products found
+                          {t.noProductsFound}
                         </p>
                       ) : (
                         filteredProducts.map((p) => (
@@ -323,7 +441,7 @@ export default function Licenses() {
             {/* Key Type Selector */}
             <div>
               <label className="mb-1.5 block text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
-                Key Type
+                {t.keyType}
               </label>
               <div
                 className="flex gap-1 rounded-xl border border-[rgba(0,0,0,0.08)] bg-white p-1"
@@ -346,7 +464,7 @@ export default function Licenses() {
                       }`}
                     >
                       <Icon className="size-3.5" strokeWidth={active ? 2.2 : 1.8} />
-                      <span className="hidden sm:inline">{kt.label}</span>
+                      <span className="hidden sm:inline">{locale === "en" ? kt.label : { key: t.keyTypeKeyCode, link: t.keyTypeLink, file: t.keyTypeFile, image: t.keyTypeImage, subscription: t.keyTypeSubscription }[kt.value]}</span>
                     </button>
                   )
                 })}
@@ -358,23 +476,23 @@ export default function Licenses() {
               <div className="mb-1.5 flex items-center justify-between">
                 <label className="text-[12px] font-medium tracking-[-0.32px] text-[#999999]">
                   {keyType === "key"
-                    ? "Key Codes"
+                    ? t.keyCodes
                     : keyType === "link"
-                      ? "URLs"
+                      ? t.urls
                       : keyType === "file"
-                        ? "File Upload"
+                        ? t.fileUpload
                         : keyType === "image"
-                          ? "Image Upload"
-                          : "Subscription Details"}
+                          ? t.imageUpload
+                          : t.subscriptionDetails}
                 </label>
                 {(keyType === "key" || keyType === "link") && lineCount > 0 && (
                   <span className="text-[11px] tabular-nums tracking-[-0.32px] text-[#918DF6]">
-                    {lineCount} {lineCount === 1 ? (keyType === "key" ? "key" : "URL") : (keyType === "key" ? "keys" : "URLs")} entered
+                    {lineCount} {lineCount === 1 ? (keyType === "key" ? t.keyEntered : t.urlEntered) : (keyType === "key" ? t.keysEntered : t.urlsEntered)}{locale === "en" ? " entered" : " 입력됨"}
                   </span>
                 )}
                 {(keyType === "file" || keyType === "image") && uploadedFiles.length > 0 && (
                   <span className="text-[11px] tabular-nums tracking-[-0.32px] text-[#918DF6]">
-                    {uploadedFiles.length} {uploadedFiles.length === 1 ? "file" : "files"} selected
+                    {uploadedFiles.length} {uploadedFiles.length === 1 ? t.fileSelected : t.filesSelected}{locale === "en" ? " selected" : " 선택됨"}
                   </span>
                 )}
               </div>
@@ -385,8 +503,8 @@ export default function Licenses() {
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder={
                     keyType === "key"
-                      ? "Enter one key per line...\nXXXX-ABCD-1234-EFGH\nXXXX-IJKL-5678-MNOP"
-                      : "Enter one URL per line...\nhttps://example.com/redeem/abc123\nhttps://example.com/redeem/def456"
+                      ? t.keyCodePlaceholder
+                      : t.linkPlaceholder
                   }
                   rows={8}
                   className="w-full resize-none rounded-xl border border-[rgba(0,0,0,0.12)] bg-white px-4 py-3 font-mono text-[13px] leading-relaxed tracking-[-0.32px] text-[#181925] placeholder:text-[#CCCCCC] outline-none transition-colors focus:border-[#918DF6]"
@@ -436,17 +554,17 @@ export default function Licenses() {
                     )}
                     <div className="text-center">
                       <p className="text-[14px] font-medium tracking-[-0.32px] text-[#181925]">
-                        Drop {keyType === "file" ? "files" : "images"} here
+                        {keyType === "file" ? t.dropFiles : t.dropImages}
                       </p>
                       <p className="mt-1 text-[12px] tracking-[-0.32px] text-[#999999]">
-                        or click to browse from your computer
+                        {t.orClickToBrowse}
                       </p>
                     </div>
                     <span
                       className="flex items-center gap-1.5 rounded-lg border border-[rgba(0,0,0,0.12)] px-4 py-2 text-[12px] font-medium tracking-[-0.32px] text-[#666666] transition-colors hover:bg-[rgba(0,0,0,0.03)]"
                     >
                       <Upload className="size-3.5" strokeWidth={2} />
-                      Browse Files
+                      {t.browseFiles}
                     </span>
                   </div>
 
@@ -489,38 +607,38 @@ export default function Licenses() {
                 >
                   <div>
                     <label className="mb-1 block text-[11px] font-medium tracking-[-0.32px] text-[#999999]">
-                      Subscription Name
+                      {t.subscriptionName}
                     </label>
                     <input
                       type="text"
                       value={subName}
                       onChange={(e) => setSubName(e.target.value)}
-                      placeholder="e.g. Xbox Game Pass Ultimate"
+                      placeholder={t.subscriptionNamePlaceholder}
                       className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#CCCCCC] outline-none transition-colors focus:border-[#918DF6]"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="mb-1 block text-[11px] font-medium tracking-[-0.32px] text-[#999999]">
-                        Plan
+                        {t.plan}
                       </label>
                       <input
                         type="text"
                         value={subPlan}
                         onChange={(e) => setSubPlan(e.target.value)}
-                        placeholder="e.g. 1 Month"
+                        placeholder={t.planPlaceholder}
                         className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#CCCCCC] outline-none transition-colors focus:border-[#918DF6]"
                       />
                     </div>
                     <div>
                       <label className="mb-1 block text-[11px] font-medium tracking-[-0.32px] text-[#999999]">
-                        Price
+                        {t.price}
                       </label>
                       <input
                         type="text"
                         value={subPrice}
                         onChange={(e) => setSubPrice(e.target.value)}
-                        placeholder="e.g. $12.99"
+                        placeholder={t.pricePlaceholder}
                         className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white px-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#CCCCCC] outline-none transition-colors focus:border-[#918DF6]"
                       />
                     </div>
@@ -528,7 +646,7 @@ export default function Licenses() {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="mb-1 block text-[11px] font-medium tracking-[-0.32px] text-[#999999]">
-                        Start Date
+                        {t.startDate}
                       </label>
                       <input
                         type="date"
@@ -539,7 +657,7 @@ export default function Licenses() {
                     </div>
                     <div>
                       <label className="mb-1 block text-[11px] font-medium tracking-[-0.32px] text-[#999999]">
-                        End Date
+                        {t.endDate}
                       </label>
                       <input
                         type="date"
@@ -557,7 +675,7 @@ export default function Licenses() {
             {(keyType === "key" || keyType === "link") && lineCount > 0 && (
               <div className="rounded-xl border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.02)] p-4">
                 <p className="mb-2 text-[11px] font-semibold tracking-[-0.32px] text-[#999999]">
-                  Preview
+                  {t.preview}
                 </p>
                 <div className="flex flex-col gap-1">
                   {inputValue
@@ -577,7 +695,7 @@ export default function Licenses() {
                     ))}
                   {lineCount > 5 && (
                     <p className="mt-1 text-center text-[11px] tabular-nums tracking-[-0.32px] text-[#999999]">
-                      +{lineCount - 5} more
+                      +{lineCount - 5} {t.more}
                     </p>
                   )}
                 </div>
@@ -592,10 +710,12 @@ export default function Licenses() {
             >
               <Plus className="size-4" strokeWidth={2} />
               {keyType === "key" || keyType === "link"
-                ? `Add ${lineCount > 0 ? lineCount : ""} ${keyType === "key" ? (lineCount === 1 ? "Key" : "Keys") : (lineCount === 1 ? "URL" : "URLs")}`.trim()
+                ? locale === "en"
+                  ? `Add ${lineCount > 0 ? lineCount : ""} ${keyType === "key" ? (lineCount === 1 ? "Key" : "Keys") : (lineCount === 1 ? "URL" : "URLs")}`.trim()
+                  : `${lineCount > 0 ? lineCount + "개 " : ""}${keyType === "key" ? "키 추가" : "URL 추가"}`
                 : keyType === "subscription"
-                  ? "Add Subscription"
-                  : `Upload ${keyType === "file" ? "Files" : "Images"}`}
+                  ? t.addSubscription
+                  : keyType === "file" ? t.uploadFiles : t.uploadImages}
             </button>
           </div>
 
@@ -609,7 +729,7 @@ export default function Licenses() {
               >
                 <div className="flex items-center gap-1.5">
                   <Clock className="size-3 text-[#999999]" strokeWidth={2} />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Today</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.today}</p>
                 </div>
                 <p className="mt-1 text-[20px] font-bold tabular-nums tracking-[-0.32px] text-[#181925]">
                   24
@@ -621,7 +741,7 @@ export default function Licenses() {
               >
                 <div className="flex items-center gap-1.5">
                   <TrendingUp className="size-3 text-[#999999]" strokeWidth={2} />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">This Week</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.thisWeek}</p>
                 </div>
                 <p className="mt-1 text-[20px] font-bold tabular-nums tracking-[-0.32px] text-[#181925]">
                   156
@@ -633,7 +753,7 @@ export default function Licenses() {
               >
                 <div className="flex items-center gap-1.5">
                   <Package className="size-3 text-[#999999]" strokeWidth={2} />
-                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">Top</p>
+                  <p className="text-[11px] font-medium tracking-[-0.32px] text-[#999999]">{t.top}</p>
                 </div>
                 <p className="mt-1 truncate text-[12px] font-semibold tracking-[-0.32px] text-[#181925]">
                   Steam Wallet $50
@@ -645,10 +765,10 @@ export default function Licenses() {
             <div>
               <div className="mb-3 flex items-center justify-between">
                 <p className="text-[12px] font-semibold tracking-[-0.32px] text-[#999999]">
-                  Recent Charges
+                  {t.recentCharges}
                 </p>
                 <span className="text-[11px] tabular-nums tracking-[-0.32px] text-[#999999]">
-                  {visibleCharges.length} of {chargeHistory.length} entries loaded
+                  {visibleCharges.length} {t.of} {chargeHistory.length} {t.entriesLoaded}
                 </span>
               </div>
 
@@ -666,11 +786,11 @@ export default function Licenses() {
                         </p>
                         <div className="mt-1 flex flex-wrap items-center gap-1.5">
                           <span className="text-[12px] font-semibold tabular-nums tracking-[-0.32px] text-[#918DF6]">
-                            +{item.keysAdded} keys
+                            +{item.keysAdded} {locale === "en" ? "keys" : "개"}
                           </span>
                           <span className="text-[#CCCCCC]">·</span>
                           <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${keyTypeBadgeStyles[item.keyType]}`}>
-                            {keyTypeLabels[item.keyType]}
+                            {locale === "en" ? keyTypeLabels[item.keyType] : { key: t.keyTypeKeyCode, link: t.keyTypeLink, file: t.keyTypeFile, image: t.keyTypeImage, subscription: t.keyTypeSubscription }[item.keyType]}
                           </span>
                           <span className="text-[#CCCCCC]">·</span>
                           <span className="text-[11px] tracking-[-0.32px] text-[#999999]">
@@ -697,7 +817,7 @@ export default function Licenses() {
                 )}
                 {allChargesLoaded && (
                   <p className="py-2 text-center text-[11px] tracking-[-0.32px] text-[#999999]">
-                    All {chargeHistory.length} entries loaded
+                    {t.allEntriesLoaded.replace("{count}", String(chargeHistory.length))}
                   </p>
                 )}
               </div>
