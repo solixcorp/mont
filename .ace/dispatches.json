@@ -1,0 +1,28 @@
+[
+  {
+    "dispatchId": "aab183a6-5b98-450f-949d-5428f7835968",
+    "botId": "WORK-1",
+    "phase": "PHS-003",
+    "task": "Products.tsx dialog 내부 텍스트 크기 상향 — text-[10px]→text-[12px], text-[11px]→text-[13px], text-[12px]→text-[13px], text-[13px]→text-[14px]. 범위: line 656~1184 (메인 상품 상세 dialog + 중첩 주문 상세 dialog). 제외: 상품 목록 행, Merchant Settings dialog. 완료 후 bun run build 통과 확인.",
+    "dispatchedAt": "2026-06-19T04:52:34.960Z",
+    "status": "done",
+    "result": "Products.tsx dialog 내부 텍스트 크기 상향 완료. text-[10px]→text-[12px], text-[11px]→text-[13px], text-[12px]→text-[13px], text-[13px]→text-[14px] 적용. bun run build 통과. ACE 10.3/100 LOW.",
+    "completedAt": "2026-06-19T04:55:12.016Z"
+  },
+  {
+    "dispatchId": "ac6276e0-17eb-4bfb-804a-de98697defcd",
+    "botId": "WORK-1",
+    "phase": "PHS-004",
+    "task": "Create src/OrderDetail.tsx (new page), modify src/Orders.tsx (row click → navigate, remove modal), add routes to src/main.tsx. Full order detail page with 2-column layout: main overview + right logs sidebar.",
+    "dispatchedAt": "2026-06-21T04:34:55.572Z",
+    "status": "running"
+  },
+  {
+    "dispatchId": "1fa5ea25-9799-4d7c-acac-5b2db20340cc",
+    "botId": "WORK-1",
+    "phase": "PHS-004",
+    "task": "Create OrderDetail.tsx, modify Orders.tsx and main.tsx for order detail page implementation",
+    "dispatchedAt": "2026-06-21T04:39:33.364Z",
+    "status": "running"
+  }
+]

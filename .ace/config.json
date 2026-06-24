@@ -1,0 +1,19 @@
+{
+  "windowSize": 30,
+  "weights": {
+    "repeatedErrors": 0.3,
+    "failedTests": 0.25,
+    "repeatedFileModifications": 0.2,
+    "repeatedCommands": 0.15,
+    "modifiedFileCount": 0.07,
+    "logVolume": 0.03
+  },
+  "thresholds": {
+    "repeatedErrors": 5,
+    "failedTests": 5,
+    "repeatedFileModifications": 6,
+    "repeatedCommands": 5,
+    "modifiedFileCount": 10,
+    "logVolume": 30
+  }
+}
