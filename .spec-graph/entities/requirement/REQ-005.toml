@@ -1,0 +1,29 @@
+schema = 1
+id = "REQ-005"
+type = "requirement"
+title = "Order detail as dedicated page at /dashboard/orders/:orderId"
+description = "주문 클릭 시 Dialog 모달이 아닌 별도 페이지(/dashboard/orders/:orderId)로 이동. 기존 모달 내 모든 기능(Overview, Logs, 재발송, 라이선스 재할당, 메모, Raw Data 등)을 상세 페이지에 포함. /kr/ locale도 동일 패턴 적용."
+status = "active"
+created_at = 2026-06-21T13:27:35+09:00
+updated_at = 2026-06-21T13:27:35+09:00
+
+[metadata]
+kind = "functional"
+owner = "ui"
+priority = "must"
+
+[[relations]]
+to = "DEC-002"
+type = "constrained_by"
+
+[[relations]]
+to = "ACT-007"
+type = "has_criterion"
+
+[[relations]]
+to = "ACT-008"
+type = "has_criterion"
+
+[[relations]]
+to = "ACT-009"
+type = "has_criterion"

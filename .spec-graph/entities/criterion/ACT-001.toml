@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-001"
+type = "criterion"
+title = "NaverIcon component and its references are removed"
+status = "active"
+created_at = 2026-06-19T11:50:26+09:00
+updated_at = 2026-06-19T11:53:39+09:00
+
+[metadata]
+given = "shared.tsx exports a NaverIcon React.FC that renders an SVG path resembling the Naver N logo"
+then = "NaverIcon is no longer exported from shared.tsx; the platformBadges record no longer contains an icon field; PlatformBadgeIcon no longer branches on Icon presence"
+when = "REQ-001 implementation completes"

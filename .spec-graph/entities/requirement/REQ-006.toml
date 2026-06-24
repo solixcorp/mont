@@ -1,0 +1,17 @@
+schema = 1
+id = "REQ-006"
+type = "requirement"
+title = "Order detail page: Logs as right sidebar instead of tab"
+description = "OrderDetail 페이지에서 Overview/Logs 탭 구조를 제거하고, Overview 콘텐츠는 메인 영역에, Logs는 오른쪽 사이드바에 항상 표시. 2컬럼 레이아웃(main + right sidebar). 모바일에서는 Logs가 메인 콘텐츠 아래로 이동(stacked)."
+status = "active"
+created_at = 2026-06-21T13:29:30+09:00
+updated_at = 2026-06-21T13:29:30+09:00
+
+[metadata]
+kind = "functional"
+owner = "ui"
+priority = "must"
+
+[[relations]]
+to = "ACT-010"
+type = "has_criterion"

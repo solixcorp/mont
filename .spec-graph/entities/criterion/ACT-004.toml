@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-004"
+type = "criterion"
+title = "Product row meta items share a uniform baseline"
+status = "active"
+created_at = 2026-06-19T11:50:41+09:00
+updated_at = 2026-06-19T11:54:45+09:00
+
+[metadata]
+given = "Products.tsx product row (around lines 580-604) shows platform badges + stock + totalSold with dot separators"
+then = "All three meta items render at the same vertical baseline; gap and font-size are uniform (e.g. 11px label, size-3 icon, gap-1)"
+when = "REQ-002 implementation completes"

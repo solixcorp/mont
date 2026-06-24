@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-005"
+type = "criterion"
+title = "Delete button triggers confirmation dialog"
+status = "draft"
+created_at = 2026-06-19T15:46:48+09:00
+updated_at = 2026-06-19T15:46:48+09:00
+
+[metadata]
+given = "User is viewing a product in the Products page"
+then = "A confirmation dialog opens asking to confirm deletion; product is NOT deleted until confirmed"
+when = "User clicks the delete action"

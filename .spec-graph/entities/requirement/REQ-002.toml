@@ -1,0 +1,21 @@
+schema = 1
+id = "REQ-002"
+type = "requirement"
+title = "Compact UI density for platform indicators"
+description = "Platform badge usage in product rows, detail dialogs, order tables, and merchant cards must follow a compact density (size-3.5 block, tight padding, aligned baseline with neighboring meta items)."
+status = "active"
+created_at = 2026-06-19T11:50:12+09:00
+updated_at = 2026-06-19T11:54:45+09:00
+
+[metadata]
+kind = "functional"
+owner = "ui"
+priority = "must"
+
+[[relations]]
+to = "REQ-001"
+type = "depends_on"
+
+[[relations]]
+to = "ACT-004"
+type = "has_criterion"

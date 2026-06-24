@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-007"
+type = "criterion"
+title = "Order detail page renders at /dashboard/orders/:orderId"
+status = "active"
+created_at = 2026-06-21T13:28:21+09:00
+updated_at = 2026-06-21T13:28:21+09:00
+
+[metadata]
+given = "Orders 목록에서 주문 row를 클릭"
+then = "/dashboard/orders/4X7PA 에서 OrderDetail 컴포넌트가 렌더되고 해당 주문 정보(상품명, 고객, 금액, 상태)가 표시됨"
+when = "navigate(/dashboard/orders/4X7PA) 실행"

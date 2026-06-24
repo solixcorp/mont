@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-010"
+type = "criterion"
+title = "Order detail uses 2-column layout with Logs sidebar"
+status = "active"
+created_at = 2026-06-21T13:29:38+09:00
+updated_at = 2026-06-21T13:29:38+09:00
+
+[metadata]
+given = "OrderDetail 페이지가 데스크톱 뷰포트에서 렌더된 상태"
+then = "왼쪽 메인 영역에 Overview 콘텐츠(주문정보, 배송상세, 라이선스, 메모 등), 오른쪽 사이드바에 Logs 타임라인이 동시에 표시됨. 탭 전환 없음"
+when = "페이지 로드 완료"

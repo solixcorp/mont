@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-009"
+type = "criterion"
+title = "Back navigation returns to orders list"
+status = "active"
+created_at = 2026-06-21T13:28:34+09:00
+updated_at = 2026-06-21T13:28:34+09:00
+
+[metadata]
+given = "OrderDetail 페이지에 있는 상태"
+then = "Orders 목록 페이지(/dashboard/orders)로 복귀. 이전 검색/필터 상태는 유지되지 않아도 됨"
+when = "← Orders 뒤로가기 버튼 클릭 또는 브라우저 back"

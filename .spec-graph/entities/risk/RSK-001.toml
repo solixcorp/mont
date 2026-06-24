@@ -1,0 +1,13 @@
+schema = 1
+id = "RSK-001"
+type = "risk"
+title = "26 call-sites use PlatformBadgeIcon or import NaverIcon"
+description = "Grep finds 26 usages across Products, Orders, Customers. Removing NaverIcon and changing the icon field on platformBadges could break consumers if any code path references NaverIcon directly or reads badge.icon."
+status = "draft"
+created_at = 2026-06-19T11:50:51+09:00
+updated_at = 2026-06-19T11:50:51+09:00
+
+[metadata]
+impact = "medium"
+likelihood = "low"
+mitigation = "Run spec-graph impact DEC-001 before changes; rely on TypeScript compiler to surface any direct NaverIcon imports."

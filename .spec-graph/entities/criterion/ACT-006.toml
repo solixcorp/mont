@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-006"
+type = "criterion"
+title = "Product removed from list after confirmed deletion"
+status = "draft"
+created_at = 2026-06-19T15:46:55+09:00
+updated_at = 2026-06-19T15:46:55+09:00
+
+[metadata]
+given = "Confirmation dialog is open for a product"
+then = "The product is removed from the products list; dialog closes; build passes with zero errors"
+when = "User confirms deletion"

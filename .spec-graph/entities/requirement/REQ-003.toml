@@ -1,0 +1,21 @@
+schema = 1
+id = "REQ-003"
+type = "requirement"
+title = "Design system compliance — no fake brand logos"
+description = "Resolves DESIGN.md Anti-Pattern #2: never use SVG paths, Lucide icons, or generic shapes to imitate a real company logo. NaverIcon component (which imitates the Naver N) is the only current offender and must be removed."
+status = "active"
+created_at = 2026-06-19T11:50:16+09:00
+updated_at = 2026-06-19T11:53:39+09:00
+
+[metadata]
+kind = "non_functional"
+owner = "design"
+priority = "must"
+
+[[relations]]
+to = "DEC-001"
+type = "constrained_by"
+
+[[relations]]
+to = "ACT-001"
+type = "has_criterion"

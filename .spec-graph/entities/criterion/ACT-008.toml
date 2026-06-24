@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-008"
+type = "criterion"
+title = "Order detail page includes all modal functionality"
+status = "active"
+created_at = 2026-06-21T13:28:28+09:00
+updated_at = 2026-06-21T13:28:28+09:00
+
+[metadata]
+given = "OrderDetail 페이지가 렌더된 상태"
+then = "모든 기능이 모달 때와 동일하게 동작함. Dialog 기반 서브액션(재발송 확인, 라이선스 선택 등)은 여전히 Dialog로 열림"
+when = "사용자가 Overview/Logs 탭, 재발송, 라이선스 재할당, 메모, Raw Data 기능을 사용"

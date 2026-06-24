@@ -1,0 +1,12 @@
+schema = 1
+id = "DEC-002"
+type = "decision"
+title = "Order detail uses route param pattern /dashboard/orders/:orderId"
+description = "URL 패턴은 /dashboard/orders/:orderId (예: /dashboard/orders/4X7PA). useParams로 orderId를 읽고 allOrders에서 찾는다. 존재하지 않는 ID는 NotFound 또는 목록으로 리다이렉트. /kr/ prefix도 동일 패턴."
+status = "active"
+created_at = 2026-06-21T13:27:43+09:00
+updated_at = 2026-06-21T13:27:43+09:00
+
+[metadata]
+date = "2026-06-21"
+rationale = "RESTful URL 패턴. 직접 링크 공유 가능. SPA이므로 vercel.json rewrite가 이미 모든 경로를 / 로 처리함."

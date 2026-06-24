@@ -1,0 +1,28 @@
+schema = 1
+id = "PHS-003"
+type = "phase"
+title = "Phase 3 — Product deletion feature"
+status = "draft"
+created_at = 2026-06-19T15:47:13+09:00
+updated_at = 2026-06-19T15:47:13+09:00
+
+[metadata]
+exit_criteria = "[Delete button visible on product card or detail dialog Clicking delete opens a confirmation dialog (not inline expand) Confirming deletion removes product from list Cancelling returns to previous state without changes bun run build completes with zero errors]"
+goal = "Add delete functionality to Products page with confirmation dialog. Update product list state on deletion."
+order = 3.0
+
+[[relations]]
+to = "PLN-001"
+type = "belongs_to"
+
+[[relations]]
+to = "ACT-005"
+type = "covers"
+
+[[relations]]
+to = "ACT-006"
+type = "covers"
+
+[[relations]]
+to = "REQ-004"
+type = "covers"

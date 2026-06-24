@@ -1,0 +1,12 @@
+schema = 1
+id = "ACT-002"
+type = "criterion"
+title = "All four platforms render identically (block + letter)"
+status = "active"
+created_at = 2026-06-19T11:50:31+09:00
+updated_at = 2026-06-19T11:53:39+09:00
+
+[metadata]
+given = "platformBadges has 4 entries (Naver, Lotte, Gmarket, Coupang)"
+then = "Each renders as a same-sized colored block with a single uppercase letter; no entry uses an SVG icon or different shape"
+when = "PlatformBadgeIcon is rendered for any of the four"

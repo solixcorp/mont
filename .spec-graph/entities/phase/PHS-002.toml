@@ -1,0 +1,40 @@
+schema = 1
+id = "PHS-002"
+type = "phase"
+title = "Phase 2 — Compact platform pill usage in Products"
+status = "draft"
+created_at = 2026-06-19T11:51:11+09:00
+updated_at = 2026-06-19T11:51:11+09:00
+
+[metadata]
+exit_criteria = "[Products.tsx product row meta (platform badges + stock + totalSold) renders on a single aligned baseline (ACT-004) Platform badge in product detail dialogs uses compact size-3.5 + reduced padding Merchant card platform badge size matches list-row size where both are visible together bun run build completes with zero errors ACT-004 is satisfied]"
+goal = "Tighten platform badge usage and meta-row baseline in Products.tsx (product list row, product detail dialog platforms section, order logs, merchant cards) so all four platforms appear with compact, aligned density."
+order = 2.0
+
+[[relations]]
+to = "PLN-001"
+type = "belongs_to"
+
+[[relations]]
+to = "ACT-004"
+type = "covers"
+
+[[relations]]
+to = "REQ-002"
+type = "covers"
+
+[[relations]]
+to = "RSK-001"
+type = "covers"
+
+[[relations]]
+to = "ACT-004"
+type = "delivers"
+
+[[relations]]
+to = "REQ-002"
+type = "delivers"
+
+[[relations]]
+to = "PHS-003"
+type = "precedes"

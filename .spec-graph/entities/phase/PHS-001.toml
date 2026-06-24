@@ -1,0 +1,72 @@
+schema = 1
+id = "PHS-001"
+type = "phase"
+title = "Phase 1 — Unify platform badge source"
+status = "draft"
+created_at = 2026-06-19T11:51:06+09:00
+updated_at = 2026-06-19T11:51:06+09:00
+
+[metadata]
+exit_criteria = "[NaverIcon is no longer exported from src/shared.tsx platformBadges record no longer contains the icon field PlatformBadgeIcon component no longer branches on Icon presence (renders badge.label only) bun run build completes with zero errors ACT-001, ACT-002, ACT-003 are satisfied]"
+goal = "Remove NaverIcon and its icon-field branch from shared.tsx so all platforms share the same single-character block treatment."
+order = 1.0
+
+[[relations]]
+to = "PLN-001"
+type = "belongs_to"
+
+[[relations]]
+to = "ACT-001"
+type = "covers"
+
+[[relations]]
+to = "ACT-002"
+type = "covers"
+
+[[relations]]
+to = "ACT-003"
+type = "covers"
+
+[[relations]]
+to = "DEC-001"
+type = "covers"
+
+[[relations]]
+to = "REQ-001"
+type = "covers"
+
+[[relations]]
+to = "REQ-003"
+type = "covers"
+
+[[relations]]
+to = "RSK-001"
+type = "covers"
+
+[[relations]]
+to = "ACT-001"
+type = "delivers"
+
+[[relations]]
+to = "ACT-002"
+type = "delivers"
+
+[[relations]]
+to = "ACT-003"
+type = "delivers"
+
+[[relations]]
+to = "DEC-001"
+type = "delivers"
+
+[[relations]]
+to = "REQ-001"
+type = "delivers"
+
+[[relations]]
+to = "REQ-003"
+type = "delivers"
+
+[[relations]]
+to = "PHS-002"
+type = "precedes"

@@ -1,0 +1,21 @@
+schema = 1
+id = "REQ-004"
+type = "requirement"
+title = "Product deletion from Products page"
+description = "Users can delete a product from /dashboard/products. Deletion must use a confirmation dialog (never inline expand). After deletion the product is removed from the list. Must follow AGENTS.md UI rule: action clicks open a Dialog/popup, never expand content below the trigger."
+status = "draft"
+created_at = 2026-06-19T15:46:41+09:00
+updated_at = 2026-06-19T15:46:41+09:00
+
+[metadata]
+kind = "functional"
+owner = "ui"
+priority = "should"
+
+[[relations]]
+to = "ACT-005"
+type = "has_criterion"
+
+[[relations]]
+to = "ACT-006"
+type = "has_criterion"

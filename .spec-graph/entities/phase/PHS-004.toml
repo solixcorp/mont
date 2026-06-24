@@ -1,0 +1,40 @@
+schema = 1
+id = "PHS-004"
+type = "phase"
+title = "Phase 4 — Create OrderDetail page and wire routes"
+status = "active"
+created_at = 2026-06-21T13:27:52+09:00
+updated_at = 2026-06-21T13:27:52+09:00
+
+[metadata]
+exit_criteria = "[OrderDetail.tsx 페이지가 /dashboard/orders/:orderId 에서 렌더됨, 기존 모달의 모든 기능(Overview/Logs 탭, 재발송, 라이선스 재할당, 메모, Raw Data)이 상세 페이지에 동작, Orders.tsx에서 Dialog import 및 selectedOrder 모달 로직 제거, /kr/ locale 라우트 동작, 뒤로가기(← Orders) 버튼으로 목록 복귀, bun run build 에러 없음]"
+goal = "Orders.tsx에서 모달 로직을 분리하여 새 OrderDetail.tsx 페이지 생성. main.tsx에 /dashboard/orders/:orderId 및 /kr/dashboard/orders/:orderId 라우트 추가. Orders.tsx에서 row 클릭 시 navigate로 전환. 모달(Dialog) 관련 코드 제거."
+order = 4.0
+
+[[relations]]
+to = "PLN-001"
+type = "belongs_to"
+
+[[relations]]
+to = "ACT-007"
+type = "covers"
+
+[[relations]]
+to = "ACT-008"
+type = "covers"
+
+[[relations]]
+to = "ACT-009"
+type = "covers"
+
+[[relations]]
+to = "ACT-010"
+type = "covers"
+
+[[relations]]
+to = "REQ-005"
+type = "covers"
+
+[[relations]]
+to = "REQ-006"
+type = "covers"

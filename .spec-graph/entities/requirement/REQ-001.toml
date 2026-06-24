@@ -1,0 +1,29 @@
+schema = 1
+id = "REQ-001"
+type = "requirement"
+title = "Consistent platform badge style"
+description = "All platform badges in PlatformBadgeIcon must use the same visual treatment (single character label on a colored block). No real-brand SVG logos, no Lucide icon stand-ins."
+status = "active"
+created_at = 2026-06-19T11:50:08+09:00
+updated_at = 2026-06-19T11:53:39+09:00
+
+[metadata]
+kind = "functional"
+owner = "ui"
+priority = "must"
+
+[[relations]]
+to = "DEC-001"
+type = "constrained_by"
+
+[[relations]]
+to = "ACT-001"
+type = "has_criterion"
+
+[[relations]]
+to = "ACT-002"
+type = "has_criterion"
+
+[[relations]]
+to = "ACT-003"
+type = "has_criterion"

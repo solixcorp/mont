@@ -1,0 +1,16 @@
+schema = 1
+id = "DEC-001"
+type = "decision"
+title = "Use single-character label for all platform badges"
+description = "Every entry in platformBadges uses {bg, label, textSize} only. The optional icon field is dropped. Visual differentiation comes from background color and single uppercase letter, consistent with how other compact SaaS dashboards handle multi-platform indicators."
+status = "active"
+created_at = 2026-06-19T11:50:22+09:00
+updated_at = 2026-06-19T11:53:39+09:00
+
+[metadata]
+date = "2026-06-19"
+rationale = "DESIGN.md forbids fake company logos. Single-letter treatment gives visual identity without IP/likeness risk and is what the other three platforms (Lotte, Gmarket, Coupang) already use."
+
+[[relations]]
+to = "RSK-001"
+type = "mitigates"
