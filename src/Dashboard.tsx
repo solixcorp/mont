@@ -242,19 +242,31 @@ export default function Dashboard({ locale = "en" }: { locale?: Locale }) {
   const navigate = useNavigate()
   const [currency, setCurrency] = useState<Currency>("KRW")
   const [orderTab, setOrderTab] = useState<"all" | "manual" | "delivered" | "failed">("all")
+  const [searchQuery, setSearchQuery] = useState("")
   const t = translations[locale]
 
   const filteredOrders = (() => {
+    let filtered = orders
     switch (orderTab) {
       case "manual":
-        return orders.filter((o) => o.status === "Failed" || o.status === "ManualRequired")
+        filtered = orders.filter((o) => o.status === "Failed" || o.status === "ManualRequired")
+        break
       case "delivered":
-        return orders.filter((o) => o.status === "Delivered")
+        filtered = orders.filter((o) => o.status === "Delivered")
+        break
       case "failed":
-        return orders.filter((o) => o.status === "Failed")
-      default:
-        return orders
+        filtered = orders.filter((o) => o.status === "Failed")
+        break
     }
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase()
+      filtered = filtered.filter((o) =>
+        o.product.toLowerCase().includes(q) ||
+        o.customer.toLowerCase().includes(q) ||
+        o.id.toLowerCase().includes(q)
+      )
+    }
+    return filtered
   })()
 
   return (
@@ -377,6 +389,8 @@ export default function Dashboard({ locale = "en" }: { locale?: Locale }) {
                 <div className="relative flex-1">
                   <input
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={t.searchOrders}
                     className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white pl-3 pr-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none"
                   />

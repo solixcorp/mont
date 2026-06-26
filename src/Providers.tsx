@@ -674,7 +674,7 @@ function ToggleSwitch({
       role="switch"
       aria-checked={on}
       onClick={onToggle}
-      className={`relative inline-flex ${dimensions.track} shrink-0 items-center rounded-full transition-colors duration-200`}
+      className={`relative inline-flex ${dimensions.track} shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200`}
       style={{ backgroundColor: on ? "#918DF6" : "#D1D5DB" }}
     >
       <span

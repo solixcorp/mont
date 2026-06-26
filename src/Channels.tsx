@@ -664,7 +664,7 @@ function ChannelDetailSheet({
                 </p>
               )}
               <div className="pt-2">
-                <button className="flex h-9 items-center rounded-full bg-[#918DF6] px-5 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]">
+                <button onClick={() => console.log("Save settings")} className="flex h-9 items-center rounded-full bg-[#918DF6] px-5 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]">
                   {t.saveSettings}
                 </button>
               </div>
@@ -846,12 +846,13 @@ export default function Channels({ locale = "en" }: { locale?: Locale }) {
               </div>
               <Dialog open={dialogOpen} onOpenChange={handleDialogOpenChange}>
                 <DialogTrigger
-                  render={
-                    <button className="flex h-8 items-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]" />
-                  }
+                  render={(props: React.ComponentPropsWithoutRef<'button'>) => (
+                    <button {...props} className="flex h-8 items-center gap-1.5 rounded-full bg-[#918DF6] px-4 text-[13px] font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#7B77E0]">
+                      <Plus className="size-3.5" strokeWidth={2.5} />
+                      {t.addChannel}
+                    </button>
+                  )}
                 >
-                  <Plus className="size-3.5" strokeWidth={2.5} />
-                  {t.addChannel}
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[520px]">
                   {dialogStep === "select" ? (

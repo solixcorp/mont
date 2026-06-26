@@ -508,7 +508,7 @@ export default function Products({ locale = "en" }: { locale?: Locale }) {
               className="h-9 w-full rounded-lg border border-[rgba(0,0,0,0.12)] bg-white pl-9 pr-3 text-[13px] tracking-[-0.32px] text-[#181925] placeholder:text-[#999999] outline-none"
             />
           </div>
-          <button className="flex h-9 items-center gap-2 rounded-lg bg-[#918DF6] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#7D79E8]">
+           <button onClick={() => console.log("Add product")} className="flex h-9 items-center gap-2 rounded-lg bg-[#918DF6] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#7D79E8]">
             <Plus className="size-4" strokeWidth={2} />
             {t.addProduct}
           </button>

@@ -484,6 +484,7 @@ export default function Signup({ locale = "en" }: { locale?: "en" | "kr" }) {
           {t.didntReceive}{" "}
           <button
             type="button"
+            onClick={() => console.log("Resend code")}
             className="font-medium text-[#918DF6] transition-colors hover:text-[#9580FF]"
           >
             {t.resend}
@@ -1257,6 +1258,7 @@ export default function Signup({ locale = "en" }: { locale?: "en" | "kr" }) {
                   <div className="flex flex-col gap-3">
                     <button
                       type="button"
+                      onClick={() => console.log("Google signup")}
                       className="flex h-10 w-full cursor-pointer items-center justify-center gap-2.5 rounded-full border border-[rgba(0,0,0,0.12)] bg-white text-sm font-medium tracking-[-0.32px] text-[#181925] transition-colors hover:bg-neutral-50"
                     >
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -1270,6 +1272,7 @@ export default function Signup({ locale = "en" }: { locale?: "en" | "kr" }) {
 
                     <button
                       type="button"
+                      onClick={() => console.log("Telegram signup")}
                       className="flex h-10 w-full cursor-pointer items-center justify-center gap-2.5 rounded-full border border-[rgba(0,0,0,0.08)] bg-[#2AABEE] text-sm font-medium tracking-[-0.32px] text-white transition-colors hover:bg-[#229ED9]"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
